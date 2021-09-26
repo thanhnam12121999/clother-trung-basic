@@ -36,7 +36,7 @@
 <footer class="footer-section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="footer-left">
                     <div class="footer-logo">
                         <a href="#">
@@ -45,9 +45,9 @@
                         </a>
                     </div>
                     <ul>
-                        <li>Address: 60-49 Road 11378 New York</li>
-                        <li>Phone: +65 11.188.888</li>
-                        <li>Email: hello.colorlib@gmail.com</li>
+                        <li>Địa chỉ: Tầng 2, toà nhà HCMCC. 249A Thuỵ Khuê, Tây Hồ, Hà Nội</li>
+                        <li>Điện thoại: 1800 2010</li>
+                        <li>Email: holalady@gmail.com</li>
                     </ul>
                     <div class="footer-social">
                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -57,24 +57,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 offset-lg-1">
+            <div class="col-lg-2">
                 <div class="footer-widget">
-                    <h5>Information</h5>
+                    <h5>Thông tin</h5>
                     <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Checkout</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Serivius</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Thanh toán</a></li>
+                        <li><a href="#">Liên hệ</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="footer-widget">
-                    <h5>My Account</h5>
+                    <h5>Tài khoản của tôi</h5>
                     <ul>
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Shopping Cart</a></li>
+                        <li><a href="#">Tài khoản của tôi</a></li>
+                        <li><a href="#">Giỏ hàng</a></li>
                         <li><a href="#">Shop</a></li>
                     </ul>
                 </div>

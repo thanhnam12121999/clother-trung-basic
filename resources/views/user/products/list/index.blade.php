@@ -1,5 +1,8 @@
 @extends('user.layouts.master')
-@section('title', 'Danh sách sản phẩm')
+@section('title', 'Shop')
+@section('active-product')
+    class="active"
+@endsection
 @section('breadcrumb')
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -8,7 +11,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang chủ</a>
-                        <span>Danh sách sản phẩm</span>
+                        <span>Shop</span>
                     </div>
                 </div>
             </div>

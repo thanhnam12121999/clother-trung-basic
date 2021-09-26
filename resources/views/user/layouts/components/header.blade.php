@@ -5,15 +5,15 @@
             <div class="ht-left">
                 <div class="mail-service">
                     <i class=" fa fa-envelope"></i>
-                    hello.colorlib@gmail.com
+                    holalady@gmail.com
                 </div>
                 <div class="phone-service">
                     <i class=" fa fa-phone"></i>
-                    +65 11.188.888
+                    1800 2010
                 </div>
             </div>
             <div class="ht-right">
-                <a href="#" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
+                <a href="{{ route('auth.sign-in') }}" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
 {{--                <div class="lan-selector">--}}
 {{--                    <select class="language_drop" name="countries" id="countries" style="width:300px;">--}}
 {{--                        <option value='yt' data-image="{{ asset('user/img/flag-1.jpg') }}" data-imagecss="flag yt"--}}

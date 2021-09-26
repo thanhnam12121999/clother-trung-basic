@@ -8,7 +8,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang chủ</a>
-                        <a href="{{ route('products.index') }}">Danh sách sản phẩm</a>
+                        <a href="{{ route('products.index') }}">Shop</a>
                         <span>Giỏ hàng</span>
                     </div>
                 </div>
