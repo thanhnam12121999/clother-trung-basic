@@ -1,5 +1,8 @@
 @extends('user.layouts.master')
 @section('title', 'Trang chủ')
+@section('active-home')
+    class="active"
+@endsection
 @section('content')
     @include('user.home.components.slider')
     @include('user.home.components.categories')

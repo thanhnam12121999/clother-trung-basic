@@ -5,6 +5,7 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\PaymentController;
+use App\Http\Controllers\User\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,9 @@ use App\Http\Controllers\User\PaymentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('dang-nhap', [AuthController::class, 'signIn'])->name('auth.sign-in');
+Route::get('dang-ky', [AuthController::class, 'signUp'])->name('auth.sign-up');
 
 Route::get('', function () {
    return redirect()->route('home');

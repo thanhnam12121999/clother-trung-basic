@@ -3,6 +3,9 @@
 @section('custom-css')
     <link rel="stylesheet" href="{{ asset('user/custom-css/products/style.css') }}">
 @endsection
+@section('active-product')
+    class="active"
+@endsection
 @section('breadcrumb')
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -11,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang chủ</a>
-                        <a href="{{ route('products.index') }}">Danh sách sản phẩm</a>
+                        <a href="{{ route('products.index') }}">Shop</a>
                         <span>Chi tiết sản phẩm</span>
                     </div>
                 </div>
@@ -37,7 +40,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h2>Related Products</h2>
+                        <h2>Có thể bạn quan tâm</h2>
                     </div>
                 </div>
             </div>
