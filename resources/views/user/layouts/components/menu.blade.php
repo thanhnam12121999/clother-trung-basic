@@ -18,8 +18,8 @@
 {{--        </div>--}}
         <nav class="nav-menu mobile-menu">
             <ul>
-                <li class="active"><a href="{{ route('home') }}">Trang chủ</a></li>
-                <li><a href="{{ route('products.index') }}">Danh sách sản phẩm</a></li>
+                <li @yield('active-home')><a href="{{ route('home') }}">Trang chủ</a></li>
+                <li @yield('active-product')><a href="{{ route('products.index') }}">Shop</a></li>
                 <li><a href="#">Catalog</a>
                     <ul class="dropdown">
                         <li><a href="#">Áo nữ</a></li>
