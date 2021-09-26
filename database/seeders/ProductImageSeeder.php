@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ProductVariantImage;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -20,10 +21,7 @@ class ProductImageSeeder extends Seeder
 
         DB::table('product_images')->truncate();
 
-        DB::table('product_images')->insert([
-            ['product_id' => 1, 'image' => Str::random(10)],
-            ['product_id' => 1, 'image' => Str::random(10)],
-        ]);
+        ProductVariantImage::factory()->count(150)->create(); 
 
         Schema::enableForeignKeyConstraints();
     }
