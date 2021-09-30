@@ -1,0 +1,10 @@
+.register-form, .login-form {
+  &__main {
+    input.error {
+      border: 1px solid #d31010 !important;
+    }
+    label.error {
+      color: #d31010 !important;
+    }
+  }
+}
