@@ -13,7 +13,23 @@
                 </div>
             </div>
             <div class="ht-right">
-                <a href="{{ route('auth.sign-in') }}" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
+                @php
+                $checkMemberLoggedIn = auth('accounts')->check() && isAccountType(\App\Models\Member::class);
+                @endphp
+                @if($checkMemberLoggedIn)
+                    <div class="member-info-dropdown">
+                        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ getLoggedInUser()->username ?? getLoggedInUser()->email }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#">Thông tin tài khoản</a>
+                            <a class="dropdown-item" href="#">Đơn mua</a>
+                            <a class="dropdown-item" href="{{ route('auth.logout') }}">Đăng xuất</a>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('auth.sign-in') }}" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
+                @endif
 {{--                <div class="lan-selector">--}}
 {{--                    <select class="language_drop" name="countries" id="countries" style="width:300px;">--}}
 {{--                        <option value='yt' data-image="{{ asset('user/img/flag-1.jpg') }}" data-imagecss="flag yt"--}}
@@ -36,7 +52,7 @@
             <div class="row">
                 <div class="col-lg-2 col-md-2">
                     <div class="logo">
-                        <a href="./index.html">
+                        <a href="{{ route('home') }}">
 {{--                            <img src="{{ asset('user/img/logo.png') }}" alt="">--}}
                             <h3 style="font-weight: 600;">Holalady</h3>
                         </a>
