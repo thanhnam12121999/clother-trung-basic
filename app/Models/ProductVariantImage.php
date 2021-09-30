@@ -9,16 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductVariantImage extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    // use SoftDeletes;
 
-    protected $table = "product_variant_images";
+    protected $table = "product_images";
     protected $fillable = [
-        'product_variant_id',
+        'product_id',
         'image'
     ];
 
-    public function variants()
+    // public function variants()
+    // {
+    //     return $this->belongsTo(ProductVariant::class, 'product_variant_id', 'id');
+    // }
+
+    public function product()
     {
-        return $this->belongsTo(ProductVariant::class, 'product_variant_id', 'id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 }

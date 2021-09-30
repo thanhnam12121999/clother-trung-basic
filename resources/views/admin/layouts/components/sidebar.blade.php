@@ -43,7 +43,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('products.index') }}" class="nav-link">
+            <a href="{{ route('admin.products.index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Sản Phẩm
@@ -59,7 +59,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('admin.categories.index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Danh Mục Sản Phẩm
