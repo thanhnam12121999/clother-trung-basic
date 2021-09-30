@@ -22,6 +22,6 @@ class BaseService
         array $data = [],
         $success = false
     ) {
-        return $this->sendResponse($message, $data, $success, $status);
+        return $this->sendResponse($message, $data, $status, $success);
     }
 }

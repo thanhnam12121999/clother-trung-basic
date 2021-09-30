@@ -1,0 +1,8 @@
+.register-form__main input.error, .login-form__main input.error {
+  border: 1px solid #d31010 !important;
+}
+.register-form__main label.error, .login-form__main label.error {
+  color: #d31010 !important;
+}
+
+/*# sourceMappingURL=style.css.map */
