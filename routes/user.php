@@ -19,10 +19,13 @@ use App\Http\Controllers\User\AuthController;
 */
 
 Route::get('dang-nhap', [AuthController::class, 'signIn'])->name('auth.sign-in');
+Route::post('login', [AuthController::class, 'doLogin'])->name('auth.login');
 Route::get('dang-ky', [AuthController::class, 'signUp'])->name('auth.sign-up');
+Route::post('register', [AuthController::class, 'doRegister'])->name('auth.register');
+Route::get('dang-xuat', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::get('', function () {
-   return redirect()->route('home');
+    return redirect()->route('home');
 });
 
 Route::get('trang-chu', [HomeController::class, 'index'])->name('home');
