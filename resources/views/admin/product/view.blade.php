@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <p>{{$product->summary}}</p>
-                    {{-- <div class="row">
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="size">Size</label>
                             <input type="text" class="form-control">
@@ -81,7 +81,7 @@
                             <label for="size">Quantity</label>
                             <input type="text" class="form-control" placeholder="">
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,4 +113,12 @@
 @endsection
 @section('my-script')
     <script src="{{ asset('admin/products/detail/product-detail.js') }}"></script>
+    <script>
+        CKEDITOR.editorConfig = function( config ) {
+        config.entities_latin = false; 
+        config.entities_greek = false; 
+        config.entities = false; 
+        config.basicEntities = false; 
+    };
+    </script>
 @endsection

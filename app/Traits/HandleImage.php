@@ -16,30 +16,21 @@ trait HandleImage
         return $image->getClientOriginalName();
     }
 
-    // public function updateFileImage($request, $avatar, $avatarRequest)
-    // {
-    //     if ($request->hasFile($avatarRequest)) {
-    //         $image = $request->file($avatarRequest);
-    //         $imageName = $this->getNameFile($image);
-    //         $this->deleteImage($avatar);
-    //         $this->moveImage($image, $imageName);
-    //     } else {
-    //         $imageName  = $avatar;
-    //     }
-    //     return $imageName;
-    // }
-
     public function creatFileImage($request, $avatarRequest)
     {
         if(!File::exists($this->pathImageProduct)) {
             return false;
         }
         if ($request->hasFile($avatarRequest)) {
-        $avatarImg = $request->file($avatarRequest);
-        $newName  = rand() . '-' . $avatarImg->getClientOriginalName();
-        $this->moveImage($avatarImg, $newName);
-        return $newName;
+        $dataImage = $request->file($avatarRequest);
+        $newName  = rand() . '-' . $dataImage->getClientOriginalName();
+        // $this->moveImage($avatarImg, $newName);
+        return [
+            'nameImage' => $newName,
+            'dataImage' => $dataImage
+        ];
         };
+        return false;
     }
 
     public function creatMutilFileImage($request, $mutilpleImageRequest)
@@ -48,25 +39,32 @@ trait HandleImage
             return false;
         }
         if ($request->hasFile($mutilpleImageRequest)) {
-            $data = [];
+            $listNameImg = [];
+            $dataImages = [];
             $images = $request->file($mutilpleImageRequest);
             foreach ($images as $index => $image) {
                 $fileName = rand() . '-' . $image->getClientOriginalName();
-                $this->moveImage($image, $fileName);
-                array_push($data, ['image' => $fileName]);
+                // $this->moveImage($image, $fileName);
+                array_push($listNameImg, ['image' => $fileName]);
+                array_push($dataImages, $image);
             }
-            return $data;
+            return [
+                'listNameImg' => $listNameImg,
+                'dataImg' => $dataImages
+            ];
         }
+        return false;
     }
 
-    public function deleteMutilImage($product)
+    public function deleteMutilImage($listImage)
     {
         if(!File::exists($this->pathImageProduct)) {
             return false;
         }
-        foreach ($product->images as $image) {
-            return File::delete($this->pathImageProduct . $image->image);
+        foreach ($listImage as $image) {
+            File::delete($this->pathImageProduct . $image->image);
         }
+        return true;
     }
 
     public function deleteImage($imageName)
@@ -78,6 +76,13 @@ trait HandleImage
     public function moveImage($image, $imageName)
     {
         $image->move(public_path($this->pathImageProduct), $imageName);
+    }
+
+    public function moveMutipleImages($dataImages)
+    {
+        foreach ($dataImages['listNameImg'] as $index => $image) {
+            $dataImages['dataImg'][$index]->move(public_path($this->pathImageProduct), $image['image']);
+        }
     }
 }
  
