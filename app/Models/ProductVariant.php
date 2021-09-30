@@ -19,10 +19,10 @@ class ProductVariant extends Model
         'unit_price'
     ];
 
-    public function images()
-    {
-        return $this->hasMany(ProductVariantImage::class, 'product_variant_id', 'id');
-    }
+    // public function images()
+    // {
+    //     return $this->hasMany(ProductVariantImage::class, 'product_variant_id', 'id');
+    // }
 
     public function product()
     {
