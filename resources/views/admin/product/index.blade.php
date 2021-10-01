@@ -37,9 +37,12 @@
                                         <tbody>
                                             @foreach ($products as $product)
                                             <tr id="id-product">
+                                                @php
+                                                    $isUrl = filter_var($product->feature_image, FILTER_VALIDATE_URL);
+                                                @endphp
                                                 <td class="text-center">{{$product->id}}</td>
                                                 <td class="text-center">
-                                                    <img style="height: 50px;width: 70px;" src="{{ asset('admin/products/images')}}/{{$product->feature_image}}">
+                                                    <img style="height: 50px;width: 70px;" src="{{ $isUrl ? $product->feature_image : asset("admin/products/images/$product->feature_image") }}">
                                                 </td>
                                                 <td style="font-size: 16px;">{{$product->name}}</td>
                                                 <td class="text-center">{{$product->category->name}}</td>
@@ -60,7 +63,7 @@
                                                     Xóa</button>
                                                 </td>
                                             </tr>
-                                            @endforeach 
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -90,7 +93,7 @@
             });
         });
         $(document).ready(function () {
-            $('.btn-delete').click(function (e) { 
+            $('.btn-delete').click(function (e) {
                 e.preventDefault();
                 let url = $(this).attr('data-url');
                 Swal.fire({
