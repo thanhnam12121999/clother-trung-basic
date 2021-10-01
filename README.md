@@ -23,7 +23,7 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## Hướng dẫn cài đặt
 
-- Download <a href="https://www.apachefriends.org/download.html">XAMPP</a> và <a href="https://getcomposer.org/download/">Composer</a>
+- Download <a href="https://www.apachefriends.org/download.html">XAMPP</a> và <a href="https://getcomposer.org/download/">Composer</a> và tiến hành cài đặt
 - Truy cập vào **XAMPP** tạo database và table
 - Sau khi đã clone project, truy cập thư mục gốc chứa các file và folder của project, mở cmd hoặc PowerShell chạy lệnh **composer install**
 - Copy file **.env.example** và paste nó vào trong folder gốc, sửa tên thành **.env**, sủa lại các biến **DB_HOST**, **DB_PORT**, **DB_DATABASE**, **DB_USERNAME**, **DB_PASSWORD** tùy vào việc setup database trên **XAMPP**
@@ -33,4 +33,5 @@ DB_PORT=3306<br/>
 DB_DATABASE=clothes_shopping<br/>
 DB_USERNAME=root<br/>
 DB_PASSWORD=<br/>
-- Truy cập vào **http://localhost<:port>** để vào màn hình user, **http://localhost<:port>/admin/dashboard** để vào màn hình admin (nếu **port** khác 80 thì thêm, không thì thôi)
+- Tiếp theo, Ở cmd chạy lệnh **php artisan migrate** và **php artisan db:seed**
+- Sau đó chạy lệnh **php artisan serve**, nó sẽ mở 1 server ảo với cổng 8000, giữ nguyên tiến trình cmd đang chạy, vào web **http://localhost:8000** để vào màn hình user, **http://localhost:8000/admin/dashboard** để vào màn hình admin
