@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -15,6 +16,7 @@ class Product extends Model
     protected $fillable = [
         'category_id',
         'name',
+        'slug',
         'code',
         'feature_image',
         'summary',
@@ -22,6 +24,14 @@ class Product extends Model
         'description',
         'status'
     ];
+
+    protected static function booted()
+    {
+        parent::booted();
+        static::creating(function ($product) {
+            $product->slug = Str::slug($product->name) . '-' . Str::random(10) . strtotime($product->created_at);
+        });
+    }
 
     public function category()
     {
@@ -38,21 +48,9 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class, 'product_id', 'id');
     }
 
-    public function variantImages()
-    {
-        return $this->hasManyThrough(
-            ProductVariantImage::class,
-            ProductVariant::class,
-            'product_id',
-            'product_variant_id',
-            'id',
-            'id'
-        );
-    }
-
     public function images()
     {
-        return $this->hasMany(ProductVariantImage::class, 'product_id', 'id');
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
 
 }

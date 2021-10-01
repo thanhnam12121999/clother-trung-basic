@@ -29,6 +29,16 @@ class ProductRepository extends BaseRepository
         }
     }
 
+    public function getProductsPaginate($perPage = 10)
+    {
+        return $this->model->with('variants')->paginate($perPage);
+    }
+
+    public function getProductBySlug($slug)
+    {
+        return $this->model->where('slug', $slug)->first();
+    }
+
     public function createMutilImage()
     {
         return ;

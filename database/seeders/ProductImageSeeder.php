@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\ProductVariantImage;
+use App\Models\ProductImage;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +21,7 @@ class ProductImageSeeder extends Seeder
 
         DB::table('product_images')->truncate();
 
-        ProductVariantImage::factory()->count(150)->create(); 
+        ProductImage::factory()->count(150)->create();
 
         Schema::enableForeignKeyConstraints();
     }
