@@ -13,12 +13,12 @@
 </head>
 
 <body>
-<!-- Page Preloder -->
+{{-- <!-- Page Preloder -->
 @if(!session()->has('success') || !session()->has('errors'))
     <div id="preloder">
         <div class="loader"></div>
     </div>
-@endif
+@endif --}}
 
 @include('user.layouts.components.header')
 

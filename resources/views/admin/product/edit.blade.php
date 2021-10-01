@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('custom-css')
-    
+
 @endsection
 @section('breadcrumb', 'Chỉnh Sửa Sản Phẩm')
 @section('contents')
@@ -25,7 +25,7 @@
                 <div class="box" id="view">
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Tên sản phẩm <span class = "maudo">(*)</span></label>
                                     <input type="text" class="form-control" name="name" style="width:100%" value="{{$product->name}}">
@@ -41,10 +41,14 @@
                                                 <select name="cate_id" class="form-control">
                                                     <option value = "">[--Chọn loại sản phẩm--]</option>
                                                     @foreach ($categories as $cate)
-                                                    @if ($cate->id == $product->category->id)
-                                                    <option selected value = "{{$cate->id}}">{{$cate->name}}</option>    
-                                                    @else
-                                                    <option value = "{{$cate->id}}">{{$cate->name}}</option>   
+                                                        @if ($cate->id == $product->category->id)
+                                                            <option selected value="{{$cate->id}}">
+                                                                {{ Str::ucfirst($cate->name) }}
+                                                            </option>
+                                                        @else
+                                                    <option value = "{{$cate->id}}">
+                                                        {{ Str::ucfirst($cate->name) }}
+                                                    </option>
                                                     @endif
                                                     @endforeach
                                                 </select>
@@ -69,12 +73,12 @@
                                     <textarea name="detail" id="detail" class="form-control">{{$product->detail}}</textarea>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
+                            <div class="col-md-6">
+                                {{-- <div class="form-group">
                                     <label>Giá bán(Cần add bảng order)</label>
                                     <input name="price" class="form-control" type="number" value="1000000" min="0" step="10000" max="1000000000">
                                     <div class="error" id="password_error"></div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="form-group">
                                     <label>Số lượng tồn kho</label>
                                     <input name="number" class="form-control" type="number" value="" min="1" step="1" max="1000" disabled>

@@ -76,27 +76,47 @@
 {{--                            </a>--}}
 {{--                        </li>--}}
                         <li class="cart-icon">
-                            <a href="#">
+                            <a href="">
                                 <i class="icon_bag_alt"></i>
-                                <span>3</span>
+                                @if (getCart()->isNotEmpty())
+                                    <span>{{ getCart()->count() }}</span>
+                                @endif
                             </a>
-                            <div class="cart-hover">
-                                <div class="select-items">
+                            <div class="cart-hover" style="right: -100px; width: 400px;">
+                                <div class="select-items" style="max-height: 300px; overflow-y: auto;">
                                     <table>
                                         <tbody>
-                                        <tr>
-                                            <td class="si-pic"><img src="{{ asset('user/img/select-product-1.jpg') }}" alt=""></td>
-                                            <td class="si-text">
-                                                <div class="product-selected">
-                                                    <p>$60.00 x 1</p>
-                                                    <h6>Kabino Bedside Table</h6>
-                                                </div>
-                                            </td>
-                                            <td class="si-close">
-                                                <i class="ti-close"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
+                                        @if (getCart()->isNotEmpty())
+                                        @foreach (getCart() as $item)
+                                            @php
+                                                $productImage = getProductImageInCart($item->id);
+                                                $isImageUrl = filter_var($productImage, FILTER_VALIDATE_URL);
+                                            @endphp
+                                            <tr>
+                                                <td class="si-pic" width="40%">
+                                                    <img class="w-100" src="{{ $isImageUrl ? $productImage : asset("admin/products/images/$productImage") }}" alt="">
+                                                </td>
+                                                <td class="si-text" width="50%">
+                                                    <div class="product-selected">
+                                                        <p>{{ number_format($item->price, 0, ',', '.') }}đ x {{ $item->qty }}</p>
+                                                        <h6>{{ $item->name }}</h6>
+                                                    </div>
+                                                </td>
+                                                <td class="si-close" width="10%">
+                                                    <a href="{{ route('cart.remove', ['rowId' => $item->rowId]) }}">
+                                                        <i class="ti-close"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p class="text-center">Không có sản phẩm nào</p>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                        {{-- <tr>
                                             <td class="si-pic"><img src="{{ asset('user/img/select-product-2.jpg') }}" alt=""></td>
                                             <td class="si-text">
                                                 <div class="product-selected">
@@ -107,13 +127,13 @@
                                             <td class="si-close">
                                                 <i class="ti-close"></i>
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="select-total">
-                                    <span>total:</span>
-                                    <h5>$120.00</h5>
+                                    <span>tổng:</span>
+                                    <h5>{{ getCartTotal() }}đ</h5>
                                 </div>
                                 <div class="select-button">
                                     <a href="{{ route('cart.index') }}" class="primary-btn view-card">XEM GIỎ HÀNG</a>
@@ -121,7 +141,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="cart-price">$150.00</li>
+                        <li class="cart-price">{{ getCartTotal() }}đ</li>
                     </ul>
                 </div>
             </div>

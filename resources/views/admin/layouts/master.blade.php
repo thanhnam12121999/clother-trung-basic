@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title')</title>
+    <title>Admin</title>
 
     @include('admin.layouts.components.stylesheet')
 </head>
@@ -57,7 +57,7 @@
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
-      
+
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
@@ -65,7 +65,7 @@
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
-        </main>  
+        </main>
 
         @include('admin.layouts.components.footer')
     </div>

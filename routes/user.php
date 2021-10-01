@@ -31,7 +31,10 @@ Route::get('', function () {
 Route::get('trang-chu', [HomeController::class, 'index'])->name('home');
 Route::prefix('san-pham')->group(function () {
     Route::get('', [ProductController::class, 'index'])->name('products.index');
-    Route::get('chi-tiet', [ProductController::class, 'detail'])->name('products.detail');
+    Route::get('/{slug}', [ProductController::class, 'detail'])->name('products.detail');
 });
 Route::get('gio-hang', [CartController::class, 'index'])->name('cart.index');
+Route::post('cart/add/{slug}', [CartController::class, 'add'])->name('cart.add');
+Route::get('cart/remove/{rowId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::put('cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::get('thanh-toan', [PaymentController::class, 'index'])->name('payment.index');

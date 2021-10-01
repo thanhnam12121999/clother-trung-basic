@@ -13,27 +13,36 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+                @php
+                    $isFeatureImageUrl = filter_var($product->feature_image, FILTER_VALIDATE_URL);
+                @endphp
                 <div id="slider" class="owl-carousel product-slider">
                     <div class="item">
-                        <img src="{{ asset('admin/products/images')}}/{{$product->feature_image}}" />
+                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : asset("admin/products/images/$product->feature_image") }}" />
                     </div>
                     @foreach ($product->images as $productImg)
+                    @php
+                        $isImageUrlSlider = filter_var($productImg->image, FILTER_VALIDATE_URL);
+                    @endphp
                     <div class="item">
-                        <img src="{{ asset('admin/products/images')}}/{{$productImg->image}}" />
-                    </div>    
+                        <img src="{{ $isImageUrlSlider ? $productImg->image : asset("admin/products/images/$productImg->image") }}" />
+                    </div>
                     @endforeach
                 </div>
                 <div id="thumb" class="owl-carousel product-thumb">
                     <div class="item">
-                        <img src="{{ asset('admin/products/images')}}/{{$product->feature_image}}" />
+                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : asset("admin/products/images/$product->feature_image") }}" />
                     </div>
                     @foreach ($product->images as $productImg)
+                    @php
+                        $isImageUrlCarousel = filter_var($productImg->image, FILTER_VALIDATE_URL);
+                    @endphp
                     <div class="item">
-                        <img src="{{ asset('admin/products/images')}}/{{$productImg->image}}" />
-                    </div>    
+                        <img src="{{ $isImageUrlCarousel ? $productImg->image : asset("admin/products/images/$productImg->image") }}" />
+                    </div>
                     @endforeach
-                </div>    
-       
+                </div>
+
             </div>
             <div class="col-md-6">
                 <div class="product-dtl">
@@ -88,19 +97,21 @@
         <div class="product-info-tabs">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+                    <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Mô tả sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Detail</a>
+                    <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Chi tiết sản phẩm</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                    {{$product->description}}
+                    {!! $product->description !!}
                 </div>
                 <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                    <div class="review-heading">Detail</div>
-                    <p class="mb-20">{{$product->detail}}</p>
+                    <div class="review-heading">Chi tiết</div>
+                    <div>
+                        {!! $product->detail !!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -115,10 +126,10 @@
     <script src="{{ asset('admin/products/detail/product-detail.js') }}"></script>
     <script>
         CKEDITOR.editorConfig = function( config ) {
-        config.entities_latin = false; 
-        config.entities_greek = false; 
-        config.entities = false; 
-        config.basicEntities = false; 
+        config.entities_latin = false;
+        config.entities_greek = false;
+        config.entities = false;
+        config.basicEntities = false;
     };
     </script>
 @endsection

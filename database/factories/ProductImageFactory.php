@@ -3,17 +3,17 @@
 namespace Database\Factories;
 
 use App\Models\Product;
-use App\Models\ProductVariantImage;
+use App\Models\ProductImage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductVariantImageFactory extends Factory
+class ProductImageFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = ProductVariantImage::class;
+    protected $model = ProductImage::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class ProductVariantImageFactory extends Factory
     public function definition()
     {
         return [
-            'product_id' => Product::all()->random()->id, 
+            'product_id' => Product::all()->random()->id,
             'image' => $this->faker->imageUrl($width = 640, $height = 480),
         ];
     }
