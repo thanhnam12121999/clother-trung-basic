@@ -29,7 +29,9 @@
                                 <div class="form-group">
                                     <label>Tên sản phẩm <span class = "maudo">(*)</span></label>
                                     <input type="text" class="form-control" name="name" style="width:100%" value="{{$product->name}}">
-                                    <div class="error" id="password_error"></div>
+                                    @error('name')
+                                    <p class="text-danger">{{ $message }}</p> 
+                                    @enderror
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -50,6 +52,9 @@
                                                     @endif
                                                     @endforeach
                                                 </select>
+                                                @error('cate_id')
+                                                <p class="text-danger">{{ $message }}</p> 
+                                                @enderror
                                                 <div class="error" id="password_error"></div>
                                             </div>
                                         </div>
@@ -85,16 +90,25 @@
                                 <div class="form-group">
                                     <label>Thay hình đại diện</label>
                                     <input type="file"  name="feature_image" style="width: 100%">
+                                    @error('feature_image')
+                                    <p class="text-danger">{{ $message }}</p> 
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Thay hình ảnh sản phẩm</label>
                                     <input type="file"  name="image_list[]" multiple>
+                                    @error('image_list')
+                                    <p class="text-danger">{{ $message }}</p> 
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Trạng thái</label>
                                     <select name="status" class="form-control">
                                         <option value="1" @php if($product->status == 1) {echo 'selected';} @endphp>Đang kinh doanh</option>
                                         <option value="0" @php if($product->status == 0) {echo 'selected';} @endphp>Ngừng kinh doanh</option>
+                                        @error('status')
+                                        <p class="text-danger">{{ $message }}</p> 
+                                        @enderror
                                     </select>
                                 </div>
                             </div>
