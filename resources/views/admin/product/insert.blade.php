@@ -60,8 +60,6 @@
                                     <input name="price_buy" class="form-control" type="number" value="0" min="0" step="1" max="1000000000">
                                     <div class="error" id="password_error"></div>
                                 </div> --}}
-
-                                </div>
                                 <div class="form-group">
                                     <label>Hình đại diện</label>
                                     <input type="file"  id="image_list" name="feature_image" style="width: 100%">
