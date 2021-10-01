@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
-use App\Models\Product;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class ProductController extends Controller
         return view('admin.product.index', compact('products'));
     }
 
-    public function store(ProductRequest $request)
+    public function store(StoreProductRequest $request)
     {
         $response = $this->productService->store($request);
         if ($response['success']) {
@@ -48,7 +48,7 @@ class ProductController extends Controller
         return view('admin.product.view', compact('product'));
     }
 
-    public function update(int $id, ProductRequest $request)
+    public function update(int $id, UpdateProductRequest $request)
     {
         $response = $this->productService->update($id, $request);
         if ($response['success']) {

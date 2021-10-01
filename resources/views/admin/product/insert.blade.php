@@ -25,6 +25,9 @@
                                 <div class="form-group">
                                     <label>Tên sản phẩm <span class = "maudo">(*)</span></label>
                                     <input type="text" class="form-control" name="name" style="width:100%" placeholder="Tên sản phẩm">
+                                    @error('name')
+                                    <p class="text-danger">{{ $message }}</p> 
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Loại sản phẩm<span class = "maudo">(*)</span></label>
@@ -34,9 +37,12 @@
                                         <option value="{{ $cate->id }}">{{ $cate->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('cate_id')
+                                    <p class="text-danger">{{ $message }}</p> 
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Tóm Lược<span class = "maudo">(*)</span></label>
+                                    <label>Tóm Lược</label>
                                     <input type="text" class="form-control" name="summary" style="width:100%" placeholder="Tóm Lược">
                                 </div>
                                 <div class="form-group">
@@ -52,15 +58,21 @@
                                 <div class="form-group">
                                     <label>Giá bán</label>
                                     <input name="price_buy" class="form-control" type="number" value="0" min="0" step="1" max="1000000000">
-                                    {{-- <div class="error" id="password_error"></div> --}}
+                                    
                                 </div>
                                 <div class="form-group">
                                     <label>Hình đại diện</label>
-                                    <input type="file"  id="image_list" name="feature_image" required style="width: 100%">
+                                    <input type="file"  id="image_list" name="feature_image" style="width: 100%">
+                                    @error('feature_image')
+                                    <p class="text-danger">{{ $message }}</p> 
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Hình ảnh sản phẩm</label>
-                                    <input type="file"  id="image_list" name="image_list[]" multiple required>
+                                    <input type="file"  id="image_list" name="image_list[]" multiple>
+                                    @error('image_list')
+                                    <p class="text-danger">{{ $message }}</p> 
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Trạng thái</label>
@@ -68,6 +80,9 @@
                                         <option value="1">Kinh doanh</option>
                                         <option value="0">Chưa Kinh doanh</option>
                                     </select>
+                                    @error('status')
+                                    <p class="text-danger">{{ $message }}</p> 
+                                    @enderror
                                 </div>
                             </div>
                         </div>
