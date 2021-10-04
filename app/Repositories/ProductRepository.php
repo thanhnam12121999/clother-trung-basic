@@ -21,10 +21,9 @@ class ProductRepository extends BaseRepository
         return $this->model->with('variants')->find($id);
     }
 
-    public function deleteImagesRelation($id)
+    public function deleteImagesRelation($product)
     {
-        $product = $this->find($id);
-        foreach ($product->images  as $image) {
+        foreach ($product->images as $image) {
             $image->delete();
         }
     }

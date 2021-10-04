@@ -1,8 +1,8 @@
 @extends('admin.layouts.master')
 @section('custom-css')
-<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 @endsection
 @section('my-css')
     <link rel="stylesheet" href="{{ asset('admin/products/detail/product-detail.css') }}">
@@ -18,27 +18,27 @@
                 @endphp
                 <div id="slider" class="owl-carousel product-slider">
                     <div class="item">
-                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : asset("admin/products/images/$product->feature_image") }}" />
+                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : asset("storage/images/products/$product->feature_image") }}" />
                     </div>
                     @foreach ($product->images as $productImg)
                     @php
                         $isImageUrlSlider = filter_var($productImg->image, FILTER_VALIDATE_URL);
                     @endphp
                     <div class="item">
-                        <img src="{{ $isImageUrlSlider ? $productImg->image : asset("admin/products/images/$productImg->image") }}" />
+                        <img src="{{ $isImageUrlSlider ? $productImg->image : asset("storage/images/products/$productImg->image") }}" />
                     </div>
                     @endforeach
                 </div>
                 <div id="thumb" class="owl-carousel product-thumb">
                     <div class="item">
-                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : asset("admin/products/images/$product->feature_image") }}" />
+                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : asset("storage/images/products/$product->feature_image") }}" />
                     </div>
                     @foreach ($product->images as $productImg)
                     @php
                         $isImageUrlCarousel = filter_var($productImg->image, FILTER_VALIDATE_URL);
                     @endphp
                     <div class="item">
-                        <img src="{{ $isImageUrlCarousel ? $productImg->image : asset("admin/products/images/$productImg->image") }}" />
+                        <img src="{{ $isImageUrlCarousel ? $productImg->image : asset("storage/images/products/$productImg->image") }}" />
                     </div>
                     @endforeach
                 </div>

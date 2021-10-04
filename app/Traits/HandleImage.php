@@ -3,86 +3,65 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 /**
- * 
+ *
  */
 trait HandleImage
 {
-    public $pathImageProduct = 'admin/products/images/';
-
-    public function getNameFile($image)
+    public function createImage($image, $folder, $isMultiple = false)
     {
-        return $image->getClientOriginalName();
-    }
-
-    public function creatFileImage($request, $avatarRequest)
-    {
-        if(!File::exists($this->pathImageProduct)) {
-            return false;
-        }
-        if ($request->hasFile($avatarRequest)) {
-        $dataImage = $request->file($avatarRequest);
-        $newName  = rand() . '-' . $dataImage->getClientOriginalName();
-        // $this->moveImage($avatarImg, $newName);
-        return [
-            'nameImage' => $newName,
-            'dataImage' => $dataImage
-        ];
-        };
-        return false;
-    }
-
-    public function creatMutilFileImage($request, $mutilpleImageRequest)
-    {
-        if(!File::exists($this->pathImageProduct)) {
-            return false;
-        }
-        if ($request->hasFile($mutilpleImageRequest)) {
-            $listNameImg = [];
-            $dataImages = [];
-            $images = $request->file($mutilpleImageRequest);
-            foreach ($images as $index => $image) {
-                $fileName = rand() . '-' . $image->getClientOriginalName();
-                // $this->moveImage($image, $fileName);
-                array_push($listNameImg, ['image' => $fileName]);
-                array_push($dataImages, $image);
+        if ($isMultiple) {
+            $imageList = $image;
+            $listImageName = [];
+            foreach ($imageList as $img) {
+                $imageName = $this->handleUploadImage($img, $folder);
+                array_push($listImageName, ['image' => $imageName]);
             }
-            return [
-                'listNameImg' => $listNameImg,
-                'dataImg' => $dataImages
-            ];
+            return $listImageName;
+        } else {
+            $imageName = $this->handleUploadImage($image, $folder);
+            return $imageName;
         }
-        return false;
     }
 
-    public function deleteMutilImage($listImage)
+    private function handleUploadImage($image, $folder)
     {
-        if(!File::exists($this->pathImageProduct)) {
+        $imageName = time() . '-' . $image->getClientOriginalName();
+        $filePath = "images/${folder}/{$imageName}";
+        Storage::disk('public')->put($filePath, file_get_contents($image), 'public');
+        if (!Storage::disk('public')->exists($filePath)) {
+            return null;
+        }
+        return $imageName;
+    }
+
+    public function deleteImage($imageName, $folder)
+    {
+        try {
+            $imagePath = "images/{$folder}/{$imageName}";
+            if (Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
+            return true;
+        } catch (\Exception $e) {
+            Log::error($e);
             return false;
         }
-        foreach ($listImage as $image) {
-            File::delete($this->pathImageProduct . $image->image);
-        }
-        return true;
     }
 
-    public function deleteImage($imageName)
+    public function deleteMultipleImages($listImage)
     {
-        File::delete($this->pathImageProduct . $imageName);
-        return true;
-    }
-
-    public function moveImage($image, $imageName)
-    {
-        $image->move(public_path($this->pathImageProduct), $imageName);
-    }
-
-    public function moveMutipleImages($dataImages)
-    {
-        foreach ($dataImages['listNameImg'] as $index => $image) {
-            $dataImages['dataImg'][$index]->move(public_path($this->pathImageProduct), $image['image']);
+        try {
+            $listImage->each(function ($image) {
+                $this->deleteImage($image->image, 'products');
+            });
+            return true;
+        } catch (\Exception $e) {
+            Log::error($e);
+            return false;
         }
     }
 }
- 
