@@ -39,6 +39,6 @@ if (!function_exists('getProductImageInCart')) {
     function getProductImageInCart($itemId)
     {
         $product = \App\Models\Product::where('slug', $itemId)->first();
-        return $product->feature_image;
+        return $product->feature_image ?? null;
     }
 }
