@@ -22,6 +22,11 @@ class ProductImage extends Model
     //     return $this->belongsTo(ProductVariant::class, 'product_variant_id', 'id');
     // }
 
+    public function getImagePathAttribute()
+    {
+        return asset("storage/images/products/{$this->image}");
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');

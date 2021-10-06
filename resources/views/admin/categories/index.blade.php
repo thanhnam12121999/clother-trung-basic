@@ -44,7 +44,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <img style="width: 100px; max-height: 200px;"
-                                                        src="{{ asset("storage/images/categories/{$category->image}") }}"
+                                                        src="{{ $category->image_path }}"
                                                         alt="{{ $category->image }}" />
                                                 </td>
                                                 <td class="text-center">

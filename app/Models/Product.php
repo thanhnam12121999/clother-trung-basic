@@ -36,6 +36,11 @@ class Product extends Model
         });
     }
 
+    public function getFeatureImagePathAttribute()
+    {
+        return asset("storage/images/products/{$this->feature_image}");
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');

@@ -32,6 +32,16 @@ class Category extends Model
         });
     }
 
+    public function getNameAttribute($value)
+    {
+        return Str::ucfirst($value);
+    }
+
+    public function getImagePathAttribute()
+    {
+        return asset("storage/images/categories/{$this->image}");
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class, 'category_id', 'id');

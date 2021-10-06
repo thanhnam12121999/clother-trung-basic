@@ -41,7 +41,7 @@
                                 <select name="category_id" class="form-control">
                                     <option value="">[--Chọn loại sản phẩm--]</option>
                                     @foreach ($categories as $cate)
-                                        <option value="{{ $cate->id }}">{{ Str::ucfirst($cate->name) }}
+                                        <option value="{{ $cate->id }}">{{ $cate->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -111,7 +111,7 @@
                                 <select class="select2" multiple="multiple" name="attribute_product[]" data-placeholder="Chọn thuộc tính sản phẩm" style="width: 100%;">
                                     <option value="">[--Chọn thuộc tính--]</option>
                                     @foreach ($attributeValues as $attrValue)
-                                        <option value="{{ $attrValue->id }}">{{ Str::ucfirst($attrValue->attribute->name) . ' - ' . Str::ucfirst($attrValue->name) }}</option>
+                                        <option value="{{ $attrValue->id }}">{{ $attrValue->attribute->name . ' - ' . $attrValue->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('attribute_product')
@@ -154,9 +154,9 @@
                                                             <td>
                                                                 @foreach ($attr->attributeValues as $key => $attrValue)
                                                                     @if ($key == count($attr->attributeValues) - 1)
-                                                                        <span>{{ Str::ucfirst($attrValue->name) }}</span>
+                                                                        <span>{{ $attrValue->name }}</span>
                                                                     @else
-                                                                        <span>{{ Str::ucfirst($attrValue->name) }},</span>
+                                                                        <span>{{ $attrValue->name }},</span>
                                                                     @endif
                                                                 @endforeach
                                                             </td>
