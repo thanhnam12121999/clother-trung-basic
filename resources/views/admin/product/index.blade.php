@@ -42,7 +42,7 @@
                                         <td class="text-center">{{$product->id}}</td>
                                         <td class="text-center">{{$product->name}}</td>
                                         <td class="text-center">
-                                            <img style="max-height: 200px; width: 100px;" src="{{ $isUrl ? $product->feature_image : asset("storage/images/products/$product->feature_image") }}">
+                                            <img style="max-height: 200px; width: 100px;" src="{{ $isUrl ? $product->feature_image : $product->feature_image_path }}">
                                         </td>
                                         <td class="text-center">{{$product->category->name}}</td>
                                         <td class="text-center">{{$product->summary}}</td>

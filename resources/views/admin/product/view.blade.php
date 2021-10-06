@@ -18,27 +18,27 @@
                 @endphp
                 <div id="slider" class="owl-carousel product-slider">
                     <div class="item">
-                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : asset("storage/images/products/$product->feature_image") }}" />
+                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : $product->feature_image_path }}" />
                     </div>
                     @foreach ($product->images as $productImg)
                     @php
                         $isImageUrlSlider = filter_var($productImg->image, FILTER_VALIDATE_URL);
                     @endphp
                     <div class="item">
-                        <img src="{{ $isImageUrlSlider ? $productImg->image : asset("storage/images/products/$productImg->image") }}" />
+                        <img src="{{ $isImageUrlSlider ? $productImg->image : $productImg->image_path }}" />
                     </div>
                     @endforeach
                 </div>
                 <div id="thumb" class="owl-carousel product-thumb">
                     <div class="item">
-                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : asset("storage/images/products/$product->feature_image") }}" />
+                        <img src="{{ $isFeatureImageUrl ? $product->feature_image : $product->feature_image_path }}" />
                     </div>
                     @foreach ($product->images as $productImg)
                     @php
                         $isImageUrlCarousel = filter_var($productImg->image, FILTER_VALIDATE_URL);
                     @endphp
                     <div class="item">
-                        <img src="{{ $isImageUrlCarousel ? $productImg->image : asset("storage/images/products/$productImg->image") }}" />
+                        <img src="{{ $isImageUrlCarousel ? $productImg->image : $productImg->image_path }}" />
                     </div>
                     @endforeach
                 </div>
