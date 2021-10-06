@@ -48,7 +48,8 @@ class ProductController extends Controller
     {
         $response = $this->productService->store($request);
         if ($response['success']) {
-            return redirect()->route('admin.products.index')->with('success_msg', $response['message']);
+            $product = $response['data']['product'];
+            return redirect()->route('admin.products.variants', ['product' => $product->id])->with('success_msg', $response['message']);
         }
         return redirect()->back()->with('error_msg', $response['message'])->withInput();
 
@@ -73,7 +74,7 @@ class ProductController extends Controller
     {
         $response = $this->productService->update($id, $request);
         if ($response['success']) {
-            return redirect()->route('admin.products.index')->with('success_msg', $response['message']);
+            return redirect()->back()->with('success_msg', $response['message']);
         }
         return redirect()->back()->with('error_msg', $response['message']);
     }

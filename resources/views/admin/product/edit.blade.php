@@ -120,6 +120,11 @@
                             <input name="number" class="form-control" type="number" value="" min="1" step="1" max="1000" disabled>
                         </div> --}}
                         <div class="form-group">
+                            <a href="{{ route('admin.products.variants', ['product' => $product->id]) }}" class="btn btn-info" role="button">
+                                <span class="glyphicon glyphicon-remove do_nos"></span> Cập nhật biến thể sản phẩm
+                            </a>
+                        </div>
+                        <div class="form-group">
                             <label>Thuộc tính sản phẩm</label>
                             <select class="select2" multiple="multiple" name="attribute_product[]" data-placeholder="Chọn thuộc tính sản phẩm" style="width: 100%;">
                                 <option value="">[--Chọn thuộc tính--]</option>
@@ -144,13 +149,12 @@
                                     <span class="glyphicon glyphicon-floppy-save"></span>
                                     Thêm thuộc tính
                                 </button>
-                                @if ($errors->any())
-                                    <div class="alert alert-danger mb-2">
-                                        <ul class="mb-0">
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
+                                @if (session()->has('failed_validate'))
+                                    <div class="alert alert-danger">
+                                        <strong>{{ session('failed_validate') }}</strong>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                 @endif
                                 <div id="table-responsive1" class="table-responsive">
@@ -170,9 +174,13 @@
                                                             {{ $attr->name }}
                                                         </td>
                                                         <td>
-                                                            @foreach ($attr->attributeValues as $attrValue)
-                                                                <span>{{ Str::ucfirst($attrValue->name) }}</span>
-                                                            @endforeach
+                                                            @foreach ($attr->attributeValues as $key => $attrValue)
+                                                                    @if ($key == count($attr->attributeValues) - 1)
+                                                                        <span>{{ Str::ucfirst($attrValue->name) }}</span>
+                                                                    @else
+                                                                        <span>{{ Str::ucfirst($attrValue->name) }},</span>
+                                                                    @endif
+                                                                @endforeach
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-warning btn-xs btn-edit-attr" data-attr="{{ $attr }}">Sửa</button>

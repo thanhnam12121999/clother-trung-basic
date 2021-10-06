@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Repositories\AttributeRepository;
 use App\Repositories\AttributeValueRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProductVariantRepository;
 use App\Traits\HandleImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,17 +20,17 @@ class ProductService extends BaseService
     use HandleImage;
 
     protected $productRepository;
-    protected $attributeRepository;
-    protected $attributeValueRepository;
+    protected $productVariantService;
+    protected $productVariantRepository;
 
     public function __construct(
         ProductRepository $productRepository,
-        AttributeRepository $attributeRepository,
-        AttributeValueRepository $attributeValueRepository
+        ProductVariantService $productVariantService,
+        ProductVariantRepository $productVariantRepository
     ) {
         $this->productRepository = $productRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->attributeValueRepository = $attributeValueRepository;
+        $this->productVariantService = $productVariantService;
+        $this->productVariantRepository = $productVariantRepository;
     }
 
     public function store(Request $request) {
@@ -46,11 +47,16 @@ class ProductService extends BaseService
             $productData['feature_image'] = $newNameOfFeatureImage;
             $product = $this->productRepository->create($productData);
             if ($product->id) {
-                $product->attributes()->sync($request->get('attribute_product', []));
+                $productAttributes = $request->get('attribute_product', []);
+                $product->attributes()->sync($productAttributes);
+                $variants = $this->productVariantService->getProductVariantsValue($productAttributes);
+                $product->variants()->createMany($variants);
                 $product->images()->createMany($listNewNameOfProductImages);
             }
             DB::commit();
-            return $this->sendResponse('Sản phẩm đã được thêm thành công.');
+            return $this->sendResponse('Sản phẩm đã được thêm thành công.', [
+                'product' => $product
+            ]);
         } catch (\Exception $e) {
             Log::error($e);
             DB::rollBack();
@@ -107,7 +113,9 @@ class ProductService extends BaseService
                 $product->images()->createMany($listNewNameOfProductImages);
             }
             $this->productRepository->update($id, $productData);
-            $product->attributes()->sync($request->get('attribute_product', []));
+            $productAttributes = $request->get('attribute_product', []);
+            $product->attributes()->sync($productAttributes);
+            $this->handleUpdateVariants($product, $productAttributes);
             DB::commit();
             return $this->sendResponse('Sản phẩm đã được sửa thành công.');
         } catch (\Exception $e) {
@@ -115,6 +123,40 @@ class ProductService extends BaseService
             DB::rollBack();
         }
         return $this->sendError('Có lỗi xảy ra, vui lòng thử lại.');
+    }
+
+    private function handleUpdateVariants($product, $productAttributes)
+    {
+        $variantsData = $this->productVariantService->getProductVariantsValue($productAttributes);
+        $variants = $this->productVariantRepository->getVariantsByProductId($product->id);
+        $variantsWithId = $variants->mapWithKeys(function ($variantModel) {
+            return [$variantModel->id => $variantModel->variant];
+        });
+
+        $variantsData = collect($variantsData)->map(function ($variant) {
+            return $variant['variant'];
+        });
+
+        $variantsMapping = $variantsWithId->map(function ($variantValue) {
+            return json_encode(json_decode($variantValue, true));
+        });
+
+        $sameVariants = array_intersect($variantsData->all(), $variantsMapping->all());
+        $variantsDataFinal = $variantsData->filter(function ($variantValue) use ($sameVariants) {
+            return !in_array($variantValue, $sameVariants);
+        })->map(function ($variantValue) {
+            return ['variant' => $variantValue];
+        });
+
+        $variantsDelete = $variantsMapping->filter(function ($variantValue) use ($sameVariants) {
+            return !in_array($variantValue, $sameVariants);
+        });
+
+        $product->variants()->createMany($variantsDataFinal->toArray());
+
+        $variantsDelete->each(function ($variantValue, $variantId) {
+            $this->productVariantRepository->delete($variantId);
+        });
     }
 
     public function delete($id)
@@ -151,64 +193,5 @@ class ProductService extends BaseService
             Log::error($e);
         }
         return false;
-    }
-
-    public function createProductAttribute(array $data)
-    {
-        try {
-            DB::beginTransaction();
-            $attribute = $this->attributeRepository->create([
-                'name' => $data['attr_name']
-            ]);
-            if ($attribute->id) {
-                $attrValuesData = [];
-                foreach ($data['attribute_values'] as $attrValue) {
-                    array_push($attrValuesData, ['name' => $attrValue]);
-                }
-                $attribute->attributeValues()->createMany($attrValuesData);
-            }
-            DB::commit();
-            return $this->sendResponse('Tạo thuộc tính thành công');
-        } catch (\Exception $e) {
-            Log::error($e);
-            DB::rollBack();
-        }
-        return $this->sendError('Tạo thuộc tính thất bại');
-    }
-
-    public function updateProductAttribute(array $data, $attribute)
-    {
-        try {
-            DB::beginTransaction();
-            tap($attribute)->update([
-                'name' => $data['attr_name']
-            ]);
-            if (!empty($data['attribute_values'])) {
-                foreach ($data['attribute_values'] as $id => $attrValue) {
-                    $this->attributeValueRepository->update($id, [
-                        'name' => $attrValue
-                    ]);
-                }
-            }
-            if (!empty($data['new_attribute_values'])) {
-                $attrValuesData = [];
-                foreach ($data['new_attribute_values'] as $attrValue) {
-                    array_push($attrValuesData, ['name' => $attrValue]);
-                }
-                $attribute->attributeValues()->createMany($attrValuesData);
-            }
-            $attrValueIdsDelete = json_decode($data['attribute_values_delete']);
-            if (!empty($attrValueIdsDelete)) {
-                foreach ($attrValueIdsDelete as $id) {
-                    $this->attributeValueRepository->delete($id);
-                }
-            }
-            DB::commit();
-            return $this->sendResponse('Sửa thuộc tính thành công');
-        } catch (\Exception $e) {
-            Log::error($e);
-            DB::rollBack();
-        }
-        return $this->sendError('Sửa thuộc tính thất bại');
     }
 }
