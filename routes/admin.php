@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ManagerController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\SlideController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +43,8 @@ Route::prefix('product')->group(function() {
     Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('products.delete');
 
     Route::resource('attributes', AttributeController::class)->only(['store', 'update', 'destroy']);
+    Route::prefix('variants')->group(function () {
+        Route::get('/{product}', [ProductVariantController::class, 'getVariantsOfProduct'])->name('products.variants');
+        Route::put('/{product}', [ProductVariantController::class, 'updateProductVariants'])->name('products.variants.update');
+    });
 });

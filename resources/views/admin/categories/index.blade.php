@@ -115,7 +115,9 @@
                     confirmButtonText: 'Xóa',
                     cancelButtonText: 'Hủy'
                 }).then((result) => {
-                    $(this).parent().submit()
+                    if (result.isConfirmed) {
+                        $(this).parent().submit()
+                    }
                 })
             });
         });

@@ -127,13 +127,12 @@
                                         <span class="glyphicon glyphicon-floppy-save"></span>
                                         Thêm thuộc tính
                                     </button>
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger mb-2">
-                                            <ul class="mb-0">
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
+                                    @if (session()->has('failed_validate'))
+                                        <div class="alert alert-danger">
+                                            <strong>{{ session('failed_validate') }}</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
                                     @endif
                                     <div id="table-responsive1" class="table-responsive">
@@ -153,8 +152,12 @@
                                                                 {{ $attr->name }}
                                                             </td>
                                                             <td>
-                                                                @foreach ($attr->attributeValues as $attrValue)
-                                                                    <span>{{ Str::ucfirst($attrValue->name) }}</span>
+                                                                @foreach ($attr->attributeValues as $key => $attrValue)
+                                                                    @if ($key == count($attr->attributeValues) - 1)
+                                                                        <span>{{ Str::ucfirst($attrValue->name) }}</span>
+                                                                    @else
+                                                                        <span>{{ Str::ucfirst($attrValue->name) }},</span>
+                                                                    @endif
                                                                 @endforeach
                                                             </td>
                                                             <td>
