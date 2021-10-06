@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class StoreAttributeRequest extends BaseRequest
+class UpdateAttributeRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,10 @@ class StoreAttributeRequest extends BaseRequest
     {
         return [
             'attr_name' => 'required',
-            'attribute_values' => 'required|array|min:1',
-            'attribute_values.*' => 'required'
+            'attribute_values' => 'required|array',
+            'attribute_values.*' => 'required',
+            'new_attribute_values' => 'array',
+            'new_attribute_values.*' => 'required'
         ];
     }
 
@@ -32,7 +34,8 @@ class StoreAttributeRequest extends BaseRequest
     {
         return [
             'attr_name.required' => 'Tên thuộc tính không được trống',
-            'attribute_values.*.required' => 'Giá trị thuộc tính không được trống'
+            'attribute_values.*.required' => 'Giá trị thuộc tính không được trống',
+            'new_attribute_values.*.required' => 'Giá trị thuộc tính không được trống'
         ];
     }
 }

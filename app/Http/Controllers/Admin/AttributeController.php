@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAttributeRequest;
+use App\Http\Requests\UpdateAttributeRequest;
 use App\Models\Attribute;
-use App\Services\ProductService;
+use App\Services\ProductAttributeService;
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
 {
-    protected $productService;
+    protected $productAttributeService;
 
-    public function __construct(ProductService $productService)
+    public function __construct(ProductAttributeService $productAttributeService)
     {
-        $this->productService = $productService;
+        $this->productAttributeService = $productAttributeService;
     }
 
     /**
@@ -25,7 +26,11 @@ class AttributeController extends Controller
      */
     public function store(StoreAttributeRequest $request)
     {
-        $response = $this->productService->createProductAttribute($request->validated());
+        if (!empty($request->errors)) {
+            $errors = $request->errors->messages();
+            return redirect()->back()->with('failed_validate', 'Đảm bảo tên thuộc tính và giá trị không được trống');
+        }
+        $response = $this->productAttributeService->createAttribute($request->validated());
         if ($response['success']) {
             return redirect()->back()->with('success_msg', $response['message']);
         }
@@ -39,9 +44,12 @@ class AttributeController extends Controller
      * @param  Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attribute $attribute)
+    public function update(UpdateAttributeRequest $request, Attribute $attribute)
     {
-        $response = $this->productService->updateProductAttribute($request->all(), $attribute);
+        if (!empty($request->errors)) {
+            return redirect()->back()->with('failed_validate', 'Đảm bảo tên thuộc tính và giá trị không được trống');
+        }
+        $response = $this->productAttributeService->updateAttribute($request, $attribute);
         if ($response['success']) {
             return redirect()->back()->with('success_msg', $response['message']);
         }

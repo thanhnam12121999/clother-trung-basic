@@ -15,4 +15,9 @@ class AttributeValueRepository extends BaseRepository
     {
         return $this->model->orderBy('attribute_id', 'ASC')->get();
     }
+
+    public function getAttributeValuesOfProduct($productAttributes)
+    {
+        return $this->model->whereIn('id', $productAttributes)->get();
+    }
 }
