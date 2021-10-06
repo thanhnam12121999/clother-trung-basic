@@ -39,6 +39,23 @@ if (!function_exists('getProductImageInCart')) {
     function getProductImageInCart($itemId)
     {
         $product = \App\Models\Product::where('slug', $itemId)->first();
-        return $product->feature_image;
+        return $product->feature_image ?? null;
+    }
+}
+
+if (!function_exists('getCombinations')) {
+    function getCombinations($arrays)
+    {
+        $result = array(array());
+        foreach ($arrays as $property => $property_values) {
+            $tmp = [];
+            foreach ($result as $result_item) {
+                foreach ($property_values as $property_value) {
+                    $tmp[] = array_merge($result_item, array($property => $property_value));
+                }
+            }
+            $result = $tmp;
+        }
+        return $result;
     }
 }
