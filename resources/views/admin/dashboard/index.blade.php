@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('active-dashboard', 'active')
 @section('breadcrumb', 'Bảng Điều Khiển')
 @section('contents')
     <!-- Info boxes -->

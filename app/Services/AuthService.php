@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Manager;
 use App\Models\Member;
 use App\Repositories\AccountRepository;
 use App\Repositories\MemberRepository;
@@ -61,5 +62,26 @@ class AuthService extends BaseService
             DB::rollBack();
         }
         return $this->sendError('Đăng ký thất bại', Response::HTTP_BAD_REQUEST);
+    }
+
+    public function doLoginAdmin(array $data)
+    {
+        try {
+            DB::beginTransaction();
+            $fieldType = filter_var($data['username'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+            $credentials = [
+                $fieldType => $data['username'],
+                'password' => $data['password'],
+                'accountable_type' => Manager::class
+            ];
+            $isLogin = Auth::guard('accounts')->attempt($credentials);
+            if ($isLogin) {
+                return $this->sendResponse('Đăng nhập thành công');
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+        return $this->sendError('Đăng nhập thất bại', Response::HTTP_BAD_REQUEST);
     }
 }

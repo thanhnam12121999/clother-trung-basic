@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductImage extends Model
 {
     use HasFactory;
-    // use SoftDeletes;
+    use SoftDeletes;
 
     protected $table = "product_images";
     protected $fillable = [
@@ -21,6 +21,11 @@ class ProductImage extends Model
     // {
     //     return $this->belongsTo(ProductVariant::class, 'product_variant_id', 'id');
     // }
+
+    public function getImagePathAttribute()
+    {
+        return asset("storage/images/products/{$this->image}");
+    }
 
     public function product()
     {
