@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateManagerAccountRequest extends FormRequest
+class StoreManagerAccountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,13 @@ class UpdateManagerAccountRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:accounts,email,'.$this->id,
-            'username' => 'required|unique:accounts,username,'.$this->id,
+            'email' => 'required|email|unique:accounts,email',
+            'username' => 'required|unique:accounts,username',
             'number_phone' => 'numeric',
             'gender' => 'boolean',
             'date_of_birth' => 'date_format:Y-m-d|before:today|nullable',
             'avatar' => 'image',
+            'role' => 'required|string',
         ];
     }
 
@@ -52,7 +53,9 @@ class UpdateManagerAccountRequest extends FormRequest
             'gender.boolean' => 'Chỉ được giá trị chọn nam hoặc nữ',
             'date_of_birth.date_format' => 'Sai định dạng',
             'date_of_birth.before' => 'Cần nhập đúng ngày sinh',
-            'avatar.image' => 'Sai định dạng ảnh .'
+            'avatar.image' => 'Sai định dạng ảnh .',
+            'role.required' => 'Bạn cần chọn quyền',
+            'role.string' => 'Vui lòng chọn đúng dữ liệu',
         ];
     }
 }

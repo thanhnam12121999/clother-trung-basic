@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreManagerAccountRequest;
 use App\Http\Requests\UpdateManagerAccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Repositories\AccountRepository;
@@ -32,6 +33,21 @@ class ManagerController extends Controller
         return view('admin.manager.index', compact('listStaffs'));
     }
 
+    public function create()
+    {
+        return view('admin.manager.create');
+    }
+
+    public function store(StoreManagerAccountRequest $request)
+    {
+        
+        $response = $this->managerService->storeAccountOfManager($request);
+        if ($response['success']) {
+            return redirect()->route('admin.manager.index')->with('success_msg', $response['message']);
+        }
+        return redirect()->back()->with('error_msg', $response['message']);
+    }
+
     public function getFormEdit(int $id)
     {
         $managers = $this->managerRepository->getAll();
@@ -45,7 +61,7 @@ class ManagerController extends Controller
         if ($response['success']) {
             return redirect()->route('admin.manager.index')->with('success_msg', $response['message']);
         }
-        return redirect()->back()->with('error_msg','adad');
+        return redirect()->back()->with('error_msg', $response['message']);
     }
 
     public function destroy(int $id)

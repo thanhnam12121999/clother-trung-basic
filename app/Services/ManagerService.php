@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Account;
+use App\Models\Manager;
 use App\Repositories\AccountRepository;
 use App\Repositories\ManagerRepository;
 use App\Traits\HandleImage;
@@ -37,15 +38,15 @@ class ManagerService extends BaseService
                 $avatarAccount = $request->file('avatar');
                 $newNameImage = $this->createImage($avatarAccount, 'accounts');
                 if (!$newNameImage) {
-                    return $this->sendError('Lỗi thêm ảnh sản phẩm, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
+                    return $this->sendError('Lỗi thêm ảnh đại diện, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
                 }
                 $accountsData['avatar'] = $newNameImage;
             }
             $this->accountRepository->update($id, $accountsData);
             DB::commit();
             return $this->sendResponse('Sửa thành công.');
-        } catch (\Throwable $th) {
-            Log::error($th);
+        } catch (\Exception $e) {
+            Log::error($e);
             DB::rollBack();
         }
         return $this->sendError('Sửa thất bại');
@@ -71,5 +72,37 @@ class ManagerService extends BaseService
             DB::rollBack();
         }
         return $this->sendError('Xóa thất bại');
+    }
+
+    public function storeAccountOfManager($request)
+    {
+        try {
+            DB::beginTransaction();
+            $manager = '';
+            $accountsData = $request->only(['name', 'email', 'username', 'number_phone', 'gender', 'date_of_birth']);
+            $avatarAccount = $request->file('avatar');
+            $newNameImage = $this->createImage($avatarAccount, 'accounts');
+            if (!$newNameImage) {
+                return $this->sendError('Lỗi thêm ảnh đại diện, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
+            }
+            $accountsData['avatar'] = $newNameImage;
+            $managerCheckExistRole = $this->managerRepository->getManagerByRole($request->role);
+            if (!empty($managerCheckExistRole[0])) {
+                $manager = $managerCheckExistRole[0];
+            } else {
+                $manager = $this->managerRepository->create(['role' => $request->role]);
+            }
+            if($manager) {
+                $accountsData['accountable_id'] = $manager->id;
+                $accountsData['accountable_type'] = Manager::class;
+            }
+            $this->accountRepository->create($accountsData);
+            DB::commit();
+            return $this->sendResponse('Thêm thành công.');
+        } catch (\Throwable $th) {
+            Log::error($th);
+            DB::rollBack();
+        }
+        return $this->sendError('Thêm thất bại');
     }
 }

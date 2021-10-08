@@ -2,11 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Manager;
 use Closure;
 use Illuminate\Http\Request;
 
-class PolicyOfStaff
+class AuthLoginAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,10 +16,10 @@ class PolicyOfStaff
      */
     public function handle(Request $request, Closure $next)
     {
-        if (getAccountInfo()->role == (Manager::NAME_ROLE_ADMIN) || getAccountInfo()->role == (Manager::NAME_ROLE_MANAGER)) {
+        if (isManagerLogged()) {
             return $next($request);
         } else {
-            abort(403);
+            return redirect()->route('admin.login-page');
         }
     }
 }

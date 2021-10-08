@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Account;
+use App\Models\Manager;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class PolicyOfManager
      */
     public function handle(Request $request, Closure $next)
     {
-        if (getAccountInfo()->role == Account::NAME_ROLE_ADMIN) {
+        if (getAccountInfo()->role == Manager::NAME_ROLE_ADMIN) {
             return $next($request);
         } else {
             abort(403);

@@ -101,11 +101,6 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            {{-- <div class="form-group">
-                                <label>Giá bán</label>
-                                <input name="price_buy" class="form-control" type="number" value="0" min="0" step="1" max="1000000000">
-                                <div class="error" id="password_error"></div>
-                            </div> --}}
                             <div class="form-group">
                                 <label>Thuộc tính sản phẩm</label>
                                 <select class="select2" multiple="multiple" name="attribute_product[]" data-placeholder="Chọn thuộc tính sản phẩm" style="width: 100%;">

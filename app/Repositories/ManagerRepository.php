@@ -15,4 +15,10 @@ class ManagerRepository extends BaseRepository
     {
         return $this->all();
     }
+
+    public function getManagerByRole($role)
+    {
+        return $this->model->where('role', 'LIKE', '%' . $role . '%')->get();
+        
+    }
 } 

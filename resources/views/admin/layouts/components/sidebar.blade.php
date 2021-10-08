@@ -54,7 +54,7 @@
             <a href="" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Quản Lý Đon Hàng
+                Quản Lý Đơn Hàng
               </p>
             </a>
           </li>
@@ -67,7 +67,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.manager.index') }}" class="nav-link">
+            <a href="{{ route('admin.manager.index') }}" class="nav-link @yield('active-manager')">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Quản Lý Nhân Viên
@@ -79,6 +79,14 @@
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Quản Lý Thành Viên
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Quản Lý Banner
               </p>
             </a>
           </li>
