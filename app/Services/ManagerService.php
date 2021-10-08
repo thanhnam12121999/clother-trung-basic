@@ -38,7 +38,7 @@ class ManagerService extends BaseService
                 $avatarAccount = $request->file('avatar');
                 $newNameImage = $this->createImage($avatarAccount, 'accounts');
                 if (!$newNameImage) {
-                    return $this->sendError('Lỗi thêm ảnh tài khoản, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
+                    return $this->sendError('Lỗi thêm ảnh đại diện, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
                 }
                 $accountsData['avatar'] = $newNameImage;
             }
@@ -83,7 +83,7 @@ class ManagerService extends BaseService
             $avatarAccount = $request->file('avatar');
             $newNameImage = $this->createImage($avatarAccount, 'accounts');
             if (!$newNameImage) {
-                return $this->sendError('Lỗi thêm ảnh tài khoản, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
+                return $this->sendError('Lỗi thêm ảnh đại diện, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
             }
             $accountsData['avatar'] = $newNameImage;
             $managerCheckExistRole = $this->managerRepository->getManagerByRole($request->role);

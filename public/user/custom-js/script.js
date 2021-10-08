@@ -1,3 +1,11 @@
+'use strict';
+
 $(function () {
-  $('[data-toggle="popover"]').popover()
+    window.BASE_URL = $('base').attr('href')
+    $('[data-toggle="popover"]').popover()
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 })

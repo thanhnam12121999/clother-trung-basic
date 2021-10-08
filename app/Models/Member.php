@@ -20,4 +20,9 @@ class Member extends Model
     {
         return $this->morphOne(Account::class, 'accountable');
     }
+
+    public function cart()
+    {
+        return $this->hasOne(ShoppingCart::class, 'identifier', 'id');
+    }
 }

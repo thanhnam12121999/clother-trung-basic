@@ -35,8 +35,7 @@
                                         <tbody>
                                             <form id="fixx" action="">
                                                 @foreach ($listStaffs as $staff)
-                                                @if (!empty($staff->accountable))
-                                                @if ($staff->accountable->role == \App\Models\Manager::NAME_ROLE_STAFF)
+                                                @if (!empty($staff->accountable) && $staff->accountable->role == \App\Models\Manager::NAME_ROLE_STAFF)
                                                 <tr id="id-product">
                                                     <td class="text-center">{{$staff->id}}</td>
                                                     <td class="text-center">
@@ -57,7 +56,6 @@
                                                         @endif
                                                     </td>
                                                 </tr>
-                                                @endif   
                                                 @endif
                                                 @endforeach
                                             </form>
