@@ -23,7 +23,6 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this->category);
         return [
             'name' => 'required|unique:categories,name,' . $this->category->id,
             'image' => 'nullable|image',
