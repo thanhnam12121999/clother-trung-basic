@@ -3,6 +3,7 @@
     @include('admin.components.css.datatables')
 @endsection
 @section('breadcrumb', 'Quản Lý Nhân Viên')
+@section('active-manager', 'active')
 @section('contents')
 <div class="breadcrumb">
     <div class="btn-add">

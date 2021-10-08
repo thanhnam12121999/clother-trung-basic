@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('breadcrumb', 'Chỉnh Sửa nhân viên')
+@section('active-manager', 'active')
 @section('contents')
 <form action="{{ route('admin.managers.update', $account->id) }}" enctype="multipart/form-data" method="POST" accept-charset="utf-8">
     @csrf

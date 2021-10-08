@@ -35,6 +35,13 @@ if (!function_exists('isMemberLogged')) {
     }
 }
 
+if (!function_exists('isManagerLogged')) {
+    function isManagerLogged()
+    {
+        return authCheck() && isAccountType(\App\Models\Manager::class);
+    }
+}
+
 if (!function_exists('getCart')) {
     function getCart()
     {

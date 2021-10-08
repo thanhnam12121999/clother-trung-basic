@@ -16,7 +16,7 @@ class AuthLoginAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (getLoggedInUser()) {
+        if (isManagerLogged()) {
             return $next($request);
         } else {
             return redirect()->route('admin.login-page');

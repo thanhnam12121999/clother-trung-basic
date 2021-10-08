@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('breadcrumb', 'Thêm nhân viên')
+@section('active-manager', 'active')
 @section('contents')
 <form action="{{ route('admin.managers.create') }}" enctype="multipart/form-data" method="POST" accept-charset="utf-8">
     @csrf
@@ -54,7 +55,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Ảnh đại diện<span class = "text-danger">(*)</span></label>
+                                    <label>Ảnh đại diện</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="avatar" name="avatar">
@@ -67,7 +68,7 @@
                                 @enderror
                                 <div class="form-group">
                                     <label>Quyền<span class = "text-danger">(*)</span></label>
-                                    <select class="select2" multiple="multiple" data-placeholder="Chọn thuộc tính sản phẩm" name="role">
+                                    <select class="form-control" data-placeholder="Chọn quyền" name="role">
                                         <option value="">Chọn quyền</option>
                                         @if (getAccountInfo()->role == (\App\Models\Manager::NAME_ROLE_ADMIN))
                                             <option value="{{(\App\Models\Manager::NAME_ROLE_ADMIN)}}">{{(\App\Models\Manager::NAME_ROLE_ADMIN)}}</option>
@@ -82,7 +83,7 @@
                                 <p class="text-danger">{{ $message }}</p> 
                                 @enderror
                                 <div class="form-group">
-                                    <label>Giới tính<span class = "text-danger">(*)</span></label>
+                                    <label>Giới tính</label>
                                     <select name="gender" class="form-control">
                                         <option value="0">Nam</option>
                                         <option value="1">Nữ</option>
@@ -113,6 +114,5 @@
 </form>
 @endsection
 @section('custom-script')
-    <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 @endsection

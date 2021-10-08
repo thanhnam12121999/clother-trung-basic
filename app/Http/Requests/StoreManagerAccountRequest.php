@@ -28,9 +28,9 @@ class StoreManagerAccountRequest extends FormRequest
             'email' => 'required|email|unique:accounts,email',
             'username' => 'required|unique:accounts,username',
             'number_phone' => 'numeric',
-            'gender' => 'required|boolean',
+            'gender' => 'boolean',
             'date_of_birth' => 'date_format:Y-m-d|before:today|nullable',
-            'avatar' => 'required|image',
+            'avatar' => 'image',
             'role' => 'required|string',
         ];
     }
@@ -50,12 +50,10 @@ class StoreManagerAccountRequest extends FormRequest
             'username.required' => 'Bạn phải nhập tên đăng nhập',
             'username.unique' => 'Tên đăng nhập đã được sử dụng',
             'number_phone.numeric' => 'Chỉ nhập số',
-            'gender.required' => 'Bạn cần chọn giới tính',
             'gender.boolean' => 'Chỉ được giá trị chọn nam hoặc nữ',
             'date_of_birth.date_format' => 'Sai định dạng',
             'date_of_birth.before' => 'Cần nhập đúng ngày sinh',
             'avatar.image' => 'Sai định dạng ảnh .',
-            'avatar.required' => 'Bạn cần chọn ảnh',
             'role.required' => 'Bạn cần chọn quyền',
             'role.string' => 'Vui lòng chọn đúng dữ liệu',
         ];
