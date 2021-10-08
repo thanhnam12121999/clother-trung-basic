@@ -2,13 +2,18 @@
 
 namespace App\Services;
 
+use App\Models\Product;
+use App\Repositories\AttributeRepository;
+use App\Repositories\AttributeValueRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProductVariantRepository;
 use App\Traits\HandleImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ProductService extends BaseService
 {
