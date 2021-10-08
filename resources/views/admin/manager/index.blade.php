@@ -35,31 +35,37 @@
                                         </thead>
                                         <tbody>
                                             <form id="fixx" action="">
-                                                {{-- @foreach ($students as $student) --}}
+                                                @foreach ($listStaffs as $staff)
+                                                @if ($staff->accountable->role == \App\Models\Account::NAME_ROLE_STAFF)
                                                 <tr id="id-product">
-                                                    <td class="text-center">id</td>
-                                                    <td style="font-size: 16px;">name_student</td>
-                                                    <td style="font-size: 16px;">name </td>
-                                                    <td style="font-size: 16px;">test </td>
-                                                    <td style="font-size: 16px;">test </td>
-                                                    <td class="text-center">instructors</td>
+                                                    <td class="text-center">{{$staff->id}}</td>
+                                                    <td class="text-center">
+                                                        <img style="height: 50px;width: 70px;" src="{{ asset('admin/accounts/images/'.$staff->avatar) }}" alt="">
+                                                    </td>
+                                                    <td class="text-center">{{$staff->name}} </td>
+                                                    <td class="text-center">{{$staff->accountable->role}}</td>
+                                                    <td class="text-center">{{$staff->email}}</td>
+                                                    <td class="text-center">{{$staff->phone_number}}</td>
                                                     <td class="text-center">
                                                         {{-- @if ($student->status == 1) --}}
                                                         <i style="color: green" class="fa fa-check" aria-hidden="true"></i>
                                                         {{-- @else
                                                         <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
-                                                        @endif --}}
-                                                    </td>
+                                                        @endif
+                                                    </td> --}}
                                                     <td class="text-center">
-                                                        <button type="button" url-update="update"
+                                                        <a href="{{ route('admin.managers.edit', $staff->id) }}" type="button" url-update="update"
                                                             class="btn btn-success btn-xs btn-edit-product"><i class="fa fa-plus"
-                                                                aria-hidden="true"></i>Sửa</button>                                           
-                                                        <button type="button" data-url="delete"
-                                                        class="btn btn-danger btn-xs  btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
-                                                        Xóa</button>
+                                                                aria-hidden="true"></i>Sửa</a>                                           
+                                                        @if (getAccountInfo()->role == (\App\Models\Account::NAME_ROLE_ADMIN))
+                                                        <a href="{{ route('admin.managers.delete', $staff->id) }}" type="button" data-url="delete"
+                                                            class="btn btn-danger btn-xs  btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                            Xóa</a>
+                                                        @endif
                                                     </td>
                                                 </tr>
-                                                {{-- @endforeach --}}
+                                                @endif
+                                                @endforeach
                                             </form>
                                         </tbody>
                                     </table>

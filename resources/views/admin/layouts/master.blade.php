@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin</title>
+    <base href="{{ asset('') }}">
 
     @include('admin.layouts.components.stylesheet')
 </head>
@@ -27,17 +28,17 @@
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
-                    @if(session()->has('success'))
+                    @if(session()->has('success_msg'))
                     <div class="alert alert-success">
-                        <strong>{{ session('success') }}</strong>
+                        <strong>{{ session('success_msg') }}</strong>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     @endif
-                    @if(session()->has('error'))
+                    @if(session()->has('error_msg'))
                         <div class="alert alert-danger">
-                            <strong>{{ session('error') }}</strong>
+                            <strong>{{ session('error_msg') }}</strong>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

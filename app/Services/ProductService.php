@@ -2,60 +2,61 @@
 
 namespace App\Services;
 
-use App\Http\Requests\ProductRequest;
-use App\Models\Product;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProductVariantRepository;
 use App\Traits\HandleImage;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class ProductService extends BaseService
 {
     use HandleImage;
 
     protected $productRepository;
+    protected $productVariantService;
+    protected $productVariantRepository;
 
-    public function __construct(ProductRepository $productRepository)
-    {
+    public function __construct(
+        ProductRepository $productRepository,
+        ProductVariantService $productVariantService,
+        ProductVariantRepository $productVariantRepository
+    ) {
         $this->productRepository = $productRepository;
+        $this->productVariantService = $productVariantService;
+        $this->productVariantRepository = $productVariantRepository;
     }
 
-    public function store($request) {
+    public function store(Request $request) {
         try {
             DB::beginTransaction();
-            $dataImage = $this->creatFileImage($request, 'feature_image');
-            $dataImages = $this->creatMutilFileImage($request, 'image_list');
-            if (!$dataImage || !$dataImages) {
-                return $this->sendError('Lỗi thêm hình ảnh, thêm sản phẩm thất bại.');
+            $productData = $request->only(['name', 'category_id', 'summary', 'detail', 'description', 'status']);
+            $featureImage = $request->file('feature_image');
+            $productImages = $request->file('image_list');
+            $newNameOfFeatureImage = $this->createImage($featureImage, 'products');
+            $listNewNameOfProductImages = $this->createImage($productImages, 'products', true);
+            if (!$newNameOfFeatureImage || !$listNewNameOfProductImages) {
+                return $this->sendError('Lỗi thêm ảnh sản phẩm, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
             }
-            $dataProduct = $this->fillDataProduct($request, $dataImage['nameImage']);
-            $product = $this->productRepository->create($dataProduct);
-            $productImageRelation = $product->images()->createMany($dataImages['listNameImg']);
-            // save image file to folder
-            if (!empty($product) && !empty($productImageRelation)) {
-                $this->moveImage($dataImage['dataImage'], $dataImage['nameImage']);
-                $this->moveMutipleImages($dataImages);
+            $productData['feature_image'] = $newNameOfFeatureImage;
+            $product = $this->productRepository->create($productData);
+            if ($product->id) {
+                $productAttributes = $request->get('attribute_product', []);
+                $product->attributes()->sync($productAttributes);
+                $variants = $this->productVariantService->getProductVariantsValue($productAttributes);
+                $product->variants()->createMany($variants);
+                $product->images()->createMany($listNewNameOfProductImages);
             }
             DB::commit();
-            return $this->sendResponse('Sản phẩm đã được thêm thành công.');
-        } catch (\Throwable $th) {
+            return $this->sendResponse('Sản phẩm đã được thêm thành công.', [
+                'product' => $product
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e);
             DB::rollBack();
         }
         return $this->sendError('Có lỗi xảy ra, vui lòng thử lại');
-    }
-
-    public function fillDataProduct($request, $newNameImg) {
-        return [
-            'category_id' => $request->cate_id,
-            'name' => $request->name,
-            'code' => Str::random(10),
-            'feature_image' => $newNameImg,
-            'summary' => $request->summary,
-            'detail' => $request->sort_desc,
-            'description' => $request->detail,
-            'status' => $request->status,
-        ];
     }
 
     public function getAll()
@@ -73,62 +74,119 @@ class ProductService extends BaseService
         return $this->productRepository->getById($id);
     }
 
-    public function update($id, $request)
+    public function update($id, Request $request)
     {
         try {
             DB::beginTransaction();
             $product = $this->productRepository->find($id);
+            $productData = $request->only(['name', 'category_id', 'summary', 'detail', 'description', 'status']);
             $oldImagesRelation = $product->images;
-            $newImage = '';
-            $dataUpdate = [
-                'name' => $request->name,
-                'category_id' => $request->cate_id,
-                'summary' => $request->summary,
-                'description' => $request->description,
-                'detail' => $request->detail,
-                'status' => $request->status,
-            ];
-            // create new avatar if have new avatar product
-            if ($request->has('feature_image')) {
-                $newImage = $this->creatFileImage($request, 'feature_image');
-                $dataUpdate['feature_image'] = $newImage['nameImage'];
+
+            if ($request->hasFile('feature_image')) {
+                $response = $this->deleteImage($product->feature_image, 'products');
+                if (!$response) {
+                    throw new \Exception;
+                }
+                $featureImage = $request->file('feature_image');
+                $newNameOfFeatureImage = $this->createImage($featureImage, 'products');
+                if (!$newNameOfFeatureImage) {
+                    return $this->sendError('Lỗi thêm ảnh sản phẩm, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
+                }
+                $productData['feature_image'] = $newNameOfFeatureImage;
             }
-            // create new images if have new image product
-            if ($request->has('image_list')) { 
-                $this->productRepository->deleteImagesRelation($id);
-                $listImages = $this->creatMutilFileImage($request, 'image_list');
-                $newImagesRelation = $product->images()->createMany($listImages['listNameImg']);
-                if(!$newImagesRelation) { return false ;}
-                $this->moveMutipleImages($listImages);
-                $this->deleteMutilImage($oldImagesRelation);
+            if ($request->hasFile('image_list')) {
+                $response = $this->deleteMultipleImages($oldImagesRelation, 'products');
+                if (!$response) {
+                    throw new \Exception;
+                }
+                $productImages = $request->file('image_list');
+                $listNewNameOfProductImages = $this->createImage($productImages, 'products', true);
+                if (!$listNewNameOfProductImages) {
+                    return $this->sendError('Lỗi thêm ảnh sản phẩm, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
+                }
+                $product->images()->delete();
+                $product->images()->createMany($listNewNameOfProductImages);
             }
-            $productUpdate = $this->productRepository->update($id, $dataUpdate);
-            //delete avatar if have new avatar
-            if (!empty($productUpdate) && !empty($newImage)) {
-                $this->deleteImage($product->feature_image);
-                $this->moveImage($newImage['dataImage'], $newImage['nameImage']);
-            }
+            $this->productRepository->update($id, $productData);
+            $productAttributes = $request->get('attribute_product', []);
+            $product->attributes()->sync($productAttributes);
+            $this->handleUpdateVariants($product, $productAttributes);
             DB::commit();
             return $this->sendResponse('Sản phẩm đã được sửa thành công.');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            Log::error($e);
             DB::rollBack();
         }
-        return $this->sendError('Sửa thất bại.');
+        return $this->sendError('Có lỗi xảy ra, vui lòng thử lại.');
+    }
+
+    private function handleUpdateVariants($product, $productAttributes)
+    {
+        $variantsData = $this->productVariantService->getProductVariantsValue($productAttributes);
+        $variants = $this->productVariantRepository->getVariantsByProductId($product->id);
+        $variantsWithId = $variants->mapWithKeys(function ($variantModel) {
+            return [$variantModel->id => $variantModel->variant];
+        });
+
+        $variantsData = collect($variantsData)->map(function ($variant) {
+            return $variant['variant'];
+        });
+
+        $variantsMapping = $variantsWithId->map(function ($variantValue) {
+            return json_encode(json_decode($variantValue, true));
+        });
+
+        $sameVariants = array_intersect($variantsData->all(), $variantsMapping->all());
+        $variantsDataFinal = $variantsData->filter(function ($variantValue) use ($sameVariants) {
+            return !in_array($variantValue, $sameVariants);
+        })->map(function ($variantValue) {
+            return ['variant' => $variantValue];
+        });
+
+        $variantsDelete = $variantsMapping->filter(function ($variantValue) use ($sameVariants) {
+            return !in_array($variantValue, $sameVariants);
+        });
+
+        $product->variants()->createMany($variantsDataFinal->toArray());
+
+        $variantsDelete->each(function ($variantValue, $variantId) {
+            $this->productVariantRepository->delete($variantId);
+        });
     }
 
     public function delete($id)
     {
-        $product = $this->productRepository->find($id);
-        $this->deleteMutilImage($product->images);
-        $this->productRepository->deleteImagesRelation($id);
-        $this->deleteProduct($id, $product);
-        return $this->sendResponse('Xóa sản phẩm thành công.');
+        try {
+            DB::beginTransaction();
+            $product = $this->productRepository->find($id);
+            $featureImage = $product->feature_image;
+            $productImages = $product->images;
+            $isDelete = $this->deleteImage($featureImage, 'products');
+            $isDeleteMultiple = $this->deleteMultipleImages($productImages);
+            if (!$isDelete || !$isDeleteMultiple) {
+                throw new \Exception;
+            }
+            $product->images()->delete();
+            $product->delete();
+            DB::commit();
+            return $this->sendResponse('Xóa sản phẩm thành công');
+        } catch (\Exception $e) {
+            Log::error($e);
+            DB::rollBack();
+        }
+        return $this->sendError('Có lỗi xảy ra, vui lòng thử lại.');
     }
 
-    public function deleteProduct($id, $product)
+    public function deleteMultipleProducts($products)
     {
-        $this->deleteImage($product->feature_image);
-        $this->productRepository->delete($id);
-        return true;
+        try {
+            foreach ($products as $product) {
+                $this->delete($product->id);
+            }
+            return true;
+        } catch (\Exception $e) {
+            Log::error($e);
+        }
+        return false;
     }
 }
