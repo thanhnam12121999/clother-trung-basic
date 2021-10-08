@@ -14,6 +14,9 @@ class Account extends Authenticatable
 
     protected $table = "accounts";
     protected $guarded = "accounts";
+    CONST NAME_ROLE_MANAGER = 'manager';
+    CONST NAME_ROLE_ADMIN = 'admin';
+    CONST NAME_ROLE_STAFF = 'staff';
 
     protected $fillable = [
         'email',
