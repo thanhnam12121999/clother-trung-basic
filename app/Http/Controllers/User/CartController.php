@@ -29,12 +29,14 @@ class CartController extends Controller
     public function add($slug, AddCartRequest $request)
     {
         if (!empty($request->errors)) {
-            if (array_key_exists('quantity', $request->errors->messages())) {
+            if (array_key_exists('quantity', $request->errors->messages())
+                && !array_key_exists('variant_amount', $request->errors->messages())
+            ) {
                 $errorQuantity = $request->errors->messages()['quantity'][0];
                 toast($errorQuantity, 'error')->autoClose(3000);
-            } else {
-                toast('Vui lòng chọn thuộc tính sản phẩm', 'error')->autoClose(3000);
+                return redirect()->back();
             }
+            toast('Vui lòng chọn thuộc tính sản phẩm', 'error')->autoClose(3000);
             return redirect()->back();
         }
         $response = $this->cartService->addCart($slug, $request->validated());
