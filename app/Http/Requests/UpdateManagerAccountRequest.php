@@ -27,9 +27,9 @@ class UpdateManagerAccountRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:accounts,email,'.$this->id,
             'username' => 'required|unique:accounts,username,'.$this->id,
-            'number_phone' => 'numeric',
+            'phone_number' => 'nullable|numeric',
             'gender' => 'boolean',
-            'date_of_birth' => 'date_format:Y-m-d|before:today|nullable',
+            'date_of_birth' => 'nullable|date_format:Y-m-d|before:today',
             'avatar' => 'image',
         ];
     }
@@ -48,7 +48,7 @@ class UpdateManagerAccountRequest extends FormRequest
             'email.email' => 'Sai định dạng mail',
             'username.required' => 'Bạn phải nhập tên đăng nhập',
             'username.unique' => 'Tên đăng nhập đã được sử dụng',
-            'number_phone.numeric' => 'Chỉ nhập số',
+            'phone_number.numeric' => 'Chỉ nhập số',
             'gender.boolean' => 'Chỉ được giá trị chọn nam hoặc nữ',
             'date_of_birth.date_format' => 'Sai định dạng',
             'date_of_birth.before' => 'Cần nhập đúng ngày sinh',

@@ -25,7 +25,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">ID</th>
-                                                <th class="text-center">Hình Ảnh</th>
+                                                <th class="text-center">Avatar</th>
                                                 <th class="text-center">Họ Và Tên</th>
                                                 <th class="text-center">Quyền</th>
                                                 <th class="text-center">Email</th>
@@ -36,11 +36,11 @@
                                         <tbody>
                                             <form id="fixx" action="">
                                                 @foreach ($listStaffs as $staff)
-                                                @if (!empty($staff->accountable) && $staff->accountable->role == \App\Models\Manager::NAME_ROLE_STAFF)
+                                                {{-- @if (!empty($staff->accountable) && $staff->accountable->role == \App\Models\Manager::NAME_ROLE_STAFF) --}}
                                                 <tr id="id-product">
                                                     <td class="text-center">{{$staff->id}}</td>
                                                     <td class="text-center">
-                                                        <img style="height: 50px;width: 70px;" src="{{ asset('admin/accounts/images/'.$staff->avatar) }}" alt="">
+                                                        <img style="height: 50px;width: 70px;" src="{{ $staff->avatar_path }}" alt="">
                                                     </td>
                                                     <td class="text-center">{{$staff->name}} </td>
                                                     <td class="text-center">{{$staff->accountable->role}}</td>
@@ -49,7 +49,7 @@
                                                     <td class="text-center">
                                                         <a href="{{ route('admin.managers.edit', $staff->id) }}" type="button" url-update="update"
                                                             class="btn btn-success btn-xs btn-edit-product"><i class="fa fa-plus"
-                                                                aria-hidden="true"></i>Sửa</a>                                           
+                                                                aria-hidden="true"></i>Sửa</a>
                                                         @if (getAccountInfo()->role == (\App\Models\Manager::NAME_ROLE_ADMIN))
                                                         <a href="{{ route('admin.managers.delete', $staff->id) }}" type="button" data-url="delete"
                                                             class="btn btn-danger btn-xs  btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
@@ -57,7 +57,7 @@
                                                         @endif
                                                     </td>
                                                 </tr>
-                                                @endif
+                                                {{-- @endif --}}
                                                 @endforeach
                                             </form>
                                         </tbody>

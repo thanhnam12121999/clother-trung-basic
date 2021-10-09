@@ -44,6 +44,11 @@ class Account extends Authenticatable
         });
     }
 
+    public function getAvatarPathAttribute()
+    {
+        return asset("storage/images/accounts/{$this->avatar}");
+    }
+
     public function accountable()
     {
         return $this->morphTo();

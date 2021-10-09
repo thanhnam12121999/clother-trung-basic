@@ -31,14 +31,14 @@ if (!function_exists('isAccountType')) {
 if (!function_exists('isMemberLogged')) {
     function isMemberLogged()
     {
-        return authCheck() && isAccountType(\App\Models\Member::class);
+        return getLoggedInUser() && isAccountType(\App\Models\Member::class);
     }
 }
 
 if (!function_exists('isManagerLogged')) {
     function isManagerLogged()
     {
-        return authCheck() && isAccountType(\App\Models\Manager::class);
+        return getLoggedInUser() && isAccountType(\App\Models\Manager::class);
     }
 }
 
@@ -56,7 +56,7 @@ if (!function_exists('getCart')) {
 if (!function_exists('getCartTotal')) {
     function getCartTotal()
     {
-        return isMemberLogged() ? number_format(getAccountInfo()->cart->sub_total, 0, ',', '.') ?? 0 : \Cart::subtotal(0, ',', '.');
+        return isMemberLogged() ? (!empty(getCart()) ? number_format(getAccountInfo()->cart->sub_total, 0, ',', '.') : 0) : \Cart::subtotal(0, ',', '.');
     }
 }
 

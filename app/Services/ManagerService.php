@@ -9,7 +9,7 @@ use App\Repositories\ManagerRepository;
 use App\Traits\HandleImage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Log;
 
 class ManagerService extends BaseService
 {
@@ -29,7 +29,7 @@ class ManagerService extends BaseService
         try {
             DB::beginTransaction();
             $account = $this->accountRepository->find($id);
-            $accountsData = $request->only(['name', 'email', 'username', 'number_phone', 'gender', 'date_of_birth']);
+            $accountsData = $request->only(['name', 'email', 'username', 'phone_number', 'gender', 'date_of_birth']);
             if ($request->hasFile('avatar')) {
                 $response = $this->deleteImage($account->avatar, 'accounts');
                 if (!$response) {
@@ -79,7 +79,7 @@ class ManagerService extends BaseService
         try {
             DB::beginTransaction();
             $manager = '';
-            $accountsData = $request->only(['name', 'email', 'username', 'number_phone', 'gender', 'date_of_birth']);
+            $accountsData = $request->only(['name', 'email', 'username', 'phone_number', 'gender', 'date_of_birth']);
             $avatarAccount = $request->file('avatar');
             $newNameImage = $this->createImage($avatarAccount, 'accounts');
             if (!$newNameImage) {

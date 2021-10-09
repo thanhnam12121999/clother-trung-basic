@@ -29,28 +29,28 @@
                                     <input type="text" class="form-control" name="name" style="width:100%" value="{{ $account->name }}">
                                 </div>
                                 @error('name')
-                                <p class="text-danger">{{ $message }}</p> 
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                                 <div class="form-group">
                                     <label>Email<span class = "text-danger">(*)</span></label>
                                     <input type="text" class="form-control" name="email" style="width:100%"  value="{{ $account->email }}">
                                 </div>
                                 @error('email')
-                                <p class="text-danger">{{ $message }}</p> 
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                                 <div class="form-group">
                                     <label>Tài khoản<span class = "text-danger">(*)</span></label>
                                     <input type="text" class="form-control" name="username" style="width:100%"  value="{{ $account->username }}">
                                 </div>
                                 @error('username')
-                                <p class="text-danger">{{ $message }}</p> 
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                                 <div class="form-group">
-                                    <label>Số điện thoại<span class = "text-danger">(*)</span></label>
-                                    <input type="text" class="form-control" name="number_phone" style="width:100%"  value="{{ $account->phone_number }}">
+                                    <label>Số điện thoại</label>
+                                    <input type="text" class="form-control" name="phone_number" style="width:100%"  value="{{ $account->phone_number }}">
                                 </div>
-                                @error('number_phone')
-                                <p class="text-danger">{{ $message }}</p> 
+                                @error('phone_number')
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="col-md-6">
@@ -67,7 +67,7 @@
                                     @enderror
                                 </div>
                                 @error('avatar')
-                                <p class="text-danger">{{ $message }}</p> 
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                                 <div class="form-group">
                                     <label>Quyền</label>
@@ -78,11 +78,11 @@
                                         @else
                                             <option value="{{$manage->id}}">{{$manage->role}}</option>
                                         @endif
-                                        @endforeach   
+                                        @endforeach
                                     </select>
                                 </div>
                                 @error('role')
-                                <p class="text-danger">{{ $message }}</p> 
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                                 <div class="form-group">
                                     <label>Giới tính</label>
@@ -90,19 +90,19 @@
                                         <option value="0">Nam</option>
                                         <option value="1">Nữ</option>
                                         @error('gender')
-                                        <p class="text-danger">{{ $message }}</p> 
+                                        <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </select>
                                 </div>
                                 @error('gender')
-                                <p class="text-danger">{{ $message }}</p> 
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                                 <div class="form-group">
                                     <label>Ngày sinh<span class = "text-danger">(*)</span></label>
                                     <input type="date" class="form-control" name="date_of_birth" style="width:100%"  value="{{$account->date_of_birth}}">
                                 </div>
                                 @error('date_of_birth')
-                                <p class="text-danger">{{ $message }}</p> 
+                                <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -117,4 +117,9 @@
 @endsection
 @section('custom-script')
 <script src="{{ asset('adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+@endsection
+@section('my-script')
+    <script>
+        bsCustomFileInput.init();
+    </script>
 @endsection

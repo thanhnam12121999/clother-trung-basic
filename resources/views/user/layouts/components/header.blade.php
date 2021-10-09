@@ -13,11 +13,7 @@
                 </div>
             </div>
             <div class="ht-right">
-                @php
-                $checkMemberLoggedIn = auth('accounts')->check() && isAccountType(\App\Models\Member::class);
-                @endphp
-                {{$checkMemberLoggedIn}}
-                @if($checkMemberLoggedIn)
+                @if(isMemberLogged())
                     <div class="member-info-dropdown">
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ getLoggedInUser()->username ?? getLoggedInUser()->email }}
