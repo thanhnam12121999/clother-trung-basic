@@ -25,10 +25,10 @@ class Category extends Model
     {
         parent::booted();
         static::creating(function ($category) {
-            $category->slug = Str::slug($category->name);
+            $category->slug = Str::slug($category->name) . '-cat.' . $category->id . '.' . time();
         });
         static::updating(function ($category) {
-            $category->slug = Str::slug($category->name);
+            $category->slug = Str::slug($category->name) . '-cat.' . $category->id . '.' . time();
         });
     }
 
