@@ -11,6 +11,9 @@ class Manager extends Model
     use HasFactory;
     use SoftDeletes;
 
+    CONST NAME_ROLE_MANAGER = 'manager';
+    CONST NAME_ROLE_ADMIN = 'admin';
+    CONST NAME_ROLE_STAFF = 'staff';
     protected $table = "managers";
     protected $fillable = [
         'role'

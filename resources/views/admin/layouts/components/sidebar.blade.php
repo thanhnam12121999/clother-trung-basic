@@ -13,7 +13,7 @@
           <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Admin</a>
+          <a href="#" class="d-block">{{ isManagerLogged() ? getLoggedInUser()->name : 'Admin' }}</a>
         </div>
       </div>
 
@@ -35,7 +35,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="{{ route('admin.dashboard.index') }}" class="nav-link @yield('active-dashboard')">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Bảng Điều Khiển
@@ -43,10 +43,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.products.index') }}" class="nav-link">
+            <a href="{{ route('admin.products.index') }}" class="nav-link @yield('active-products')">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Sản Phẩm
+                Quản Lý Sản Phẩm
               </p>
             </a>
           </li>
@@ -54,12 +54,12 @@
             <a href="" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Đon Hàng
+                Quản Lý Đơn Hàng
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.categories.index') }}" class="nav-link">
+            <a href="{{ route('admin.categories.index') }}" class="nav-link @yield('active-categories')">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Danh Mục Sản Phẩm
@@ -67,7 +67,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('admin.manager.index') }}" class="nav-link @yield('active-manager')">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Quản Lý Nhân Viên
@@ -86,7 +86,15 @@
             <a href="" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Slide
+                Quản Lý Banner
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Quản Lý Banner
               </p>
             </a>
           </li>

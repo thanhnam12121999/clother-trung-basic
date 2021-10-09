@@ -3,11 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Account;
+use App\Models\Manager;
 use App\Models\Member;
 
 class AccountRepository extends BaseRepository
 {
-
+    
     /**
      * @inheritDoc
      */
@@ -22,4 +23,15 @@ class AccountRepository extends BaseRepository
             ->where('accountable_type', Member::class)
             ->first();
     }
+
+    public function getAccountManagerIsStaff()
+    {
+        return $this->model->where('accountable_type', Manager::class)->get();
+    }
+
+    public function getAccountManagerById($id)
+    {
+        return $this->find($id);
+    }
+    
 }

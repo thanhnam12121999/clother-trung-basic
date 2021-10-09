@@ -1,5 +1,8 @@
 @extends('user.layouts.master')
 @section('title', 'Giỏ hàng')
+@section('custom-css')
+    <link rel="stylesheet" href="{{ asset('user/custom-css/cart/style.css') }}">
+@endsection
 @section('breadcrumb')
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -39,37 +42,36 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @if (getCart()->isNotEmpty())
+                                    @if (!empty(getCart()))
                                         @foreach (getCart() as $item)
-                                            @php
-                                                $productImage = getProductImageInCart($item->id);
-                                                $isImageUrl = filter_var($productImage, FILTER_VALIDATE_URL);
-                                            @endphp
                                             <tr>
                                                 <td class="cart-pic first-row">
-                                                    <img style="width: 10rem;" src="{{ $isImageUrl ? $productImage : asset("admin/products/images/$productImage") }}" alt="">
+                                                    <img style="width: 10rem;" src="{{ getProductImageInCart($item['options']['slug']) }}" alt="">
                                                 </td>
                                                 <td class="cart-title first-row">
-                                                    <h5>{{ $item->name }}</h5>
+                                                    <h5 class="mb-2">
+                                                        <a class="pd-link" href="{{ route('products.detail', ['slug' => $item['options']['slug']]) }}">{{ $item['name'] }}</a>
+                                                    </h5>
+                                                    <h6 class="pd-variant">{{ implode("-", $item['options']['attributes']) }}</h6>
                                                 </td>
                                                 <td class="p-price first-row">
-                                                    {{ number_format($item->price, 0, ',', '.') }}đ
+                                                    {{ number_format($item['price'], 0, ',', '.') }}đ
                                                 </td>
                                                 <td class="qua-col first-row">
                                                     <div class="quantity">
                                                         <div class="pro-qty">
-                                                            <input type="text" value="{{ $item->qty }}" name="quantity[{{ $item->rowId }}]">
+                                                            <input type="text" value="{{ $item['qty'] }}" name="quantity[{{ $item['rowId'] }}]">
                                                         </div>
                                                     </div>
                                                 </td>
                                                 @php
-                                                    $totalItem = $item->price * $item->qty
+                                                    $totalItem = $item['price'] * $item['qty']
                                                 @endphp
                                                 <td class="total-price first-row">
                                                     {{ number_format($totalItem, 0, ',', '.') }}đ
                                                 </td>
                                                 <td class="close-td first-row">
-                                                    <a style="color: #0a0a0a;" href="{{ route('cart.remove', ['rowId'=>$item->rowId]) }}">
+                                                    <a style="color: #0a0a0a;" href="{{ route('cart.remove', ['rowId'=>$item['rowId']]) }}">
                                                         <i class="ti-close"></i>
                                                     </a>
                                                 </td>

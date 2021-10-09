@@ -13,10 +13,7 @@
                 </div>
             </div>
             <div class="ht-right">
-                @php
-                $checkMemberLoggedIn = auth('accounts')->check() && isAccountType(\App\Models\Member::class);
-                @endphp
-                @if($checkMemberLoggedIn)
+                @if(isMemberLogged())
                     <div class="member-info-dropdown">
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ getLoggedInUser()->username ?? getLoggedInUser()->email }}
@@ -78,32 +75,29 @@
                         <li class="cart-icon">
                             <a href="">
                                 <i class="icon_bag_alt"></i>
-                                @if (getCart()->isNotEmpty())
-                                    <span>{{ getCart()->count() }}</span>
+                                @if (!empty(getCart()))
+                                    <span>{{ count(getCart()) }}</span>
                                 @endif
                             </a>
                             <div class="cart-hover" style="right: -100px; width: 400px;">
                                 <div class="select-items" style="max-height: 300px; overflow-y: auto;">
                                     <table>
                                         <tbody>
-                                        @if (getCart()->isNotEmpty())
+                                        @if (!empty(getCart()))
                                         @foreach (getCart() as $item)
-                                            @php
-                                                $productImage = getProductImageInCart($item->id);
-                                                $isImageUrl = filter_var($productImage, FILTER_VALIDATE_URL);
-                                            @endphp
                                             <tr>
                                                 <td class="si-pic" width="40%">
-                                                    <img class="w-100" src="{{ $isImageUrl ? $productImage : asset("admin/products/images/$productImage") }}" alt="">
+                                                    <img class="w-100" src="{{ getProductImageInCart($item['options']['slug']) }}" alt="">
                                                 </td>
                                                 <td class="si-text" width="50%">
                                                     <div class="product-selected">
-                                                        <p>{{ number_format($item->price, 0, ',', '.') }}đ x {{ $item->qty }}</p>
-                                                        <h6>{{ $item->name }}</h6>
+                                                        <p>{{ number_format($item['price'], 0, ',', '.') }}đ x {{ $item['qty'] }}</p>
+                                                        <h6>{{ $item['name'] }}</h6>
+                                                        <p>{{ implode('-', $item['options']['attributes']) }}</p>
                                                     </div>
                                                 </td>
                                                 <td class="si-close" width="10%">
-                                                    <a href="{{ route('cart.remove', ['rowId' => $item->rowId]) }}">
+                                                    <a href="{{ route('cart.remove', ['rowId' => $item['rowId']]) }}">
                                                         <i class="ti-close"></i>
                                                     </a>
                                                 </td>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Attribute extends Model
 {
@@ -15,6 +16,11 @@ class Attribute extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function getNameAttribute($value)
+    {
+        return Str::ucfirst($value);
+    }
 
     public function attributeValues()
     {

@@ -3,10 +3,11 @@
     @include('admin.components.css.datatables')
 @endsection
 @section('breadcrumb', 'Quản Lý Nhân Viên')
+@section('active-manager', 'active')
 @section('contents')
 <div class="breadcrumb">
     <div class="btn-add">
-        <a id="btn-form-add" class="btn btn-primary btn-sm" role="button">
+        <a href="{{ route('admin.managers.form_create') }}" id="btn-form-add" class="btn btn-primary btn-sm" role="button">
             <span class="glyphicon glyphicon-plus"></span>Thêm Mới
         </a>
     </div>
@@ -24,42 +25,40 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">ID</th>
-                                                <th class="text-center">Hình Ảnh</th>
+                                                <th class="text-center">Avatar</th>
                                                 <th class="text-center">Họ Và Tên</th>
                                                 <th class="text-center">Quyền</th>
                                                 <th class="text-center">Email</th>
                                                 <th class="text-center">Phone</th>
-                                                <th class="text-center">Trạng Thái</th>
                                                 <th class="text-center">Thao Tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <form id="fixx" action="">
-                                                {{-- @foreach ($students as $student) --}}
+                                                @foreach ($listStaffs as $staff)
+                                                {{-- @if (!empty($staff->accountable) && $staff->accountable->role == \App\Models\Manager::NAME_ROLE_STAFF) --}}
                                                 <tr id="id-product">
-                                                    <td class="text-center">id</td>
-                                                    <td style="font-size: 16px;">name_student</td>
-                                                    <td style="font-size: 16px;">name </td>
-                                                    <td style="font-size: 16px;">test </td>
-                                                    <td style="font-size: 16px;">test </td>
-                                                    <td class="text-center">instructors</td>
+                                                    <td class="text-center">{{$staff->id}}</td>
                                                     <td class="text-center">
-                                                        {{-- @if ($student->status == 1) --}}
-                                                        <i style="color: green" class="fa fa-check" aria-hidden="true"></i>
-                                                        {{-- @else
-                                                        <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
-                                                        @endif --}}
+                                                        <img style="height: 50px;width: 70px;" src="{{ $staff->avatar_path }}" alt="">
                                                     </td>
+                                                    <td class="text-center">{{$staff->name}} </td>
+                                                    <td class="text-center">{{$staff->accountable->role}}</td>
+                                                    <td class="text-center">{{$staff->email}}</td>
+                                                    <td class="text-center">{{$staff->phone_number}}</td>
                                                     <td class="text-center">
-                                                        <button type="button" url-update="update"
+                                                        <a href="{{ route('admin.managers.edit', $staff->id) }}" type="button" url-update="update"
                                                             class="btn btn-success btn-xs btn-edit-product"><i class="fa fa-plus"
-                                                                aria-hidden="true"></i>Sửa</button>                                           
-                                                        <button type="button" data-url="delete"
-                                                        class="btn btn-danger btn-xs  btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
-                                                        Xóa</button>
+                                                                aria-hidden="true"></i>Sửa</a>
+                                                        @if (getAccountInfo()->role == (\App\Models\Manager::NAME_ROLE_ADMIN))
+                                                        <a href="{{ route('admin.managers.delete', $staff->id) }}" type="button" data-url="delete"
+                                                            class="btn btn-danger btn-xs  btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                            Xóa</a>
+                                                        @endif
                                                     </td>
                                                 </tr>
-                                                {{-- @endforeach --}}
+                                                {{-- @endif --}}
+                                                @endforeach
                                             </form>
                                         </tbody>
                                     </table>

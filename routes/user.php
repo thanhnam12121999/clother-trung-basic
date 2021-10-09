@@ -33,6 +33,7 @@ Route::prefix('san-pham')->group(function () {
     Route::get('', [ProductController::class, 'index'])->name('products.index');
     Route::get('/{slug}', [ProductController::class, 'detail'])->name('products.detail');
 });
+Route::post('product/get-variant-price', [ProductController::class, 'getVariantPrice']);
 Route::get('gio-hang', [CartController::class, 'index'])->name('cart.index');
 Route::post('cart/add/{slug}', [CartController::class, 'add'])->name('cart.add');
 Route::get('cart/remove/{rowId}', [CartController::class, 'remove'])->name('cart.remove');

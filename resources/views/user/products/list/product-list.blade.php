@@ -30,7 +30,7 @@
                                 $isUrl = filter_var($product->feature_image, FILTER_VALIDATE_URL);
                             @endphp
                             <div class="pi-pic">
-                                <img src="{{ $isUrl ? $product->feature_image : asset("admin/products/images/$product->feature_image") }}" alt="">
+                                <img src="{{ $isUrl ? $product->feature_image : $product->feature_image_path }}" alt="">
                                 {{-- <div class="sale pp-sale">Sale</div> --}}
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>

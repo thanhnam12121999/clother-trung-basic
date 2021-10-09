@@ -29,8 +29,16 @@ class Product extends Model
     {
         parent::booted();
         static::creating(function ($product) {
-            $product->slug = Str::slug($product->name) . '-' . Str::random(10) . strtotime($product->created_at);
+            $product->slug = Str::slug($product->name) . '-' . $product->id . '.' . Str::random(10) . '.' . time();
         });
+        static::updating(function ($product) {
+            $product->slug = Str::slug($product->name) . '-' . $product->id . '.' . Str::random(10) . '.' . time();
+        });
+    }
+
+    public function getFeatureImagePathAttribute()
+    {
+        return asset("storage/images/products/{$this->feature_image}");
     }
 
     public function category()

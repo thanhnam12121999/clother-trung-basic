@@ -1,0 +1,12 @@
+.shopping-cart .cart-table .pd-link {
+    color: #0f0f0f;
+    text-decoration: underline;
+}
+
+.shopping-cart .cart-table .pd-link:hover {
+    font-weight: 600;
+}
+
+.shopping-cart .cart-table .pd-variant {
+    color: #e7ab3c;
+}
