@@ -23,10 +23,18 @@ class AddCartRequest extends BaseRequest
     {
         return [
             'attributes' => 'required|array',
-            'product_id' => 'required|numeric',
-            'quantity' => 'required|numeric|min:1',
             'variant_id' => 'required|numeric',
-            'variant_price' => 'required'
+            'variant_price' => 'required',
+            'variant_amount' => 'required',
+            'product_id' => 'required|numeric',
+            'quantity' => 'required|numeric|min:1|lte:variant_amount',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'quantity.lte' => 'Số lượng thêm giỏ hàng đã vượt quá số lượng trong kho'
         ];
     }
 }
