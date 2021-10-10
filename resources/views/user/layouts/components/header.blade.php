@@ -19,7 +19,7 @@
                             {{ getLoggedInUser()->username ?? getLoggedInUser()->email }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#">Thông tin tài khoản</a>
+                            <a class="dropdown-item" href="{{ route('profile') }}">Thông tin tài khoản</a>
                             <a class="dropdown-item" href="#">Đơn mua</a>
                             <a class="dropdown-item" href="{{ route('auth.logout') }}">Đăng xuất</a>
                         </div>

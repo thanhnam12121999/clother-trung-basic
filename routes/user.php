@@ -29,6 +29,8 @@ Route::get('', function () {
 });
 
 Route::get('trang-chu', [HomeController::class, 'index'])->name('home');
+Route::get('ho-so', [HomeController::class, 'getProfileUser'])->name('profile');
+Route::put('ho-so/cap-nhat/{id}', [HomeController::class, 'updateProfile'])->name('profile.update');
 Route::prefix('san-pham')->group(function () {
     Route::get('', [ProductController::class, 'index'])->name('products.index');
     Route::get('/{slug}', [ProductController::class, 'detail'])->name('products.detail');
