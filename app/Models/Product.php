@@ -29,10 +29,10 @@ class Product extends Model
     {
         parent::booted();
         static::creating(function ($product) {
-            $product->slug = Str::slug($product->name) . '-' . $product->id . '.' . Str::random(10) . '.' . time();
+            $product->slug = Str::slug($product->name) . '-prod' . $product->id . '.' . Str::random(10) . '.' . time();
         });
         static::updating(function ($product) {
-            $product->slug = Str::slug($product->name) . '-' . $product->id . '.' . Str::random(10) . '.' . time();
+            $product->slug = Str::slug($product->name) . '-prod' . $product->id . '.' . Str::random(10) . '.' . time();
         });
     }
 
