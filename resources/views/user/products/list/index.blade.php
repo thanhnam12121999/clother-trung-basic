@@ -1,8 +1,14 @@
 @extends('user.layouts.master')
 @section('title', 'Shop')
-@section('active-product')
-    class="active"
-@endsection
+@if (empty($slug))
+    @section('active-product')
+        class="active"
+    @endsection
+@else
+    @section('active-category')
+        class="active"
+    @endsection
+@endif
 @section('breadcrumb')
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -11,7 +17,12 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang chủ</a>
-                        <span>Shop</span>
+                        @if (!empty($slug))
+                            <a href="{{ url()->current() }}">Danh mục sản phẩm</a>
+                            <span>{{ $category->name }}</span>
+                        @else
+                            <span>Shop</span>
+                        @endif
                     </div>
                 </div>
             </div>

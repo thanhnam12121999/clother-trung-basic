@@ -20,10 +20,10 @@
             <ul>
                 <li @yield('active-home')><a href="{{ route('home') }}">Trang chủ</a></li>
                 <li @yield('active-product')><a href="{{ route('products.index') }}">Shop</a></li>
-                <li><a href="#">Catalog</a>
+                <li @yield('active-category')><a href="#">Catalog</a>
                     <ul class="dropdown">
                         @foreach ($categories as $category)
-                        <li><a href="{{ route('products.slug', ['slug' => $category->slug]) }}">{{ $category->name }}</a></li>
+                            <li><a href="{{ route('products.slug', ['slug' => $category->slug]) }}">{{ $category->name }}</a></li>
                         @endforeach
                     </ul>
                 </li>
