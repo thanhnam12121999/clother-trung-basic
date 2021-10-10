@@ -3,18 +3,29 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
+use App\Services\ProductService;
 use App\Services\ProductVariantService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     protected $productRepository;
+    protected $categoryRepository;
+    protected $productService;
     protected $productVariantService;
 
-    public function __construct(ProductRepository $productRepository, ProductVariantService $productVariantService)
-    {
+    public function __construct(
+        ProductRepository $productRepository,
+        CategoryRepository $categoryRepository,
+        ProductService $productService,
+        ProductVariantService $productVariantService
+    ) {
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->productService = $productService;
         $this->productVariantService = $productVariantService;
     }
 
@@ -24,38 +35,24 @@ class ProductController extends Controller
         return view('user.products.list.index', compact('products'));
     }
 
-    public function detail($slug)
+    public function getItemBySlug($slug)
     {
-        $product = $this->productRepository->getProductBySlug($slug);
-        $minPrice = $product->variants->map(function ($variant) {
-            return ['unit_price' => $variant['unit_price']];
-        })->min('unit_price');
-        $maxPrice = $product->variants->map(function ($variant) {
-            return ['unit_price' => $variant['unit_price']];
-        })->max('unit_price');
-        $totalAmountProduct = $product->variants->map(function ($variant) {
-            return ['amount' => $variant['amount']];
-        })->sum('amount');
-
-        $productAttributes = $product->attributes->mapWithKeys(function ($attrValue) {
-            return [$attrValue->attribute->id => $attrValue->attribute->name];
-        });
-        $attrValues = $product->attributes->mapToGroups(function ($attrValue) {
-            return [$attrValue->attribute->id => [$attrValue->id => $attrValue->name]];
-        })->map(function ($item) {
-            $item = $item->mapWithKeys(function ($item) {
-                return [array_keys($item)[0] => array_values($item)[0]];
-            });
-            return $item;
-        });
-        return view('user.products.detail.index', compact(
-            'product',
-            'minPrice',
-            'maxPrice',
-            'totalAmountProduct',
-            'productAttributes',
-            'attrValues')
-        );
+        if (Str::contains($slug, '-cat')) {
+            $category = $this->categoryRepository->getCategoryBySlug($slug);
+            $products = $category->products()->paginate(24);
+            return view('user.products.list.index', compact('products'));
+        }
+        if (Str::contains($slug, '-prod')) {
+            $response = $this->productService->handleProductBySlug($slug);
+            return view('user.products.detail.index', [
+                'product' => $response['product'],
+                'minPrice' => $response['minPrice'],
+                'maxPrice' => $response['maxPrice'],
+                'totalAmountProduct' => $response['totalAmountProduct'],
+                'productAttributes' => $response['productAttributes'],
+                'attrValues' => $response['attrValues']
+            ]);
+        }
     }
 
     public function getVariantPrice(Request $request)

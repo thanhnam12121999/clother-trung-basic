@@ -1,10 +1,10 @@
-<div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+ <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
     <div class="filter-widget">
         <h4 class="fw-title">Danh mục</h4>
         <ul class="filter-catagories">
-            <li><a href="#">Áo nữ</a></li>
-            <li><a href="#">Quần nữ</a></li>
-            <li><a href="#">Váy nữ</a></li>
+            @foreach ($categories as $cate)
+                <li><a href="{{ route('products.slug', ['slug' => $cate->slug]) }}">{{ $cate->name }}</a></li>
+            @endforeach
         </ul>
     </div>
     {{--    <div class="filter-widget">--}}

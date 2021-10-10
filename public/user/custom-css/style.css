@@ -29,5 +29,8 @@ html body header.header-section .advanced-search .custom_input-group {
   max-width: initial;
   width: 100%;
 }
+html body .banner-section .single-banner {
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=style.css.map */

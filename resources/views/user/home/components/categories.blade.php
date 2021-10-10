@@ -1,31 +1,22 @@
 <!-- Banner Section Begin -->
 <div class="banner-section spad">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="single-banner h-100">
-                    <img class="h-100" src="{{ asset('user/img/category-1.webp') }}" alt="">
-                    <div class="inner-text">
-                        <h4>Áo nữ</h4>
-                    </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="filter-control">
+                    <h2>Danh mục sản phẩm</h2>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="single-banner h-100">
-                    <img class="h-100" src="{{ asset('user/img/category-2.jpg') }}" alt="">
-                    <div class="inner-text">
-                        <h4>Quần nữ</h4>
+            @foreach ($categories as $category)
+                <div class="col-lg-3">
+                    <div class="single-banner h-100">
+                        <img class="h-100 catalog-image" data-slug="{{ $category->slug }}" src="{{ $category->image_path }}" alt="">
+                        <div class="inner-text">
+                            <h4>{{ $category->name }}</h4>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-banner h-100">
-                    <img class="h-100" src="{{ asset('user/img/category-3.webp') }}" alt="">
-                    <div class="inner-text">
-                        <h4>Váy</h4>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>

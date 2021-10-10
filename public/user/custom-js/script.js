@@ -8,4 +8,10 @@ $(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    $(document).on('click', '.banner-section .single-banner', function () {
+        const slugCate = $('.single-banner .catalog-image').data('slug')
+        const urlCate = `${BASE_URL}san-pham/${slugCate}`
+        location.replace(urlCate);
+    })
 })

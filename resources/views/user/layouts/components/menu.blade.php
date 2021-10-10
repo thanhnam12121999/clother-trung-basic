@@ -22,23 +22,12 @@
                 <li @yield('active-product')><a href="{{ route('products.index') }}">Shop</a></li>
                 <li><a href="#">Catalog</a>
                     <ul class="dropdown">
-                        <li><a href="#">Áo nữ</a></li>
-                        <li><a href="#">Quần nữ</a></li>
-                        <li><a href="#">Váy nữ</a></li>
+                        @foreach ($categories as $category)
+                        <li><a href="{{ route('products.slug', ['slug' => $category->slug]) }}">{{ $category->name }}</a></li>
+                        @endforeach
                     </ul>
                 </li>
-{{--                <li><a href="./blog.html">Blog</a></li>--}}
                 <li><a href="">Liên hệ</a></li>
-{{--                <li><a href="#">Pages</a>--}}
-{{--                    <ul class="dropdown">--}}
-{{--                        <li><a href="./blog-details.html">Blog Details</a></li>--}}
-{{--                        <li><a href="./shopping-cart.html">Shopping Cart</a></li>--}}
-{{--                        <li><a href="./check-out.html">Checkout</a></li>--}}
-{{--                        <li><a href="./faq.html">Faq</a></li>--}}
-{{--                        <li><a href="./register.html">Register</a></li>--}}
-{{--                        <li><a href="./login.html">Login</a></li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>

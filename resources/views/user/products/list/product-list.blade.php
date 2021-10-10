@@ -39,7 +39,7 @@
                                     <li class="w-icon active">
                                         <a href="#"><i class="icon_bag_alt"></i></a>
                                     </li>
-                                    <li class="quick-view"><a href="{{ route('products.detail', [ 'slug' => $product->slug ]) }}">+ Chi tiết</a></li>
+                                    <li class="quick-view"><a href="{{ route('products.slug', [ 'slug' => $product->slug ]) }}">+ Chi tiết</a></li>
                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                 </ul>
                             </div>

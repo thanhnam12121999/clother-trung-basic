@@ -50,7 +50,7 @@
                                                 </td>
                                                 <td class="cart-title first-row">
                                                     <h5 class="mb-2">
-                                                        <a class="pd-link" href="{{ route('products.detail', ['slug' => $item['options']['slug']]) }}">{{ $item['name'] }}</a>
+                                                        <a class="pd-link" href="{{ route('products.slug', ['slug' => $item['options']['slug']]) }}">{{ $item['name'] }}</a>
                                                     </h5>
                                                     <h6 class="pd-variant">{{ implode("-", $item['options']['attributes']) }}</h6>
                                                 </td>
