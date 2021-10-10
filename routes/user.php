@@ -31,7 +31,7 @@ Route::get('', function () {
 Route::get('trang-chu', [HomeController::class, 'index'])->name('home');
 Route::prefix('san-pham')->group(function () {
     Route::get('', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/{slug}', [ProductController::class, 'detail'])->name('products.detail');
+    Route::get('/{slug}', [ProductController::class, 'getItemBySlug'])->name('products.slug');
 });
 Route::post('product/get-variant-price', [ProductController::class, 'getVariantPrice']);
 Route::get('gio-hang', [CartController::class, 'index'])->name('cart.index');

@@ -49,6 +49,12 @@ Route::middleware([AuthLoginAdmin::class])->group(function () {
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('products.edit')->middleware('policyOfStaff');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update')->middleware('policyOfStaff');
         Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('products.delete')->middleware('policyOfStaff');
+
+        Route::resource('attributes', AttributeController::class)->only(['store', 'update', 'destroy'])->middleware('policyOfStaff');
+        Route::group(['prefix' => 'variants', 'middleware' => 'policyOfStaff'], function() {
+            Route::get('/{product}', [ProductVariantController::class, 'getVariantsOfProduct'])->name('products.variants');
+            Route::put('/{product}', [ProductVariantController::class, 'updateProductVariants'])->name('products.variants.update');
+        });
     });
     /**
      * Route manager
@@ -60,12 +66,6 @@ Route::middleware([AuthLoginAdmin::class])->group(function () {
         Route::post('/create', [ManagerController::class, 'store'])->name('managers.create');
         Route::get('/create', [ManagerController::class, 'create'])->name('managers.form_create');
         Route::get('/delete/{id}', [ManagerController::class, 'destroy'])->middleware('policyOfManager')->name('managers.delete');
-    });
-
-    Route::resource('attributes', AttributeController::class)->only(['store', 'update', 'destroy'])->middleware('policyOfStaff');
-    Route::group(['prefix' => 'variants', 'middleware' => 'policyOfStaff'], function() {
-        Route::get('/{product}', [ProductVariantController::class, 'getVariantsOfProduct'])->name('products.variants');
-        Route::put('/{product}', [ProductVariantController::class, 'updateProductVariants'])->name('products.variants.update');
     });
 });
 // Route::get('test', function () {
