@@ -22,6 +22,9 @@ class HomeController extends Controller
 
     public function getProfileUser()
     {
+        if (!isMemberLogged()) {
+            return redirect()->route('home');
+        }
         return view('user.home.profile');
     }
 

@@ -8,7 +8,7 @@ use App\Models\Member;
 
 class AccountRepository extends BaseRepository
 {
-    
+
     /**
      * @inheritDoc
      */
@@ -33,5 +33,20 @@ class AccountRepository extends BaseRepository
     {
         return $this->find($id);
     }
-    
+
+    public function checkExistsMemberUsername($username)
+    {
+        return $this->model->where('accountable_type', Member::class)
+            ->where('username', $username)
+            ->where('id', '<>', getLoggedInUser()->id)
+            ->exists();
+    }
+
+    public function checkExistsMemberPhoneNumber($phone)
+    {
+        return $this->model->where('accountable_type', Member::class)
+            ->where('phone_number', $phone)
+            ->where('id', '<>', getLoggedInUser()->id)
+            ->exists();
+    }
 }

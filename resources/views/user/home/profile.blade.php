@@ -1,6 +1,6 @@
 @extends('user.layouts.master')
 @section('title', 'Hồ Sơ')
-@section('my-css')
+@section('custom-css')
     <style>
         .bg-profile-cus {
             background-color: #e6e6e6;;
@@ -24,7 +24,7 @@
 <!-- Breadcrumb Section Begin -->
 @endsection
 @section('content')
-<div class="container profile-background mt-3">
+<div class="container profile-background my-3">
     <section class="content">
         <div class="container-fluid">
             @php
@@ -40,7 +40,7 @@
             @method('PUT')
             <div class="row">
                 <div class="col-md-3">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-body">
                             <ul class="nav flex-column">
                                 <li class="nav-item bg-profile-cus mb-3">
@@ -60,66 +60,66 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header p-2">
-                                <h4>Hồ Sơ Của Tôi</h4>
+                                <h5 class="text-center">Hồ Sơ Của Tôi</h5>
                             </div><!-- /.card-header -->
                             <div class="card-body">
                                 <div class="form-horizontal">
                                     <div class="form-group row">
-                                        <label for="inputName" class="col-sm-2 col-form-label">Tên</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="name" id="inputName" value="{{$infoUser->name}}" placeholder="Tên">
+                                        <label for="inputName" class="col-md-3 col-form-label">Tên</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="inputName" value="{{$infoUser->name}}" placeholder="Tên">
                                             @error('name')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                                        <div class="col-sm-10">
-                                            <input type="email" class="form-control" name="email" id="inputEmail" value="{{$infoUser->email}}" placeholder="Email">
+                                        <label for="inputEmail" class="col-md-3 col-form-label">Email</label>
+                                        <div class="col-md-9">
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail" value="{{$infoUser->email}}" placeholder="Email">
                                             @error('email')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Điện thoại</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="phone_number" class="form-control" value="{{$infoUser->phone_number}}"  placeholder="Số điện thoại">
+                                        <label class="col-md-3 col-form-label">Điện thoại</label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" value="{{$infoUser->phone_number}}"  placeholder="Số điện thoại">
                                             @error('phone_number')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Tài khoản</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="username" class="form-control" value="{{$infoUser->username}}"  placeholder="Tài khoản">
+                                        <label class="col-md-3 col-form-label">Tài khoản</label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{$infoUser->username}}"  placeholder="Tài khoản">
                                             @error('username')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Ngày sinh</label>
-                                        <div class="col-sm-10">
-                                            <input type="date" name="date_of_birth" class="form-control" value="{{$infoUser->date_of_birth}}"  placeholder="Ngày Sinh">
+                                        <label class="col-md-3 col-form-label">Ngày sinh</label>
+                                        <div class="col-md-9">
+                                            <input type="date" name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror" value="{{$infoUser->date_of_birth}}"  placeholder="Ngày Sinh">
                                             @error('date_of_birth')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Địa chỉ</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="address" class="form-control" value="{{$infoUser['address']}}"  placeholder="Tỉnh/ Thành phố, Quận/Huyện, Phường/Xã">
+                                        <label class="col-md-3 col-form-label">Địa chỉ</label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{$infoUser['address']}}"  placeholder="Tỉnh/ Thành phố, Quận/Huyện, Phường/Xã">
                                             @error('address')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="offset-sm-2 col-sm-10">
+                                        <div class="offset-md-3 col-md-9">
                                             <button type="submit" class="btn btn-danger">Lưu</button>
                                         </div>
                                     </div>
@@ -131,17 +131,19 @@
                     <!-- /.col -->
                     <div class="col-md-3">
                         <!-- Profile Image -->
-                        <div class="card card-primary card-outline">
+                        <div class="card card-primary card-outline h-100">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle" style="width: 100px;height: 100px;border-radius: 50%"
-                                        src="{{ asset('storage/images/accounts/'.$infoUser->avatar) }}"
+                                    <img class="profile-user-img img-fluid img-circl"
+                                        id="avatar"
+                                        style="width: 100px;height: 100px;border-radius: 50%;cursor: pointer;"
+                                        src="{{ empty($infoUser->avatar) ? 'https://w7.pngwing.com/pngs/419/473/png-transparent-computer-icons-user-profile-login-user-heroes-sphere-black-thumbnail.png' : asset('storage/images/accounts/'.$infoUser->avatar) }}"
                                         alt="User profile picture">
                                 </div>
-                                <h3 class="profile-username text-center">{{$infoUser->name}}</h3>
+                                <h5 class="profile-username text-center mt-4">{{$infoUser->name}}</h5>
                                 <p class="text-muted text-center">Member</p>
                                 <label class="btn btn-primary btn-block">
-                                    Chọn Ảnh <input name="avatar" type="file" hidden>
+                                    Chọn Ảnh <input id="img-file" name="avatar" type="file" hidden onchange="changeImg(this)">
                                 </label>
                                 @error('avatar')
                                     <p class="text-danger">{{ $message }}</p>
@@ -157,4 +159,21 @@
     </section>
     <!-- /.content -->
 </div>
+@endsection
+@section('custom-js')
+<script>
+    function changeImg(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#avatar').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $('#avatar').click(function () {
+        $('#img-file').click();
+    });
+    // $( "#birthday" ).datepicker({ dateFormat: 'yy-mm-dd' });
+</script>
 @endsection

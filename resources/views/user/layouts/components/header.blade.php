@@ -14,7 +14,8 @@
             </div>
             <div class="ht-right">
                 @if(isMemberLogged())
-                    <div class="member-info-dropdown">
+                    <div class="member-info-dropdown" style="padding-bottom: 12px;padding-top: 12px;">
+                        <img style="width: 30px;height: 30px;border-radius: 50%;" src="{{ asset('storage/images/accounts/'.getLoggedInUser()->avatar) }}" alt="Member Avatar">
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ getLoggedInUser()->username ?? getLoggedInUser()->email }}
                         </a>

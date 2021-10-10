@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Repositories\AccountRepository;
+use App\Rules\CheckUniqueMemberEmail;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SignupRequest extends FormRequest
@@ -21,10 +23,14 @@ class SignupRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(AccountRepository $accountRepository)
     {
         return [
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                new CheckUniqueMemberEmail($accountRepository, true)
+            ],
             'password' => 'required|min:6|confirmed',
         ];
     }
