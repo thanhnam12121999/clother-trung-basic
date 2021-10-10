@@ -189,4 +189,39 @@ class ProductService extends BaseService
         }
         return false;
     }
+
+    public function handleProductBySlug($slug)
+    {
+        $product = $this->productRepository->getProductBySlug($slug);
+        $minPrice = $product->variants->map(function ($variant) {
+            return ['unit_price' => $variant['unit_price']];
+        })->min('unit_price');
+        $maxPrice = $product->variants->map(function ($variant) {
+            return ['unit_price' => $variant['unit_price']];
+        })->max('unit_price');
+        $totalAmountProduct = $product->variants->map(function ($variant) {
+            return ['amount' => $variant['amount']];
+        })->sum('amount');
+
+        $productAttributes = $product->attributes->mapWithKeys(function ($attrValue) {
+            return [$attrValue->attribute->id => $attrValue->attribute->name];
+        });
+        $attrValues = $product->attributes->mapToGroups(function ($attrValue) {
+            return [$attrValue->attribute->id => [$attrValue->id => $attrValue->name]];
+        })->map(function ($item) {
+            $item = $item->mapWithKeys(function ($item) {
+                return [array_keys($item)[0] => array_values($item)[0]];
+            });
+            return $item;
+        });
+
+        return [
+            'product' => $product,
+            'minPrice' => $minPrice,
+            'maxPrice' => $maxPrice,
+            'totalAmountProduct' => $totalAmountProduct,
+            'productAttributes' => $productAttributes,
+            'attrValues' => $attrValues
+        ];
+    }
 }

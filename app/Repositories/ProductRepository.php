@@ -30,7 +30,7 @@ class ProductRepository extends BaseRepository
 
     public function getProductsPaginate($perPage = 10)
     {
-        return $this->model->with('variants')->paginate($perPage);
+        return $this->model->paginate($perPage);
     }
 
     public function getProductBySlug($slug)
