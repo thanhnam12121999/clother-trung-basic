@@ -9,31 +9,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    protected $accountService;
-
-    public function __construct(AccountService $accountService) {
-        $this->accountService = $accountService;
-    }
-
     public function index()
     {
         return view('user.home.index');
-    }
-
-    public function getProfileUser()
-    {
-        if (!isMemberLogged()) {
-            return redirect()->route('home');
-        }
-        return view('user.home.profile');
-    }
-
-    public function updateProfile(int $id, UpdateMemberAccountRequest  $request)
-    {
-        $response = $this->accountService->updateAccountOfMember($id, $request);
-        if ($response['success']) {
-            return redirect()->back()->with('success', $response['message']);
-        }
-        return redirect()->back()->with('error', $response['message']);
     }
 }

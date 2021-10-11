@@ -25,4 +25,9 @@ class Member extends Model
     {
         return $this->hasOne(ShoppingCart::class, 'identifier', 'id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'member_id', 'id');
+    }
 }
