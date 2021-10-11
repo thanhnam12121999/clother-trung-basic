@@ -15,13 +15,13 @@
             <div class="ht-right">
                 @if(isMemberLogged())
                     <div class="member-info-dropdown" style="padding-bottom: 12px;padding-top: 12px;">
-                        <img style="width: 30px;height: 30px;border-radius: 50%;" src="{{ asset('storage/images/accounts/'.getLoggedInUser()->avatar) }}" alt="Member Avatar">
+                        <img style="width: 30px;height: 30px;border-radius: 50%;" src="{{ empty(getLoggedInUser()->avatar) ? 'https://w7.pngwing.com/pngs/419/473/png-transparent-computer-icons-user-profile-login-user-heroes-sphere-black-thumbnail.png' : asset('storage/images/accounts/'.getLoggedInUser()->avatar) }}" alt="Member Avatar">
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ getLoggedInUser()->username ?? getLoggedInUser()->email }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('profile') }}">Thông tin tài khoản</a>
-                            <a class="dropdown-item" href="#">Đơn mua</a>
+                            <a class="dropdown-item" href="{{ route('profile.order') }}">Đơn mua</a>
                             <a class="dropdown-item" href="{{ route('auth.logout') }}">Đăng xuất</a>
                         </div>
                     </div>
@@ -58,7 +58,6 @@
                 </div>
                 <div class="col-lg-7 col-md-7">
                     <div class="advanced-search">
-{{--                        <button type="button" class="category-btn">All Categories</button>--}}
                         <div class="input-group custom_input-group">
                             <input type="text" placeholder="Tìm kiếm">
                             <button type="button"><i class="ti-search"></i></button>
@@ -87,10 +86,10 @@
                                         @if (!empty(getCart()))
                                         @foreach (getCart() as $item)
                                             <tr>
-                                                <td class="si-pic" width="40%">
+                                                <td class="si-pic" width="30%">
                                                     <img class="w-100" src="{{ getProductImageInCart($item['options']['slug']) }}" alt="">
                                                 </td>
-                                                <td class="si-text" width="50%">
+                                                <td class="si-text" width="60%">
                                                     <div class="product-selected">
                                                         <p>{{ number_format($item['price'], 0, ',', '.') }}đ x {{ $item['qty'] }}</p>
                                                         <h6>{{ $item['name'] }}</h6>

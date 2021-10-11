@@ -1,5 +1,8 @@
 @extends('user.layouts.master')
 @section('title', 'Thanh toán')
+@section('custom-css')
+    <link rel="stylesheet" href="{{ asset('user/custom-css/payment/style.css') }}">
+@endsection
 @section('breadcrumb')
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -21,106 +24,128 @@
     <!-- Shopping Cart Section Begin -->
     <section class="checkout-section spad">
         <div class="container">
-            <form action="#" class="checkout-form">
+            <form action="{{ route('payment.handle') }}" method="POST" class="checkout-form">
+                @csrf
                 <div class="row">
                     <div class="col-lg-6">
-{{--                        <div class="checkout-content">--}}
-{{--                            <a href="#" class="content-btn">Click Here To Login</a>--}}
-{{--                        </div>--}}
                         <h4>Thông tin người nhận</h4>
                         <div class="row">
-{{--                            <div class="col-lg-6">--}}
-{{--                                <label for="fir">First Name<span>*</span></label>--}}
-{{--                                <input type="text" id="fir">--}}
-{{--                            </div>--}}
+                            <div class="col-lg-12 mb-4">
+                                <label for="name">Họ tên<span>*</span></label>
+                                <input class="mb-0 form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ isMemberLogged() ? getLoggedInUser()->name : old('name') }}">
+                                @error('name')
+                                <p class="text-danger mb-0">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="col-lg-12 mb-4">
+                                <label for="address">Địa chỉ<span>*</span></label>
+                                <input class="mb-0 form-control @error('address') is-invalid @enderror" type="text" id="address" name="address" value="{{ isMemberLogged() ? getAccountInfo()->address : old('address') }}">
+                                @error('address')
+                                <p class="text-danger mb-0">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            {{-- <div class="col-lg-12">
+                                <label for="street">Street Address<span>*</span></label>
+                                <input type="text" id="street" class="street-first">
+                                <input type="text">
+                            </div>
                             <div class="col-lg-12">
-                                <label for="last">Họ tên<span>*</span></label>
-                                <input type="text" id="last">
+                                <label for="zip">Postcode / ZIP (optional)</label>
+                                <input type="text" id="zip">
                             </div>
-{{--                            <div class="col-lg-12">--}}
-{{--                                <label for="cun-name">Company Name</label>--}}
-{{--                                <input type="text" id="cun-name">--}}
-{{--                            </div>--}}
                             <div class="col-lg-12">
-                                <label for="cun">Địa chỉ<span>*</span></label>
-                                <input type="text" id="cun">
+                                <label for="town">Town / City<span>*</span></label>
+                                <input type="text" id="town">
+                            </div> --}}
+                            <div class="col-lg-6 mb-4 pr-1">
+                                <label for="phone-number">Số điện thoại<span>*</span></label>
+                                <input class="mb-0 form-control @error('phone_number') is-invalid @enderror" type="text" id="phone-number" name="phone_number" value="{{ isMemberLogged() ? getLoggedInUser()->phone_number : old('phone_number') }}">
+                                @error('phone_number')
+                                <p class="text-danger mb-0">{{ $message }}</p>
+                                @enderror
                             </div>
-{{--                            <div class="col-lg-12">--}}
-{{--                                <label for="street">Street Address<span>*</span></label>--}}
-{{--                                <input type="text" id="street" class="street-first">--}}
-{{--                                <input type="text">--}}
-{{--                            </div>--}}
-{{--                            <div class="col-lg-12">--}}
-{{--                                <label for="zip">Postcode / ZIP (optional)</label>--}}
-{{--                                <input type="text" id="zip">--}}
-{{--                            </div>--}}
-{{--                            <div class="col-lg-12">--}}
-{{--                                <label for="town">Town / City<span>*</span></label>--}}
-{{--                                <input type="text" id="town">--}}
-{{--                            </div>--}}
-                            <div class="col-lg-6">
-                                <label for="phone">Số điện thoại<span>*</span></label>
-                                <input type="text" id="phone">
-                            </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 mb-4 pl-0">
                                 <label for="email">Email<span>*</span></label>
-                                <input type="text" id="email">
+                                <input class="mb-0 form-control @error('email') is-invalid @enderror" type="email" id="email" name="email" value="{{ isMemberLogged() ? getLoggedInUser()->email : old('email') }}">
+                                @error('email')
+                                <p class="text-danger mb-0">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="col-lg-12 mb-4">
+                                <label for="note">Lời nhắn</label>
+                                <textarea class="form-control mb-0" name="note" id="note" rows="5"></textarea>
+                            </div>
+                            <div class="payment-check col-lg-12 mb-4">
+                                <select class="form-control pc-method mb-0 @error('payment_method') is-invalid @enderror" name="payment_method" id="payment-method">
+                                    <option value="">--Chọn Phương thức thanh toán--</option>
+                                    <option value="atm">Thẻ ATM nội địa</option>
+                                    <option value="cod">Thanh toán khi nhận hàng</option>
+                                </select>
+                                @error('payment_method')
+                                <p class="text-danger mb-0">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="col-lg-12">
-                                <label for="note">Lời nhắn</label>
-                                <textarea class="form-control" name="note" id="note" rows="5"></textarea>
+                                <div class="order-btn">
+                                    <button type="submit" class="site-btn place-btn">Đặt hàng</button>
+                                </div>
                             </div>
-{{--                            <div class="col-lg-12">--}}
-{{--                                <div class="create-item">--}}
-{{--                                    <label for="acc-create">--}}
-{{--                                        Create an account?--}}
-{{--                                        <input type="checkbox" id="acc-create">--}}
-{{--                                        <span class="checkmark"></span>--}}
-{{--                                    </label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                         </div>
                     </div>
                     <div class="col-lg-6">
-{{--                        <div class="checkout-content">--}}
-{{--                            <input type="text" placeholder="Enter Your Coupon Code">--}}
-{{--                        </div>--}}
                         <div class="place-order">
                             <h4>Đơn hàng của bạn</h4>
                             <div class="order-total">
-                                <ul class="order-table">
-                                    <li>Sản phẩm <span>Số tiền</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                    <li class="fw-normal">Combination x 1 <span>$120.00</span></li>
-{{--                                    <li class="fw-normal">Subtotal <span>$240.00</span></li>--}}
-                                    <li class="total-price">Tổng đơn hàng <span>$240.00</span></li>
-                                </ul>
-                                <div class="payment-check">
-                                    <div class="pc-item">
-                                        <label for="pc-credit">
-                                            Thẻ tín dụng
-                                            <input type="checkbox" id="pc-credit">
-                                            <span class="checkmark"></span>
-                                        </label>
+                                <div class="row mb-4 order-table">
+                                    <div class="col-12 order-table__heading">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h5 class="title">Sản phẩm</h5>
+                                            </div>
+                                            <div class="col-3">
+                                                <h5 class="title float-right">Số tiền</h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="pc-item">
-                                        <label for="pc-atm">
-                                            Thẻ ATM nội địa
-                                            <input type="checkbox" id="pc-atm">
-                                            <span class="checkmark"></span>
-                                        </label>
+                                    <div class="col-12 order-table__content">
+                                        @if (!empty(getCart()))
+                                            @foreach (getCart() as $item)
+                                            <div class="row order-item">
+                                                <div class="col-9">
+                                                    <div class="row">
+                                                        <div class="col-3 order-item__image">
+                                                            <div class="w-100 pd-image">
+                                                                <img class="w-100" src="{{ getProductImageInCart($item['options']['slug']) }}" alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-9 px-0 order-item__content">
+                                                            <p class="pd-option mb-0">
+                                                                <span>{{$item['name']}}</span><span style="font-weight: 700;"> X {{$item['qty']}}</span>
+                                                            </p>
+                                                            <p class="pd-variant mb-0">{{ implode("-", $item['options']['attributes']) }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php
+                                                    $totalItem = $item['price'] * $item['qty']
+                                                @endphp
+                                                <div class="col-3">
+                                                    <span class="pd-price float-right">{{ number_format($totalItem, 0, ',', '.') }}đ</span>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    <div class="pc-item">
-                                        <label for="pc-cod">
-                                            Thanh toán khi nhận hàng
-                                            <input type="checkbox" id="pc-cod">
-                                            <span class="checkmark"></span>
-                                        </label>
+                                    <div class="col-12 order-table__footer">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h5 class="ft-title price-total__title">Tổng đơn hàng</h5>
+                                            </div>
+                                            <div class="col-3">
+                                                <h5 class="ft-title price-total__value">{{ getCartTotal() }}đ</h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="order-btn">
-                                    <button type="submit" class="site-btn place-btn">Đặt hàng</button>
                                 </div>
                             </div>
                         </div>

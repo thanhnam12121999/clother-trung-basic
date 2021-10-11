@@ -29,6 +29,10 @@ html body header.header-section .advanced-search .custom_input-group {
   max-width: initial;
   width: 100%;
 }
+html body header.header-section .cart-hover .si-text .product-selected p, html body header.header-section .cart-hover .si-text .product-selected h6 {
+  font-size: 14px !important;
+  margin-bottom: 0 !important;
+}
 html body .banner-section .single-banner {
   cursor: pointer;
 }
