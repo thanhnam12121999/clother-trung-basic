@@ -20,4 +20,9 @@ class ProductVariantRepository extends BaseRepository
     {
         return $this->model->where('variant', $variantValue)->get();
     }
+
+    public function getVariantsHasVariantTextIsNull()
+    {
+        return $this->model->whereNull('variant_text')->get();
+    }
 }

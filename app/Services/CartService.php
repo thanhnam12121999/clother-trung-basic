@@ -48,6 +48,7 @@ class CartService extends BaseService
                 'price' => $price,
                 'weight' => 0,
                 'options' => [
+                    'product_id' => $product->id,
                     'attributes' => $attributes,
                     'slug' => $slug,
                     'variant_id' => $data['variant_id']
