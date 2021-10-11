@@ -115,7 +115,7 @@
                                                     <div class="row">
                                                         <div class="col-3 order-item__image">
                                                             <div class="w-100 pd-image">
-                                                                <img class="w-100" src="{{ getProductImageInCart($item['options']['slug']) }}" alt="">
+                                                                <img class="w-100" src="{{ getProductImageInCart($item['options']['product_id']) }}" alt="">
                                                             </div>
                                                         </div>
                                                         <div class="col-9 px-0 order-item__content">

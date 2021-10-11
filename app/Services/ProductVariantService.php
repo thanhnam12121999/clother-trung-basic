@@ -104,18 +104,20 @@ class ProductVariantService extends BaseService
         $variantData = collect($data['variant'])->map(function ($item) {
             return (int)$item['attr_value_id'];
         })->all();
+        // dd($variantData);
         $variants = $this->productVariantRepository->getVariantsByProductId($data['product_id']);
         $variantsMapping = $variants->mapWithKeys(function ($variant) {
             return [
                 $variant->id => [
-                    'variant' => json_decode($variant->variant),
+                    'variant_value' => json_decode($variant->variant_value, true),
+                    'variant_text' => $variant->variant_text,
                     'variant_price' => $variant->unit_price,
                     'variant_amount' => $variant->amount
                 ]
             ];
         });
         $variantResponse = $variantsMapping->map(function ($item, $variantId) use ($variantData) {
-            $diff = collect(array_values($item['variant']))->diff($variantData);
+            $diff = collect(array_values($item['variant_value']))->diff($variantData);
             if ($diff->isEmpty()) {
                 return [
                     'variant_id' => $variantId,

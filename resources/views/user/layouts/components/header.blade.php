@@ -87,7 +87,7 @@
                                         @foreach (getCart() as $item)
                                             <tr>
                                                 <td class="si-pic" width="30%">
-                                                    <img class="w-100" src="{{ getProductImageInCart($item['options']['slug']) }}" alt="">
+                                                    <img class="w-100" src="{{ getProductImageInCart($item['options']['product_id']) }}" alt="">
                                                 </td>
                                                 <td class="si-text" width="60%">
                                                     <div class="product-selected">

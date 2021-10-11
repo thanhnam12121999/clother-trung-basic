@@ -42,8 +42,7 @@ class ProfileController extends Controller
         if (!isMemberLogged()) {
             return redirect()->route('home');
         }
-        $orders = $this->orderService->mapMemberOrdersData();
-        // dd($orders);
+        $orders = getAccountInfo()->orders;
 
         $orderStatus = [
             Order::WAITING_CONFIRM_STATUS => 'Chờ xác nhận',

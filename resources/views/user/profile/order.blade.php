@@ -78,21 +78,21 @@
                                                 @foreach ($orders as $order)
                                                 <div class="card mt-2" style="min-height: 200px;">
                                                     <div class="card-body">
-                                                        @if ($status == $order['order_status'])
-                                                            @foreach ($order['order_details'] as $detail)
+                                                        @if ($status == $order->order_status)
+                                                            @foreach ($order->orderDetails as $detail)
                                                             <div class="row">
                                                                 <div class="col-2">
-                                                                    <img src="{{ $detail['product']['feature_image_path'] }}" alt="">
+                                                                    <img src="{{ $detail->productVariant->product->feature_image_path }}" alt="">
                                                                 </div>
                                                                 <div class="col-8">
                                                                     <p class="pd-option mb-0">
-                                                                        {{$detail['product']['name']}}
+                                                                        {{ $detail->productVariant->product->name }}
                                                                     </p>
-                                                                    <p class="pd-variant mb-0">Phân loại hàng: {{$detail['variant']}}</p>
-                                                                    <p class="mb-0">x {{$detail['amount']}}</p>
+                                                                    <p class="pd-variant mb-0">Phân loại hàng: {{$detail->productVariant->variant_text}}</p>
+                                                                    <p class="mb-0">x {{$detail->amount}}</p>
                                                                 </div>
                                                                 @php
-                                                                    $totalItem = $detail['unit_price'] * $detail['amount']
+                                                                    $totalItem = $detail->productVariant->unit_price * $detail->amount
                                                                 @endphp
                                                                 <div class="col-2">
                                                                     <span class="pd-price float-right">{{ number_format($totalItem, 0, ',', '.') }}đ</span>
@@ -103,7 +103,7 @@
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <h5 class="text-uppercase font-weight-bold float-left">Tổng số tiền</h5>
-                                                                    <h5 class="price-total float-right font-weight-bold">{{ number_format($order['price_total'], 0, ',', '.') }}đ</h5>
+                                                                    <h5 class="price-total float-right font-weight-bold">{{ number_format($order->price_total, 0, ',', '.') }}đ</h5>
                                                                 </div>
                                                             </div>
                                                         @else
