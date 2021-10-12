@@ -67,10 +67,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('admin.member.index') }}" class="nav-link @yield('active-members')">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Quản Lý Thành Viên
+                Danh Sách Thành Viên
               </p>
             </a>
           </li>
