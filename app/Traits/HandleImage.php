@@ -29,7 +29,8 @@ trait HandleImage
 
     private function handleUploadImage($image, $folder)
     {
-        $imageName = time() . '-' . $image->getClientOriginalName();
+        
+        $imageName = time() . '-' . str_replace(" ", "-", $image->getClientOriginalName());
         $filePath = "images/${folder}/{$imageName}";
         Storage::disk('public')->put($filePath, file_get_contents($image), 'public');
         if (!Storage::disk('public')->exists($filePath)) {

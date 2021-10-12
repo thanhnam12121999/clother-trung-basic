@@ -6,7 +6,7 @@
 @section('contents')
 <div class="breadcrumb">
     <div class="btn-add">
-        <a id="btn-form-add" class="btn btn-primary btn-sm" role="button">
+        <a href="{{ route('admin.slides.form_create') }}" id="btn-form-add" class="btn btn-primary btn-sm" role="button">
             <span class="glyphicon glyphicon-plus"></span>Thêm Mới
         </a>
     </div>
@@ -26,37 +26,29 @@
                                                 <th class="text-center">ID</th>
                                                 <th class="text-center">Hình Ảnh</th>
                                                 <th class="text-center">Tiêu Đề</th>
-                                                <th class="text-center">Nội Dung</th>
-                                                <th class="text-center">Trạng Thái</th>
                                                 <th class="text-center">Thao Tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <form id="fixx" action="">
-                                                {{-- @foreach ($students as $student) --}}
-                                                <tr id="id-product">
-                                                    <td class="text-center">id</td>
-                                                    <td style="font-size: 16px;">name_student</td>
-                                                    <td style="font-size: 16px;">name </td>
-                                                    <td>instructors</td>
+                                                @foreach ($slides as $slide)
+                                                <tr>
+                                                    <td class="text-center">{{$slide->id}}</td>
                                                     <td class="text-center">
-                                                        {{-- @if ($student->status == 1) --}}
-                                                        <i style="color: green" class="fa fa-check" aria-hidden="true"></i>
-                                                        {{-- @else
-                                                        <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
-                                                        @endif --}}
+                                                        <img style="width: 80px;height: 80px;" src="{{ asset('storage/images/slides/'.$slide->image) }}" alt="">
                                                     </td>
+                                                    <td class="text-center">{{$slide->title}}</td>
                                                     <td class="text-center">
-                                                        <button type="button" url-update="update"
+                                                        <a type="button" href="{{ route('admin.slides.edit', $slide->id) }}"
                                                             data-url="up"
                                                             class="btn btn-success btn-xs btn-edit-product"><i class="fa fa-plus"
-                                                                aria-hidden="true"></i>Sửa</button>
-                                                        <button type="button" data-url="delete"
+                                                                aria-hidden="true"></i>Sửa</a>
+                                                        <button type="button" data-url="{{ route('admin.slides.delete', $slide->id) }}"
                                                         class="btn btn-danger btn-xs  btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
                                                         Xóa</button>
                                                     </td>
                                                 </tr>
-                                                {{-- @endforeach --}}
+                                                @endforeach
                                             </form>
                                         </tbody>
                                     </table>
@@ -71,6 +63,7 @@
 @endsection
 @section('custom-script')
     @include('admin.components.js.datatables')
+    <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 @endsection
 @section('my-script')
     <script>
@@ -87,6 +80,27 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
+            });
+
+            $('.btn-delete').click(function (e) {
+                e.preventDefault();
+                let url = $(this).attr('data-url');
+                Swal.fire({
+                    title: 'Bạn chắc chắn muốn xóa slide này?',
+                    // text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    confirmButtonColor: '#42c119',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy'
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                })
             });
         });
     </script>

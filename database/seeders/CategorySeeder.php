@@ -21,9 +21,9 @@ class CategorySeeder extends Seeder
         DB::table('categories')->truncate();
 
         DB::table('categories')->insert([
-            ['name' => 'áo', 'parent' => 0],
-            ['name' => 'quần', 'parent' => 0],
-            ['name' => 'váy', 'parent' => 0],
+            ['name' => 'áo', 'parent' => 0, 'slug' => 'ao-cat'],
+            ['name' => 'quần', 'parent' => 0, 'slug' => 'quan-cat'],
+            ['name' => 'váy', 'parent' => 0, 'slug' => 'vay-cat'],
         ]);
         
         Schema::enableForeignKeyConstraints();
