@@ -77,6 +77,12 @@ Route::middleware([AuthLoginAdmin::class])->group(function () {
         Route::get('/create', [ManagerController::class, 'create'])->name('managers.form_create');
         Route::get('/delete/{id}', [ManagerController::class, 'destroy'])->middleware('policyOfManager')->name('managers.delete');
     });
+
+    Route::prefix('orders')->group(function () {
+        Route::get('', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/{order}', [OrderController::class, 'detail'])->name('orders.detail');
+        Route::get('/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+    });
 });
 // Route::get('test', function () {
 //    return Hash::make(123456);

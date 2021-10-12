@@ -1,0 +1,39 @@
+.profile-background {
+    padding-bottom: 80px;
+    padding-top: 80px;
+}
+
+.bg-profile-cus {
+    background-color: #e6e6e6;;
+}
+
+.nav-link {
+    color: #0f0f0f;
+}
+
+.nav-link:hover {
+    color: #0f0f0f;
+    text-decoration: underline;
+}
+
+.nav-link.active {
+    color: #e7ab3c !important;
+}
+
+.tab-item ul li a {
+    font-size: 14px;
+    padding: 12px 30px;
+}
+
+.pd-price, .price-total {
+    color: #e7ab3c;
+}
+
+.btn-cancel {
+    border: none;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+    margin: 1em !important;
+    font-size: 1em !important;
+}

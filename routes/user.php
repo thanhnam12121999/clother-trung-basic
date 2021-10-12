@@ -6,6 +6,7 @@ use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\PaymentController;
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,6 @@ Route::get('', function () {
 });
 
 Route::get('trang-chu', [HomeController::class, 'index'])->name('home');
-Route::get('ho-so', [HomeController::class, 'getProfileUser'])->name('profile');
-Route::put('ho-so/cap-nhat/{id}', [HomeController::class, 'updateProfile'])->name('profile.update');
 Route::prefix('san-pham')->group(function () {
     Route::get('', [ProductController::class, 'index'])->name('products.index');
     Route::get('/{slug}', [ProductController::class, 'getItemBySlug'])->name('products.slug');
@@ -41,3 +40,8 @@ Route::post('cart/add/{slug}', [CartController::class, 'add'])->name('cart.add')
 Route::get('cart/remove/{rowId}', [CartController::class, 'remove'])->name('cart.remove');
 Route::put('cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::get('thanh-toan', [PaymentController::class, 'index'])->name('payment.index');
+Route::post('payment', [PaymentController::class, 'handlePayment'])->name('payment.handle');
+Route::get('ho-so', [ProfileController::class, 'getProfileUser'])->name('profile');
+Route::put('ho-so/cap-nhat/{id}', [ProfileController::class, 'updateProfile'])->name('profile.update');
+Route::get('don-mua', [ProfileController::class, 'getViewOrder'])->name('profile.order');
+Route::get('orders/{order}/update', [ProfileController::class, 'updateOrders'])->name('profile.order.update');

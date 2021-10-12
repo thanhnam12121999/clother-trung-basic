@@ -24,31 +24,50 @@ class ProductVariantService extends BaseService
     public function getProductVariantsValue($productAttributes)
     {
         $attributeValues = $this->attributeValueRepository->getAttributeValuesOfProduct($productAttributes);
-        $attributeValuesMapping = $attributeValues->mapToGroups(function ($attrValue, $key) {
+        $variantsValue = $attributeValues->mapToGroups(function ($attrValue, $key) {
             return [
                 $attrValue->attribute_id => $attrValue->id
             ];
         })->map(function ($attrValues, $attrId) {
             return $attrValues->all();
         })->all();
-        $productVariants = getCombinations($attributeValuesMapping);
-        $productVariantsMapping = collect($productVariants)->map(function ($variant) {
-            return ['variant' => json_encode($variant)];
+        $variantsText = $attributeValues->mapToGroups(function ($attrValue, $key) {
+            return [
+                $attrValue->attribute_id => $attrValue->name
+            ];
+        })->map(function ($attrValues, $attrId) {
+            return $attrValues->all();
         })->all();
-        return $productVariantsMapping;
+
+        $variantsValue = getCombinations($variantsValue);
+        $variantsText = getCombinations($variantsText);
+
+        $variantsValueMapping = collect($variantsValue)->map(function ($value) {
+            return ['variant_value' => json_encode($value)];
+        })->all();
+        $variantsTextMapping = collect($variantsText)->map(function ($text) {
+            return ['variant_text' => implode("-", $text)];
+        })->all();
+
+        $variants = [];
+        foreach ($variantsValueMapping as $keyValue => $value) {
+            foreach ($variantsTextMapping as $keyText => $text) {
+                if ($keyValue == $keyText) {
+                    array_push($variants, array_merge($value, $text));
+                }
+            }
+        }
+
+        return $variants;
     }
 
     public function getVariantsOfProduct($product)
     {
         $variants = $product->variants;
         $variantsMapping = $variants->mapWithKeys(function ($variant) {
-            $attributeValues = $this->attributeValueRepository->getAttributeValuesOfProduct(json_decode($variant->variant));
-            $variants = $attributeValues->sortBy('attribute_id')->pluck('name')->map(function ($value) {
-                return Str::ucfirst($value);
-            });
             return [
                 $variant->id => [
-                    'variant' => $variants->toArray(),
+                    'variant_text' => $variant->variant_text,
                     'amount' => $variant->amount,
                     'unit_price' => $variant->unit_price,
                 ]
@@ -85,18 +104,20 @@ class ProductVariantService extends BaseService
         $variantData = collect($data['variant'])->map(function ($item) {
             return (int)$item['attr_value_id'];
         })->all();
+        // dd($variantData);
         $variants = $this->productVariantRepository->getVariantsByProductId($data['product_id']);
         $variantsMapping = $variants->mapWithKeys(function ($variant) {
             return [
                 $variant->id => [
-                    'variant' => json_decode($variant->variant),
+                    'variant_value' => json_decode($variant->variant_value, true),
+                    'variant_text' => $variant->variant_text,
                     'variant_price' => $variant->unit_price,
                     'variant_amount' => $variant->amount
                 ]
             ];
         });
         $variantResponse = $variantsMapping->map(function ($item, $variantId) use ($variantData) {
-            $diff = collect(array_values($item['variant']))->diff($variantData);
+            $diff = collect(array_values($item['variant_value']))->diff($variantData);
             if ($diff->isEmpty()) {
                 return [
                     'variant_id' => $variantId,

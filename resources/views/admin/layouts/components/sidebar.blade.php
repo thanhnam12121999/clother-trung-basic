@@ -51,14 +51,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Quản Lý Đơn Hàng
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="{{ route('admin.categories.index') }}" class="nav-link @yield('active-categories')">
               <i class="nav-icon fas fa-th"></i>
               <p>
@@ -67,10 +59,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.manager.index') }}" class="nav-link @yield('active-manager')">
+            <a href="{{ route('admin.orders.index') }}" class="nav-link @yield('active-orders')">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Quản Lý Nhân Viên
+                Quản Lý Đơn Hàng
               </p>
             </a>
           </li>
@@ -83,18 +75,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.slides.index') }}" class="nav-link @yield('active-slide')">
+            <a href="{{ route('admin.manager.index') }}" class="nav-link @yield('active-manager')">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Quản Lý Slide
+                Quản Lý Nhân Viên
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('admin.slides.index') }}" class="nav-link @yield('active-slide')">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Quản Lý Banner
+                Quản Lý Slide
               </p>
             </a>
           </li>

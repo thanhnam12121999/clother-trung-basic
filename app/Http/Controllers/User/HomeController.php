@@ -23,21 +23,4 @@ class HomeController extends Controller
         $slides = $this->slideService->getSlideToShow($limit = 4);
         return view('user.home.index', compact('slides'));
     }
-
-    public function getProfileUser()
-    {
-        if (!isMemberLogged()) {
-            return redirect()->route('home');
-        }
-        return view('user.home.profile');
-    }
-
-    public function updateProfile(int $id, UpdateMemberAccountRequest  $request)
-    {
-        $response = $this->accountService->updateAccountOfMember($id, $request);
-        if ($response['success']) {
-            return redirect()->back()->with('success', $response['message']);
-        }
-        return redirect()->back()->with('error', $response['message']);
-    }
 }
