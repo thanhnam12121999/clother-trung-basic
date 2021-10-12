@@ -87,7 +87,7 @@
                                                                                 {{ $detail->productVariant->product->name }}
                                                                             </p>
                                                                             <p class="pd-variant mb-0">Phân loại hàng: {{$detail->productVariant->variant_text}}</p>
-                                                                            <p class="mb-0">x {{$detail->amount}}</p>
+                                                                            <p class="mb-0">{{ number_format($detail->productVariant->unit_price, 0, ',', '.') }}đ x {{$detail->amount}}</p>
                                                                         </div>
                                                                         @php
                                                                             $totalItem = $detail->productVariant->unit_price * $detail->amount
@@ -143,7 +143,7 @@
                                                                                 {{ $detail->productVariant->product->name }}
                                                                             </p>
                                                                             <p class="pd-variant mb-0">Phân loại hàng: {{$detail->productVariant->variant_text}}</p>
-                                                                            <p class="mb-0">x {{$detail->amount}}</p>
+                                                                            <p class="mb-0">{{ number_format($detail->productVariant->unit_price, 0, ',', '.') }}đ x {{$detail->amount}}</p>
                                                                         </div>
                                                                         @php
                                                                             $totalItem = $detail->productVariant->unit_price * $detail->amount
@@ -196,7 +196,7 @@
                                                                                 {{ $detail->productVariant->product->name }}
                                                                             </p>
                                                                             <p class="pd-variant mb-0">Phân loại hàng: {{$detail->productVariant->variant_text}}</p>
-                                                                            <p class="mb-0">x {{$detail->amount}}</p>
+                                                                            <p class="mb-0">{{ number_format($detail->productVariant->unit_price, 0, ',', '.') }}đ x {{$detail->amount}}</p>
                                                                         </div>
                                                                         @php
                                                                             $totalItem = $detail->productVariant->unit_price * $detail->amount
@@ -249,7 +249,7 @@
                                                                                 {{ $detail->productVariant->product->name }}
                                                                             </p>
                                                                             <p class="pd-variant mb-0">Phân loại hàng: {{$detail->productVariant->variant_text}}</p>
-                                                                            <p class="mb-0">x {{$detail->amount}}</p>
+                                                                            <p class="mb-0">{{ number_format($detail->productVariant->unit_price, 0, ',', '.') }}đ x {{$detail->amount}}</p>
                                                                         </div>
                                                                         @php
                                                                             $totalItem = $detail->productVariant->unit_price * $detail->amount
