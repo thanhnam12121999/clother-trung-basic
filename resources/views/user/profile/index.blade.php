@@ -57,6 +57,15 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Tài khoản</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{$infoUser->username}}"  placeholder="Tài khoản">
+                                                    @error('username')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label for="inputEmail" class="col-md-3 col-form-label">Email</label>
                                                 <div class="col-md-9">
                                                     <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail" value="{{$infoUser->email}}" placeholder="Email">
@@ -75,10 +84,26 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Tài khoản</label>
+                                                <label class="col-md-3 col-form-label">Địa chỉ</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{$infoUser->username}}"  placeholder="Tài khoản">
-                                                    @error('username')
+                                                    <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{$infoUser['address']}}"  placeholder="Tỉnh/ Thành phố, Quận/Huyện, Phường/Xã">
+                                                    @error('address')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Giới tính</label>
+                                                <div class="col-md-9">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="gender" id="male" value="0" {{ $infoUser['gender'] == 0 ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="male">Nam</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="gender" id="famale" value="option2" {{ $infoUser['gender'] == 1 ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="famale">Nữ</label>
+                                                    </div>
+                                                    @error('gender')
                                                     <p class="text-danger">{{ $message }}</p>
                                                     @enderror
                                                 </div>
@@ -88,15 +113,6 @@
                                                 <div class="col-md-9">
                                                     <input type="date" name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror" value="{{$infoUser->date_of_birth}}"  placeholder="Ngày Sinh">
                                                     @error('date_of_birth')
-                                                    <p class="text-danger">{{ $message }}</p>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Địa chỉ</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{$infoUser['address']}}"  placeholder="Tỉnh/ Thành phố, Quận/Huyện, Phường/Xã">
-                                                    @error('address')
                                                     <p class="text-danger">{{ $message }}</p>
                                                     @enderror
                                                 </div>
