@@ -1,14 +1,16 @@
 @extends('admin.layouts.master')
 @section('custom-css')
     @include('admin.components.css.datatables')
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.css') }}">
 @endsection
+@section('active-orders', 'active')
 @section('breadcrumb', 'Quản Lý Đơn Hàng')
 @section('contents')
-<div class="breadcrumb">
+{{-- <div class="breadcrumb">
 	<a class="btn btn-primary btn-sm" href="admin/orders/recyclebin" role="button">
 		<span class="glyphicon glyphicon-trash"></span> Đơn Hàng Đã Lưu (10)
 	</a>
-</div>
+</div> --}}
 <section class="content">
 	<div class="row">
 		<div class="col-md-12">
@@ -21,73 +23,89 @@
 								<table id="order-list" class="table table-hover table-bordered">
 									<thead>
 										<tr>
-											<th class="text-center">Mã Đơn Hàng</th>
-											<th>Khách Hàng</th>
-											<th>Điện Thoại</th>
-											<th>Tổng Tiền</th>
-											<th>Ngày Tạo Hóa Đơn</th>
-											<th class="text-center">Trạng Thái</th>
-											<th class="text-center">Xử Lý Đơn</th>
-											<th class="text-center">Thao Tác</th>
+											<th class="text-center">Mã đơn hàng</th>
+											<th class="text-center">Khách hàng</th>
+                                            <th class="text-center">Địa chỉ</th>
+                                            <th class="text-center">Điện thoại</th>
+											<th class="text-center">Tổng tiền</th>
+                                            <th class="text-center">Trạng thái</th>
+                                            <th class="text-center">Ghi chú</th>
+                                            <th class="text-center">Phương thúc thanh toán</th>
+                                            <th class="text-center">Ngày tạo hóa đơn</th>
+                                            <th class="text-center">Thao tác</th>
 										</tr>
 									</thead>
 									<tbody>
-											{{-- foreach ($list as $val): --}}
-											<tr>
-												<td class="text-center">ordercode</td>
-												<td>fullname</td>
-												<td>phone</td>
-												<td>100₫</td>
-												<td>order date</td>
-												<td style="text-align: center;">
-													Đang Chờ Duyệt
-													{{-- switch ($val['status']) {
-														case '0':
-														echo 'Đang chờ duyệt';
-														break;
-														case '1':
-														echo 'Đang giao hàng';
-														break;
-														case '2':
-														echo 'Đã giao';
-														break;
-														case '3':
-														echo 'Khách hàng đã hủy';
-														break;
-														case '4':
-														echo 'Nhân viên đã hủy';
-														break;
-													}
-													?>  --}}
-												</td>
-												<td style="text-align: center;">
-													{{-- if($val['status']==1) --}}
-														<a class="btn btn-success btn-xs" href="admin/orders/status/"role = "button">
-															<i class="fa  fa-thumbs-o-up"></i> Xác Nhận Thanh Toán
-														</a>
-														{{-- ($val['status']==0) --}}
-														<a class="btn btn-default btn-xs" href="admin/orders/status"   role = "button">
-															<i class="fa fa-check-square-o"></i> Duyệt Đơn Đặt Hàng
-														</a>						
-														{{-- if($val['status'] ==0 || $val['status'] ==1) --}}
-														<a class="btn btn-danger btn-xs" href="admin/orders/cancelorder/" role = "button">
-															<i class="fa fa-save"></i> Hủy Đơn
-														</a>
-												</td>
-												<td class="text-center">
-													<!-- /Xem -->
-													<a class="btn btn-info btn-xs" href="admin/orders/detail" role = "button">
-														<span class="glyphicon glyphicon-eye-open"></span> Xem 
-													</a>
-													<!-- /Xóa -->
-													<a class="btn bg-olive btn-xs" href="admin/orders/trash/"  role = "button">
-														<i class="fa fa-save"></i> Lưu Đơn
-													</a>
-													<a class="btn btn-primary btn-sm" href="/admin/orders/update/" role="button">
-														Ghi Chú 
-												</td>
-											</tr>
-										{{-- php endforeach;  --}}
+                                        @if (!empty($orders))
+                                        @foreach ($orders as $order)
+                                            @php
+                                                $user = $order->member;
+                                                if (empty($user)) {
+                                                    $user = $order->customer;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="text-center">{{ $order->order_code }}</td>
+                                                <td class="text-center">
+                                                    {{ empty($user->account) ? $user->name : $user->account->name }}
+                                                </td>
+                                                <td class="text-center">{{ $user->address }}</td>
+                                                <td class="text-center">{{ empty($user->account) ? $user->phone_number : $user->account->phone_number  }}</td>
+                                                <td class="text-center">{{ number_format($order->price_total, 0, ',', '.') }}đ</td>
+                                                <td class="text-center">
+                                                    @php
+                                                        $selectedConfirmed = '';
+                                                        $disabledConfirmed = '';
+                                                        $selectedDelivered = '';
+                                                        $disabledDelivered = '';
+                                                        if ($order->order_status == \App\Models\Order::WAITING_CONFIRM_STATUS ) {
+                                                            $disabledDelivered = 'disabled';
+                                                        }
+                                                        if ($order->order_status == \App\Models\Order::CONFIRMED_DELIVERY_STATUS) {
+                                                            $selectedConfirmed = 'selected';
+                                                            $disabledDelivered = 'disabled';
+                                                        }
+                                                        if ($order->order_status == \App\Models\Order::DELIVERED_STATUS) {
+                                                            $selectedDelivered = 'selected';
+                                                            $disabledConfirmed = 'disabled';
+                                                        }
+                                                        if ($order->order_status == \App\Models\Order::CANCEL_STATUS) {
+                                                            $disabledConfirmed = 'disabled';
+                                                            $disabledDelivered = 'disabled';
+                                                        }
+                                                    @endphp
+                                                    <select class="form-control" name="order_status" id="order-status">
+                                                        <option value="0" {{$order->order_status == \App\Models\Order::WAITING_CONFIRM_STATUS ? 'selected' : 'disabled'}}>Chờ xác nhận giao hàng</option>
+                                                        <option value="1" data-order-id="{{$order->id}}" {{$selectedConfirmed}} {{$disabledConfirmed}}>Đang giao hàng</option>
+                                                        <option value="2" {{$selectedDelivered}} {{$disabledDelivered}}>Đã giao</option>
+                                                        <option value="3" {{$order->order_status == \App\Models\Order::CANCEL_STATUS ? 'selected' : 'disabled'}}>Đã hủy</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ $order->note }}
+                                                </td>
+                                                <td class="text-center">
+                                                    @if ($order->payment_method == 'cod')
+                                                        Thanh toán khi nhận hàng
+                                                    @else
+                                                        Thanh toán ATM
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ $order->created_at }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <!-- /Xem -->
+                                                    @if ($order->order_status == \App\Models\Order::WAITING_CONFIRM_STATUS)
+                                                    <button data-url="{{ route('admin.orders.update-status', ['order' => $order->id, 'order_status' => 3]) }}" type="button" class="btn btn-danger btn-xs btn-cancel">Hủy đơn</button>
+                                                    @endif
+                                                    <a class="btn btn-info btn-xs" href="{{ route('admin.orders.detail', ['order' => $order->id]) }}" role = "button">
+                                                        <span class="glyphicon glyphicon-eye-open"></span> Chi tiết
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        @endif
 									</tbody>
 								</table>
 							</div>
@@ -103,14 +121,11 @@
 @endsection
 @section('custom-script')
     @include('admin.components.js.datatables')
+    <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 @endsection
 @section('my-script')
     <script>
         $(function() {
-            //   $("#example1").DataTable({
-            //     "responsive": true, "lengthChange": false, "autoWidth": false,
-            //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            //   }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#order-list').DataTable({
                 "paging": true,
                 // "lengthChange": false,
@@ -119,6 +134,33 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
+            });
+            $(document).on('change', '#order-status', function () {
+                const BASE_URL = $('base').attr('href')
+                const optionSelected = $("option:selected", this);
+                const valueSelected = this.value;
+                const orderId = optionSelected.data('order-id')
+                window.location.href = `${BASE_URL}admin/orders/${orderId}/update-status?order_status=${valueSelected}`;
+            })
+            $('.btn-cancel').click(function (e) {
+                e.preventDefault();
+                let url = $(this).attr('data-url');
+                Swal.fire({
+                    title: 'Bạn chắc chắn muốn hủy đơn hàng?',
+                    // text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    confirmButtonColor: '#42c119',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xác nhận hủy',
+                    cancelButtonText: 'Hủy'
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                })
             });
         });
     </script>

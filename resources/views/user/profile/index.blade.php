@@ -1,16 +1,9 @@
 @extends('user.layouts.master')
 @section('title', 'Hồ Sơ')
 @section('custom-css')
-    <style>
-        .profile-background {
-            padding-bottom: 80px;
-            padding-top: 80px;
-        }
-        .bg-profile-cus {
-            background-color: #e6e6e6;;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('user/custom-css/profile/style.css') }}">
 @endsection
+@section('active-profile-info', 'active')
 @section('breadcrumb')
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
