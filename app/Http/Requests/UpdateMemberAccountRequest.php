@@ -57,11 +57,11 @@ class UpdateMemberAccountRequest  extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Bạn phải nhập họ tên.',
-            'email.required' => 'Bạn phải nhập địa chỉ email.',
+            'name.required' => 'Hãy nhập họ tên.',
+            'email.required' => 'Hãy nhập địa chỉ email.',
             // 'email.unique' => 'Email đã được sử dụng',
-            'email.email' => 'Sai định dạng mail',
-            'username.required' => 'Bạn phải nhập tên đăng nhập',
+            'email.email' => 'Sai định dạng email',
+            'username.required' => 'Hãy nhập tên đăng nhập',
             // 'username.unique' => 'Tên đăng nhập đã được sử dụng',
             'phone_number.numeric' => 'Chỉ nhập số',
             'gender.boolean' => 'Chỉ được chọn giá trị nam hoặc nữ',

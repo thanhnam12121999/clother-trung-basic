@@ -46,7 +46,7 @@
                                         @foreach (getCart() as $item)
                                             <tr>
                                                 <td class="cart-pic first-row">
-                                                    <img style="width: 10rem;" src="{{ getProductImageInCart($item['options']['slug']) }}" alt="">
+                                                    <img style="width: 10rem;" src="{{ getProductImageInCart($item['options']['product_id']) }}" alt="">
                                                 </td>
                                                 <td class="cart-title first-row">
                                                     <h5 class="mb-2">

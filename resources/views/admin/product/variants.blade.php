@@ -33,7 +33,7 @@
                                 <tbody>
                                     @foreach ($variants as $variantId => $variant)
                                         <tr>
-                                            <td class="text-center">{{ implode(" - ", $variant['variant']) }}</td>
+                                            <td class="text-center">{{ $variant['variant_text'] }}</td>
                                             <td class="text-center">
                                                 <input type="number" class="form-control" name="amount[{{ $variantId }}]" value="{{ !empty($variant['amount']) ? $variant['amount'] : '' }}">
                                             </td>

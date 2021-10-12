@@ -61,9 +61,9 @@ if (!function_exists('getCartTotal')) {
 }
 
 if (!function_exists('getProductImageInCart')) {
-    function getProductImageInCart($slug)
+    function getProductImageInCart($productId)
     {
-        $product = \App\Models\Product::where('slug', $slug)->first();
+        $product = \App\Models\Product::find($productId);
         return $product->feature_image_path ?? null;
     }
 }
