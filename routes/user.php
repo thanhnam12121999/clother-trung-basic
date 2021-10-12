@@ -30,8 +30,6 @@ Route::get('', function () {
 });
 
 Route::get('trang-chu', [HomeController::class, 'index'])->name('home');
-Route::get('ho-so', [ProfileController::class, 'getProfileUser'])->name('profile');
-Route::put('ho-so/cap-nhat/{id}', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::prefix('san-pham')->group(function () {
     Route::get('', [ProductController::class, 'index'])->name('products.index');
     Route::get('/{slug}', [ProductController::class, 'getItemBySlug'])->name('products.slug');
@@ -43,4 +41,7 @@ Route::get('cart/remove/{rowId}', [CartController::class, 'remove'])->name('cart
 Route::put('cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::get('thanh-toan', [PaymentController::class, 'index'])->name('payment.index');
 Route::post('payment', [PaymentController::class, 'handlePayment'])->name('payment.handle');
+Route::get('ho-so', [ProfileController::class, 'getProfileUser'])->name('profile');
+Route::put('ho-so/cap-nhat/{id}', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::get('don-mua', [ProfileController::class, 'getViewOrder'])->name('profile.order');
+Route::get('orders/{order}/update', [ProfileController::class, 'updateOrders'])->name('profile.order.update');

@@ -19,8 +19,8 @@ class PaymentService extends BaseService
     public function __construct(
         CustomerRepository $customerRepository,
         ProductRepository $productRepository,
-        OrderRepository $orderReposigory)
-    {
+        OrderRepository $orderReposigory
+    ) {
         $this->customerRepository = $customerRepository;
         $this->productRepository = $productRepository;
         $this->orderReposigory = $orderReposigory;

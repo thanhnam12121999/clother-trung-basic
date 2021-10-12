@@ -43,13 +43,36 @@ class ProfileController extends Controller
             return redirect()->route('home');
         }
         $orders = getAccountInfo()->orders;
+        $waitingOrders = $orders->filter(function ($order) {
+            return $order->order_status == Order::WAITING_CONFIRM_STATUS;
+        });
+        $confirmedOrders = $orders->filter(function ($order) {
+            return $order->order_status == Order::CONFIRMED_DELIVERY_STATUS;
+        });
+        $deliveredOrders = $orders->filter(function ($order) {
+            return $order->order_status == Order::DELIVERED_STATUS;
+        });
+        $cancelOrders = $orders->filter(function ($order) {
+            return $order->order_status == Order::CANCEL_STATUS;
+        });
 
         $orderStatus = [
             Order::WAITING_CONFIRM_STATUS => 'Chờ xác nhận',
             Order::CONFIRMED_DELIVERY_STATUS => 'Đang giao',
-            Order::DELIVERED_STATUS => 'Đã giao',
+            Order::DELIVERED_STATUS => 'Đã nhận',
             Order::CANCEL_STATUS => 'Đã hủy'
         ];
-        return view('user.profile.order', compact('orders', 'orderStatus'));
+        return view('user.profile.order', compact('waitingOrders', 'confirmedOrders', 'deliveredOrders', 'cancelOrders', 'orderStatus'));
+    }
+
+    public function updateOrders(Order $order, Request $request)
+    {
+        $response = $this->orderService->updateOrders($order, $request);
+        if ($response['success']) {
+            toast($response['message'], 'success')->autoClose(3000);
+            return redirect()->back();
+        }
+        toast($response['message'], 'error')->autoClose(3000);
+        return redirect()->back();
     }
 }
