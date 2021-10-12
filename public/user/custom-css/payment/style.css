@@ -1,0 +1,49 @@
+.checkout-section .checkout-form textarea, .checkout-section .checkout-form select {
+  width: 100%;
+  border: 2px solid #ebebeb;
+  margin-bottom: 25px;
+  padding-left: 15px;
+}
+.checkout-section .checkout-form input:focus, .checkout-section .checkout-form textarea:focus, .checkout-section .checkout-form select.pc-method:focus {
+  box-shadow: none !important;
+  border-color: #e0e0e0 !important;
+}
+.checkout-section .checkout-form select.is-invalid, .checkout-section .checkout-form input.is-invalid {
+  border: 1px solid rgba(212, 16, 16, 0.87) !important;
+}
+.checkout-section .checkout-form .order-total .order-table__heading h5.title {
+  color: #252525;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.checkout-section .checkout-form .order-total .order-table__content .order-item {
+  padding-top: 2.5rem;
+  padding-bottom: 0.5rem;
+}
+.checkout-section .checkout-form .order-total .order-table__content .order-item__content p {
+  font-size: 14px;
+}
+.checkout-section .checkout-form .order-total .order-table__content .order-item__content p.pd-variant {
+  color: #e7ab3c;
+}
+.checkout-section .checkout-form .order-total .order-table__content .order-item .pd-price {
+  font-size: 14px;
+  font-weight: 700;
+}
+.checkout-section .checkout-form .order-total .order-table__footer {
+  padding-top: 2.5rem;
+  padding-bottom: 0.5rem;
+}
+.checkout-section .checkout-form .order-total .order-table__footer .ft-title {
+  color: #252525;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.checkout-section .checkout-form .order-total .order-table__footer .ft-title.price-total__value {
+  color: #e7ab3c;
+  float: right;
+}
+
+/*# sourceMappingURL=style.css.map */

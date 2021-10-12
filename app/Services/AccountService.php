@@ -42,19 +42,15 @@ class AccountService extends BaseService
                 }
                 $accountsData['avatar'] = $newNameImage;
             }
-            $member = $this->memberRepository->create(['address' => $request->address]);
-            if($member) {
-                $accountsData['accountable_id'] = $member->id;
-                $accountsData['accountable_type'] = Member::class;
-            }
             $account = $this->accountRepository->update($id, $accountsData);
-            
+            $this->memberRepository->update($account->accountable_id, ['address' => $request->address]);
+
             DB::commit();
-            return $this->sendResponse('Sửa thành công.');
+            return $this->sendResponse('Cập nhật hồ sơ thành công.');
         } catch (\Exception $e) {
             Log::error($e);
             DB::rollBack();
         }
-        return $this->sendError('Sửa thất bại');
+        return $this->sendError('Cập nhật hồ sơ thất bại');
     }
 }
