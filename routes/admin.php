@@ -31,8 +31,19 @@ Route::middleware([AuthLoginAdmin::class])->group(function () {
      * Route home
      */
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('slide', [SlideController::class, 'index'])->name('sldie.index')->middleware('policyOfStaff');
+    Route::get('order', [OrderController::class, 'index'])->name('orders.index');
     Route::get('member', [MemberController::class, 'index'])->name('member.index');
+    /**
+     * Route slide
+     */
+    Route::group(['prefix' => 'slide', 'middleware' => 'policyOfStaff'], function() {
+        Route::get('/', [SlideController::class, 'index'])->name('slides.index');
+        Route::get('create', [SlideController::class, 'create'])->name('slides.form_create');
+        Route::post('/create', [SlideController::class, 'store'])->name('slides.create');
+        Route::get('/edit/{id}', [SlideController::class, 'edit'])->name('slides.edit');
+        Route::put('/update/{id}', [SlideController::class, 'update'])->name('slides.update');
+        Route::get('/delete/{id}', [SlideController::class, 'destroy'])->name('slides.delete');
+    });
     /**
      * Route category
      */
