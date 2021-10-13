@@ -97,11 +97,11 @@
                                                 <div class="col-md-9">
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="gender" id="male" value="0" {{ $infoUser['gender'] == 0 ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="inlineRadio1">Nam</label>
+                                                        <label class="form-check-label" for="male">Nam</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="gender" id="famale" value="option2" {{ $infoUser['gender'] == 1 ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                                                        <label class="form-check-label" for="famale">Nữ</label>
                                                     </div>
                                                     @error('gender')
                                                     <p class="text-danger">{{ $message }}</p>
