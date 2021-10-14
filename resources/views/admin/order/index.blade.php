@@ -38,19 +38,13 @@
 									<tbody>
                                         @if (!empty($orders))
                                         @foreach ($orders as $order)
-                                            @php
-                                                $user = $order->member;
-                                                if (empty($user)) {
-                                                    $user = $order->customer;
-                                                }
-                                            @endphp
                                             <tr>
                                                 <td class="text-center">{{ $order->order_code }}</td>
                                                 <td class="text-center">
-                                                    {{ empty($user->account) ? $user->name : $user->account->name }}
+                                                    {{ $order->name }}
                                                 </td>
-                                                <td class="text-center">{{ $user->address }}</td>
-                                                <td class="text-center">{{ empty($user->account) ? $user->phone_number : $user->account->phone_number  }}</td>
+                                                <td class="text-center">{{ $order->address }}</td>
+                                                <td class="text-center">{{ $order->phone_number  }}</td>
                                                 <td class="text-center">{{ number_format($order->price_total, 0, ',', '.') }}đ</td>
                                                 <td class="text-center">
                                                     @php
