@@ -30,7 +30,7 @@
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form action="{{ route('admin.login') }}" method="post">
-                    @csrf 
+                    @csrf
                     <div class="input-group mb-3">
                         <input type="text" name="username" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     @error('username')
-                    <p class="text-danger">{{ $message }}</p> 
+                    <p class="text-danger">{{ $message }}</p>
                     @enderror
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" placeholder="Password">
@@ -51,26 +51,26 @@
                         </div>
                     </div>
                     @error('password')
-                    <p class="text-danger">{{ $message }}</p> 
+                    <p class="text-danger">{{ $message }}</p>
                     @enderror
                     <div class="row">
-                        <div class="col-8">
+                        {{-- <div class="col-8">
                             <div class="icheck-primary">
                                 <input type="checkbox" id="remember">
                                 <label for="remember">
                                     Remember Me
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- /.col -->
-                        <div class="col-4">
+                        <div class="col-12">
                             <button type="submit" name="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
                         <!-- /.col -->
                     </div>
                 </form>
 
-                <div class="social-auth-links text-center mb-3">
+                {{-- <div class="social-auth-links text-center mb-3">
                     <p>- OR -</p>
                     <a href="#" class="btn btn-block btn-primary">
                         <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
@@ -78,7 +78,7 @@
                     <a href="#" class="btn btn-block btn-danger">
                         <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
                     </a>
-                </div>
+                </div> --}}
                 <!-- /.social-auth-links -->
 
                 {{-- <p class="mb-1">
