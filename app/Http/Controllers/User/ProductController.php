@@ -29,9 +29,9 @@ class ProductController extends Controller
         $this->productVariantService = $productVariantService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productRepository->getProductsPaginate(24);
+        $products = $this->productRepository->getProductsPaginate($request, 24);
         return view('user.products.list.index', compact('products'));
     }
 

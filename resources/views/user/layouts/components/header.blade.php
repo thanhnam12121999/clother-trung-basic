@@ -57,12 +57,14 @@
                     </div>
                 </div>
                 <div class="col-lg-7 col-md-7">
-                    <div class="advanced-search">
-                        <div class="input-group custom_input-group">
-                            <input type="text" placeholder="Tìm kiếm">
-                            <button type="button"><i class="ti-search"></i></button>
+                    <form action="{{ route('products.index') }}" method="get">
+                        <div class="advanced-search">
+                            <div class="input-group custom_input-group">
+                                <input type="text" placeholder="Tìm kiếm" name="keyword" value="{{ request()->input('keyword') }}">
+                                <button type="submit"><i class="ti-search"></i></button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
