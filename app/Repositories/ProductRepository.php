@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class ProductRepository extends BaseRepository
 {
@@ -38,9 +40,27 @@ class ProductRepository extends BaseRepository
         }
     }
 
-    public function getProductsPaginate($perPage = 10)
+    public function getProductsPaginate(Request $request, $perPage = 10)
     {
-        return $this->model->paginate($perPage);
+        $query = $this->model->paginate($perPage);
+        if ($request->has('keyword')) {
+            $keyword = $request->get('keyword');
+            $query = $this->model->where('name', 'like', "%{$keyword}%")
+                ->orWhere('slug', 'like', "%{$keyword}%")
+                ->orWhere('summary', 'like', "%{$keyword}%")
+                ->orWhere('detail', 'like', "%{$keyword}%")
+                ->orWhere('description', 'like', "%{$keyword}%")
+                ->orWhereHas('attributes', function (Builder $q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                })
+                ->orWhereHas('category', function (Builder $q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%")
+                        ->orWhere('slug', 'like', "%{$keyword}%")
+                        ->orWhere('description', 'like', "%{$keyword}%");
+                })
+                ->paginate($perPage);
+        }
+        return $query;
     }
 
     public function getProductBySlug($slug)

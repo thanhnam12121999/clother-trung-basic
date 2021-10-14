@@ -31,7 +31,8 @@ class AuthService extends BaseService
                 'password' => $data['password'],
                 'accountable_type' => Member::class
             ];
-            $isLogin = Auth::guard('accounts')->attempt($credentials);
+            $isRemember = array_key_exists("remember_me", $data);
+            $isLogin = Auth::guard('accounts')->attempt($credentials, $isRemember);
             if ($isLogin) {
                 return $this->sendResponse('Đăng nhập thành công');
             }

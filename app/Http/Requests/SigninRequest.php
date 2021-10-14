@@ -25,7 +25,8 @@ class SigninRequest extends FormRequest
     {
         return [
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'remember_me' => 'nullable'
         ];
     }
 
