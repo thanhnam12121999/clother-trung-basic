@@ -18,6 +18,16 @@ class ProductRepository extends BaseRepository
         return $this->model->with('category')->get();
     }
 
+    public function getProductFeature($limit)
+    {
+        return $this->model->latest()->take($limit)->get();
+    }
+
+    public function getProductInterested($limit)
+    {
+        return $this->model->inRandomOrder()->limit($limit)->get();
+    }
+
     public function getById($id)
     {
         return $this->model->with('variants')->find($id);
