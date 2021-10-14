@@ -7,11 +7,11 @@
     @method('POST')
     <section class="content-header">
         <div class="breadcrumb">
-            <button href="" type = "submit" class="btn btn-primary btn-sm mr-3">
+            <button type = "submit" class="btn btn-primary btn-sm mr-3">
                 <span class="glyphicon glyphicon-floppy-save"></span>
                 Lưu[Cập nhật]
             </button>
-            <a href="" class="btn btn-primary btn-sm" href="admin/product" role="button">
+            <a class="btn btn-default btn-sm" href="{{ route('admin.slides.index') }}" role="button">
                 <span class="glyphicon glyphicon-remove do_nos"></span> Thoát
             </a>
         </div>
