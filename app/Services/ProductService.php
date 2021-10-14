@@ -28,7 +28,18 @@ class ProductService extends BaseService
         $this->productVariantRepository = $productVariantRepository;
     }
 
-    public function store(Request $request) {
+    public function getProductFeature($limit)
+    {
+        return $this->productRepository->getProductFeature($limit);    
+    } 
+
+    public function getProductInterested($limit)
+    {
+        return $this->productRepository->getProductInterested($limit);    
+    }
+
+    public function store(Request $request) 
+    {
         try {
             DB::beginTransaction();
             $productData = $request->only(['name', 'category_id', 'summary', 'detail', 'description', 'status']);
