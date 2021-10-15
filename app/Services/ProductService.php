@@ -30,15 +30,15 @@ class ProductService extends BaseService
 
     public function getProductFeature($limit)
     {
-        return $this->productRepository->getProductFeature($limit);
-    }
+        return $this->productRepository->getProductFeature($limit);    
+    } 
 
     public function getProductInterested($limit)
     {
-        return $this->productRepository->getProductInterested($limit);
+        return $this->productRepository->getProductInterested($limit);    
     }
 
-    public function store(Request $request)
+    public function store(Request $request) 
     {
         try {
             DB::beginTransaction();
