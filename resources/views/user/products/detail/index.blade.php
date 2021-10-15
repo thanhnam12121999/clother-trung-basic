@@ -68,6 +68,12 @@
                             <a href="#">
                                 <h5>{{$product->name}}</h5>
                             </a>
+                            @php
+                            $price = 0;
+                            foreach ($product->variants as $variant) {
+                                $price += $variant->unit_price;
+                            }
+                            @endphp
                             <div class="product-price">
                                 {{number_format($product->variants->min('unit_price'))}}&nbsp;<span style="font-size: 13px">vnđ</span>
                             </div>
