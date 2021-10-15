@@ -29,9 +29,9 @@ class ProductController extends Controller
         $this->productVariantService = $productVariantService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productRepository->getProductsPaginate(24);
+        $products = $this->productRepository->getProductsPaginate($request, 24);
         return view('user.products.list.index', compact('products'));
     }
 
@@ -43,6 +43,7 @@ class ProductController extends Controller
             return view('user.products.list.index', compact('category', 'products', 'slug'));
         }
         if (Str::contains($slug, '-prod')) {
+            $products = $this->productService->getProductInterested($limit = 4);
             $response = $this->productService->handleProductBySlug($slug);
             return view('user.products.detail.index', [
                 'product' => $response['product'],
@@ -50,7 +51,8 @@ class ProductController extends Controller
                 'maxPrice' => $response['maxPrice'],
                 'totalAmountProduct' => $response['totalAmountProduct'],
                 'productAttributes' => $response['productAttributes'],
-                'attrValues' => $response['attrValues']
+                'attrValues' => $response['attrValues'],
+                'products' => $products
             ]);
         }
     }
