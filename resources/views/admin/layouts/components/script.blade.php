@@ -16,4 +16,5 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('adminlte/dist/js/pages/dashboard.js') }}"></script> --}}
 <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script src="{{ asset('admin/script.js') }}"></script>
 @yield('my-script')

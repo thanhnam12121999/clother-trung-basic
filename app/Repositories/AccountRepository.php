@@ -24,7 +24,7 @@ class AccountRepository extends BaseRepository
             ->first();
     }
 
-    public function getAccountManagerIsStaff()
+    public function getAccountManager()
     {
         return $this->model->where('accountable_type', Manager::class)->get();
     }

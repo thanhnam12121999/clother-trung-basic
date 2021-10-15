@@ -19,8 +19,8 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function index() {
-        $orders = $this->orderRepository->all();
+    public function index(Request $request) {
+        $orders = $this->orderRepository->getAllOrders($request);
         return view('admin.order.index', compact('orders'));
     }
 

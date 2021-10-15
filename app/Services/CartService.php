@@ -73,32 +73,48 @@ class CartService extends BaseService
 
     public function deleteCartItem($rowId)
     {
-        Cart::remove($rowId);
-        if (isMemberLogged()) {
-            $cartInstance = $this->cartRepository->getCartByMember(getAccountInfo()->id);
-            $subtotal = (int)str_replace(".","",Cart::subtotal(0, ',', '.'));
-            tap($cartInstance)->update([
-                'content' => Cart::content()->toJson(),
-                'sub_total' => $subtotal
-            ]);
+        try {
+            DB::beginTransaction();
+            if (isMemberLogged()) {
+                $cartContent = getCart();
+                unset($cartContent[$rowId]);
+                $cartInstance = $this->cartRepository->getCartByMember(getAccountInfo()->id);
+                $subtotal = (int)str_replace(".","",Cart::subtotal(0, ',', '.'));
+                tap($cartInstance)->update([
+                    'content' => json_encode($cartContent),
+                    'sub_total' => $subtotal
+                ]);
+            } else {
+                Cart::remove($rowId);
+            }
+            DB::commit();
+            return $this->sendResponse('Đã xóa sản phẩm khỏi giỏ hàng');
+        } catch (\Exception $e) {
+            Log::error($e);
+            DB::rollBack();
         }
-        return $this->sendResponse('Đã xóa sản phẩm khỏi giỏ hàng');
+        return $this->sendError('Có lỗi xảy ra, vui lòng thử lại');
     }
 
     public function updateCart($quantity)
     {
         try {
             DB::beginTransaction();
-            foreach ($quantity as $rowId => $qtyItem) {
-                Cart::update($rowId, $qtyItem);
-            }
             if (isMemberLogged()) {
+                $cartContent = getCart();
+                foreach ($quantity as $rowId => $qtyItem) {
+                    $cartContent[$rowId]['qty'] = $qtyItem;
+                }
                 $cartInstance = $this->cartRepository->getCartByMember(getAccountInfo()->id);
                 $subtotal = (int)str_replace(".","",Cart::subtotal(0, ',', '.'));
                 tap($cartInstance)->update([
-                    'content' => Cart::content()->toJson(),
+                    'content' => json_encode($cartContent),
                     'sub_total' => $subtotal
                 ]);
+            } else {
+                foreach ($quantity as $rowId => $qtyItem) {
+                    Cart::update($rowId, $qtyItem);
+                }
             }
             DB::commit();
             return $this->sendResponse('Cập nhật giỏ hàng thành công');

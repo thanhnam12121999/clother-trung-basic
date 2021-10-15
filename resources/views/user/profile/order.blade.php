@@ -43,9 +43,12 @@
                         <div class="order-tab">
                             <div class="tab-item">
                                 <ul class="nav w-100" role="tablist">
+                                    <li style="width: 20%;">
+                                        <a class="w-100 text-center active px-2" data-toggle="tab" href="#tabAll" role="tab">TẤT CẢ</a>
+                                    </li>
                                     @foreach ($orderStatus as $status => $text)
-                                        <li class="w-25">
-                                            <a class="w-100 text-center {{ $status == 0 ? 'active' : '' }}" data-toggle="tab" href="#tab-{{$status}}" role="tab">{{ Str::upper($text) }}</a>
+                                        <li style="width: 20%;">
+                                            <a class="w-100 text-center px-2" data-toggle="tab" href="#tab-{{$status}}" role="tab">{{ Str::upper($text) }}</a>
                                         </li>
                                     @endforeach
                                     {{-- <li>
@@ -58,8 +61,66 @@
                             </div>
                             <div class="tab-item-content">
                                 <div class="tab-content">
+                                    <div class="tab-pane fade-in active" id="tabAll" role="tabpanel">
+                                        <div class="order-content">
+                                            @if ($orders->isNotEmpty())
+                                                @foreach ($orders as $order)
+                                                    <div class="card card-purple mt-2" style="min-height: 200px;">
+                                                        <div class="card-body">
+                                                            <div class="card-title clearfix">
+                                                                <div class="row">
+                                                                    <div class="col-6 d-flex align-items-center">
+                                                                        <h5>Mã đơn hàng: <span>{{ $order->order_code }}</span></h5>
+                                                                    </div>
+                                                                    {{-- <div class="col-6">
+                                                                        <button type="button" data-url="{{ route('profile.order.update', ['order' => $order->id, 'order_status' => 3]) }}" class="primary-btn float-right btn-cancel">HỦY ĐƠN HÀNG</button>
+                                                                    </div> --}}
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            @foreach ($order->orderDetails as $detail)
+                                                                <div class="row">
+                                                                    <div class="col-2">
+                                                                        <img src="{{ $detail->productVariant->product->feature_image_path }}" alt="">
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <p class="pd-option mb-0">
+                                                                            {{ $detail->productVariant->product->name }}
+                                                                        </p>
+                                                                        <p class="pd-variant mb-0">Phân loại hàng: {{$detail->productVariant->variant_text}}</p>
+                                                                        <p class="mb-0">{{ number_format($detail->productVariant->unit_price, 0, ',', '.') }}đ x {{$detail->amount}}</p>
+                                                                    </div>
+                                                                    @php
+                                                                        $totalItem = $detail->productVariant->unit_price * $detail->amount
+                                                                    @endphp
+                                                                    <div class="col-2">
+                                                                        <span class="pd-price float-right">{{ number_format($totalItem, 0, ',', '.') }}đ</span>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                            @endforeach
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <h5 class="text-uppercase font-weight-bold float-left">Tổng số tiền</h5>
+                                                                    <h5 class="price-total float-right font-weight-bold">{{ number_format($order->price_total, 0, ',', '.') }}đ</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <div class="card mt-2" style="min-height: 200px;">
+                                                    <div class="card-body">
+                                                        <div style="height: 200px;" class="d-flex align-items-center justify-content-center">
+                                                            <h4 class="text-center">Chưa có đơn hàng</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
                                     @foreach ($orderStatus as $status => $text)
-                                    <div class="tab-pane {{ $status == 0 ? 'fade-in active' : '' }}" id="tab-{{$status}}" role="tabpanel">
+                                    <div class="tab-pane" id="tab-{{$status}}" role="tabpanel">
                                         <div class="order-content">
                                             @if ($status == \App\Models\Order::WAITING_CONFIRM_STATUS)
                                                 @if ($waitingOrders->isNotEmpty())
