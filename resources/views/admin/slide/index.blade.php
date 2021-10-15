@@ -2,6 +2,7 @@
 @section('custom-css')
     @include('admin.components.css.datatables')
 @endsection
+@section('active-slide', 'active')
 @section('breadcrumb', 'Slide')
 @section('contents')
 <div class="breadcrumb">

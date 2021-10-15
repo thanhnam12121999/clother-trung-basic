@@ -68,19 +68,8 @@
                             <a href="#">
                                 <h5>{{$product->name}}</h5>
                             </a>
-                            @php
-                            $price = 0;
-                            foreach ($product->variants as $variant) {
-                                if ($price == 0) {
-                                    $price = $variant->unit_price;
-                                }
-                                if ($price > $variant->unit_price) {
-                                    $price = $variant->unit_price;
-                                }
-                            }
-                            @endphp
                             <div class="product-price">
-                                {{number_format($price)}}&nbsp;<span style="font-size: 13px">vnđ</span>
+                                {{number_format($product->variants->min('unit_price'))}}&nbsp;<span style="font-size: 13px">vnđ</span>
                             </div>
                         </div>
                     </div>

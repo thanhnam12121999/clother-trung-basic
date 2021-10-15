@@ -204,15 +204,9 @@ class ProductService extends BaseService
     public function handleProductBySlug($slug)
     {
         $product = $this->productRepository->getProductBySlug($slug);
-        $minPrice = $product->variants->map(function ($variant) {
-            return ['unit_price' => $variant['unit_price']];
-        })->min('unit_price');
-        $maxPrice = $product->variants->map(function ($variant) {
-            return ['unit_price' => $variant['unit_price']];
-        })->max('unit_price');
-        $totalAmountProduct = $product->variants->map(function ($variant) {
-            return ['amount' => $variant['amount']];
-        })->sum('amount');
+        $minPrice = $product->variants->min('unit_price');
+        $maxPrice = $product->variants->max('unit_price');
+        $totalAmountProduct = $product->variants->sum('amount');
 
         $productAttributes = $product->attributes->mapWithKeys(function ($attrValue) {
             return [$attrValue->attribute->id => $attrValue->attribute->name];
