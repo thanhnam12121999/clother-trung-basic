@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\SlideController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\AuthLoginAdmin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,9 @@ Route::middleware([AuthLoginAdmin::class])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('order', [OrderController::class, 'index'])->name('orders.index');
     Route::get('member', [MemberController::class, 'index'])->name('member.index');
+
+    Route::get('notifications/{notification}/mark-as-read', [NotificationController::class, 'markAtRead']);
+
     /**
      * Route slide
      */

@@ -18,7 +18,7 @@ class ManagerController extends Controller
     protected $managerService;
 
     public function __construct(
-        ManagerRepository $managerRepository, 
+        ManagerRepository $managerRepository,
         AccountRepository $accountRepository,
         ManagerService $managerService
         )
@@ -29,7 +29,7 @@ class ManagerController extends Controller
     }
 
     public function index() {
-        $listStaffs = AccountResource::collection($this->accountRepository->getAccountManagerIsStaff());
+        $listStaffs = AccountResource::collection($this->accountRepository->getAccountManager());
         return view('admin.manager.index', compact('listStaffs'));
     }
 
@@ -40,7 +40,7 @@ class ManagerController extends Controller
 
     public function store(StoreManagerAccountRequest $request)
     {
-        
+
         $response = $this->managerService->storeAccountOfManager($request);
         if ($response['success']) {
             return redirect()->route('admin.manager.index')->with('success_msg', $response['message']);

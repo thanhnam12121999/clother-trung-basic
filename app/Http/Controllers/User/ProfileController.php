@@ -42,7 +42,8 @@ class ProfileController extends Controller
         if (!isMemberLogged()) {
             return redirect()->route('home');
         }
-        $orders = getAccountInfo()->orders;
+        $orders = getAccountInfo()->orders->sortByDesc('created_at');
+
         $waitingOrders = $orders->filter(function ($order) {
             return $order->order_status == Order::WAITING_CONFIRM_STATUS;
         });
@@ -62,7 +63,7 @@ class ProfileController extends Controller
             Order::DELIVERED_STATUS => 'Đã nhận',
             Order::CANCEL_STATUS => 'Đã hủy'
         ];
-        return view('user.profile.order', compact('waitingOrders', 'confirmedOrders', 'deliveredOrders', 'cancelOrders', 'orderStatus'));
+        return view('user.profile.order', compact('orders', 'waitingOrders', 'confirmedOrders', 'deliveredOrders', 'cancelOrders', 'orderStatus'));
     }
 
     public function updateOrders(Order $order, Request $request)
@@ -74,5 +75,13 @@ class ProfileController extends Controller
         }
         toast($response['message'], 'error')->autoClose(3000);
         return redirect()->back();
+    }
+
+    public function getViewNotifications()
+    {
+        if (!isMemberLogged()) {
+            return redirect()->route('home');
+        }
+        return view('user.profile.notification');
     }
 }

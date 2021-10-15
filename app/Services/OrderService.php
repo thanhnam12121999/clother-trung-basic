@@ -3,19 +3,26 @@
 namespace App\Services;
 
 use App\Models\Order;
+use App\Notifications\OrdersNotification;
+use App\Repositories\AccountRepository;
 use App\Repositories\ProductVariantRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class OrderService extends BaseService
 {
     protected $productVariantRepository;
+    protected $accountRepository;
 
-    public function __construct(ProductVariantRepository $productVariantRepository)
-    {
+    public function __construct(
+        ProductVariantRepository $productVariantRepository,
+        AccountRepository $accountRepository
+    ) {
         $this->productVariantRepository = $productVariantRepository;
+        $this->accountRepository = $accountRepository;
     }
 
     public function updateStatus(Order $order, Request $request)
@@ -38,6 +45,9 @@ class OrderService extends BaseService
                 });
             }
             tap($order)->lockForUpdate()->update($request->all());
+            if (!empty($order->member_id)) {
+                Notification::send($order->member->account, new OrdersNotification($order, $orderStatus, false));
+            }
             DB::commit();
             return $this->sendResponse('Cập nhật đơn hàng thành công', ['errors' => $errorsQuantity]);
         } catch (\Exception $e) {
@@ -52,6 +62,7 @@ class OrderService extends BaseService
         $successMsg = '';
         $errorMsg = '';
         try {
+            $managerAccounts = $this->accountRepository->getAccountManager();
             switch ($request->get('order_status')) {
                 case Order::DELIVERED_STATUS:
                     $successMsg = 'Xác nhận đã nhận hàng thành công';
@@ -66,6 +77,18 @@ class OrderService extends BaseService
             }
             DB::beginTransaction();
             tap($order)->update($request->all());
+            if (isMemberLogged()) {
+                Notification::send(
+                    getLoggedInUser(),
+                    new OrdersNotification($order, $request->get('order_status'), false)
+                );
+            }
+            $managerAccounts->each(function ($account) use ($order, $request) {
+                Notification::send(
+                    $account,
+                    new OrdersNotification($order, $request->get('order_status'))
+                );
+            });
             DB::commit();
             return $this->sendResponse($successMsg);
         } catch (\Exception $e) {

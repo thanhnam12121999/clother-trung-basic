@@ -22,6 +22,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('profile') }}">Thông tin tài khoản</a>
                             <a class="dropdown-item" href="{{ route('profile.order') }}">Đơn mua</a>
+                            <a class="dropdown-item" href="{{ route('profile.notification') }}">Thông báo @if($unreadMemberNoti->count())<sup style="color: #e7ab3c;">{{ $unreadMemberNoti->count() }}</sup>@endif</a>
                             <a class="dropdown-item" href="{{ route('auth.logout') }}">Đăng xuất</a>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProductController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\PaymentController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ProfileController;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +47,5 @@ Route::get('ho-so', [ProfileController::class, 'getProfileUser'])->name('profile
 Route::put('ho-so/cap-nhat/{id}', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::get('don-mua', [ProfileController::class, 'getViewOrder'])->name('profile.order');
 Route::get('orders/{order}/update', [ProfileController::class, 'updateOrders'])->name('profile.order.update');
+Route::get('thong-bao', [ProfileController::class, 'getViewNotifications'])->name('profile.notification');
+Route::get('notifications/{notification}/mark-as-read', [NotificationController::class, 'markAtRead']);

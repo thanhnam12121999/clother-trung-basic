@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
 class Account extends Authenticatable
 {
     use HasFactory;
     use SoftDeletes;
+    use Notifiable;
 
     protected $table = "accounts";
     protected $guarded = "accounts";
@@ -53,5 +55,5 @@ class Account extends Authenticatable
     {
         return $this->morphTo();
     }
-    
+
 }
