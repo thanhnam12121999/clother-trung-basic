@@ -41,7 +41,8 @@
                             }
                             @endphp
                             <div class="product-price">
-                                <span>{{number_format($product->variants->min('unit_price'))}}&nbsp;</span><span style="font-size: 13px">vnđ</span>
+                                {{number_format($product->variants->min('unit_price'), 0, ',', '.')}}đ
+                                {{-- <span>&nbsp;</span><span style="font-size: 13px">vnđ</span> --}}
                             </div>
                         </div>
                     </div>
