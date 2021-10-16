@@ -24,11 +24,6 @@ class MultiComposer
         $categories = $this->categoryRepository->all();
         $notifications = $this->notificationRepository->getAll();
 
-        $memberNotifies = $this->notificationRepository->getMemberNotifies();
-        $unreadMemberNoti = $memberNotifies->filter(function ($noti) {
-            return empty($noti->read_at);
-        });
-
         $adminNoti = $notifications->filter(function ($noti) {
             return $noti->for_admin;
         });
@@ -36,12 +31,21 @@ class MultiComposer
             return empty($noti->read_at);
         });
 
-        $view->with([
+        $data = [
             'categories' => $categories,
             'adminNoti' => $adminNoti,
             'unreadAdminNoti' => $unreadAdminNoti,
-            'memberNotifies' => $memberNotifies,
-            'unreadMemberNoti' => $unreadMemberNoti
-        ]);
+        ];
+
+        if (isMemberLogged()) {
+            $memberNotifies = $this->notificationRepository->getMemberNotifies();
+            $unreadMemberNoti = $memberNotifies->filter(function ($noti) {
+                return empty($noti->read_at);
+            });
+            $data['memberNotifies'] = $memberNotifies;
+            $data['unreadMemberNoti'] = $unreadMemberNoti;
+        }
+
+        $view->with($data);
     }
 }
