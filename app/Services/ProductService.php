@@ -30,15 +30,15 @@ class ProductService extends BaseService
 
     public function getProductFeature($limit)
     {
-        return $this->productRepository->getProductFeature($limit);    
-    } 
+        return $this->productRepository->getProductFeature($limit);
+    }
 
     public function getProductInterested($limit)
     {
-        return $this->productRepository->getProductInterested($limit);    
+        return $this->productRepository->getProductInterested($limit);
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         try {
             DB::beginTransaction();
@@ -135,26 +135,42 @@ class ProductService extends BaseService
     {
         $variantsData = $this->productVariantService->getProductVariantsValue($productAttributes);
         $variants = $this->productVariantRepository->getVariantsByProductId($product->id);
-        $variantsWithId = $variants->mapWithKeys(function ($variantModel) {
-            return [$variantModel->id => $variantModel->variant];
+
+        $variantsModelData = $variants->mapWithKeys(function ($variantModel) {
+            return [
+                $variantModel->id => [
+                    'variant_value' => $variantModel->variant_value,
+                    'variant_text' => $variantModel->variant_text
+                ]
+            ];
         });
 
-        $variantsData = collect($variantsData)->map(function ($variant) {
-            return $variant['variant'];
+        $variantsValueData = collect($variantsData)->map(function ($variant) {
+            return $variant['variant_value'];
+        });
+        $variantsModelMapping = $variantsModelData->map(function ($variant) {
+            return json_encode(json_decode($variant['variant_value'], true));
         });
 
-        $variantsMapping = $variantsWithId->map(function ($variantValue) {
-            return json_encode(json_decode($variantValue, true));
-        });
-
-        $sameVariants = array_intersect($variantsData->all(), $variantsMapping->all());
-        $variantsDataFinal = $variantsData->filter(function ($variantValue) use ($sameVariants) {
+        $sameVariants = array_intersect($variantsValueData->all(), $variantsModelMapping->all());
+        $variantsValueData = $variantsValueData->filter(function ($variantValue) use ($sameVariants) {
             return !in_array($variantValue, $sameVariants);
         })->map(function ($variantValue) {
-            return ['variant' => $variantValue];
+            return ['variant_value' => $variantValue];
         });
 
-        $variantsDelete = $variantsMapping->filter(function ($variantValue) use ($sameVariants) {
+        $variantsDataFinal = $variantsValueData->map(function ($variantValue) use ($variantsData) {
+            $variantValue = json_decode($variantValue['variant_value']);
+            foreach ($variantsData as $variantData) {
+                $variantValueData = json_decode($variantData['variant_value']);
+                $isDifferentVariant = empty(array_diff($variantValue, $variantValueData));
+                if ($isDifferentVariant) {
+                    return $variantData;
+                }
+            }
+        });
+
+        $variantsDelete = $variantsModelMapping->filter(function ($variantValue) use ($sameVariants) {
             return !in_array($variantValue, $sameVariants);
         });
 

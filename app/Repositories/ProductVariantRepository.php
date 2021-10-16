@@ -18,7 +18,7 @@ class ProductVariantRepository extends BaseRepository
 
     public function getVariantByVariantValue($variantValue)
     {
-        return $this->model->where('variant', $variantValue)->get();
+        return $this->model->where('variant_value', $variantValue)->get();
     }
 
     public function getVariantsHasVariantTextIsNull()
