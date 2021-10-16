@@ -58,7 +58,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <a href="{{ route('admin.categories.edit', $category->id) }}"
-                                                        type="button" class="btn btn-warning btn-xs btn-edit-product">
+                                                        type="button" class="btn btn-success btn-xs btn-edit-product">
                                                         <i class="fa fa-plus" aria-hidden="true"></i>Sửa
                                                     </a>
                                                     <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">

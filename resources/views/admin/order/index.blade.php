@@ -94,7 +94,7 @@
                                                     <button data-url="{{ route('admin.orders.update-status', ['order' => $order->id, 'order_status' => 3]) }}" type="button" class="btn btn-danger btn-xs btn-cancel">Hủy đơn</button>
                                                     @endif
                                                     <a class="btn btn-info btn-xs" href="{{ route('admin.orders.detail', ['order' => $order->id]) }}" role = "button">
-                                                        <span class="glyphicon glyphicon-eye-open"></span> Chi tiết
+                                                        <span class="glyphicon glyphicon-eye-open"></span><i class="fa fa-eye" aria-hidden="true"></i> Chi tiết
                                                     </a>
                                                 </td>
                                             </tr>
