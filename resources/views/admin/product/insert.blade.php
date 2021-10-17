@@ -4,6 +4,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.css') }}">
 @endsection
 @section('active-products', 'active')
 @section('breadcrumb', 'Thêm Sản Phẩm Mới')
@@ -127,6 +128,7 @@
     @include('admin.components.js.datatables')
     <script src="{{ asset('adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
     {{-- <script src="{{ asset('adminlte/plugins/jquery-validation/jquery.validate.min.js') }}"></script> --}}
 @endsection
 @section('my-script')

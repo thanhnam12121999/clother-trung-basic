@@ -74,4 +74,19 @@ class ProductAttributeService extends BaseService
         }
         return $this->sendError('Sửa thuộc tính thất bại');
     }
+
+    public function deleteAttribute($attribute)
+    {
+        try {
+            DB::beginTransaction();
+            $attribute->attributeValues()->delete();
+            $attribute->delete();
+            DB::commit();
+            return $this->sendResponse('Xóa thuộc tính thành công');
+        } catch (\Exception $e) {
+            Log::error($e);
+            DB::rollBack();
+        }
+        return $this->sendError('Xóa thuộc tính thất bại');
+    }
 }

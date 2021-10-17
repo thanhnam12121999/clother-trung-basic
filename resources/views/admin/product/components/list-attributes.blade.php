@@ -33,19 +33,29 @@
                                 </td>
                                 <td>
                                     @foreach ($attr->attributeValues as $key => $attrValue)
-                                            @if ($key == count($attr->attributeValues) - 1)
-                                                <span>{{ $attrValue->name }}</span>
-                                            @else
-                                                <span>{{ $attrValue->name }},</span>
-                                            @endif
-                                        @endforeach
+                                        @if ($key == count($attr->attributeValues) - 1)
+                                            <span>{{ $attrValue->name }}</span>
+                                        @else
+                                            <span>{{ $attrValue->name }},</span>
+                                        @endif
+                                    @endforeach
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-warning btn-xs btn-edit-attr" data-attr="{{ $attr }}">Sửa</button>
-                                    <a href="" class="btn btn-danger btn-xs">Xóa</a>
+                                    <form class="d-inline-block" action="{{ route('admin.attributes.destroy', ['attribute' => $attr->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger btn-xs btn-delete-attr">Xóa</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
+                    @else
+                        <tr>
+                            <td colspan="3">
+                                <h4 class="text-center">Chưa có thuộc tính sản phẩm</h4>
+                            </td>
+                        </tr>
                     @endif
                 </tbody>
             </table>
