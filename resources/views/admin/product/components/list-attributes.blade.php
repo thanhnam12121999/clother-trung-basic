@@ -42,11 +42,11 @@
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-warning btn-xs btn-edit-attr" data-attr="{{ $attr }}">Sửa</button>
-                                    <form class="d-inline-block" action="{{ route('admin.attributes.destroy', ['attribute' => $attr->id]) }}" method="post">
+                                    {{-- <form class="d-inline-block" action="{{ route('admin.attributes.destroy', ['attribute' => $attr->id]) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-danger btn-xs btn-delete-attr">Xóa</button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach
