@@ -43,7 +43,7 @@ class AuthController extends Controller
     {
         $execResponse = $this->authService->doRegister($request->validated());
         if ($execResponse['success']) {
-            return redirect()->route('home')->with('success', $execResponse['message']);
+            return redirect()->route('auth.sign-in')->with('success', $execResponse['message']);
         }
         alert()->error($execResponse['message']);
         return redirect()->back()->withInput();

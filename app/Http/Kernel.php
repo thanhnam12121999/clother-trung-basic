@@ -68,5 +68,7 @@ class Kernel extends HttpKernel
         'policyOfManager' => \App\Http\Middleware\PolicyOfManager::class,
         'policyOfStaff' => \App\Http\Middleware\PolicyOfStaff::class,
         'authLoginAdmin' => \App\Http\Middleware\AuthLoginAdmin::class,
+        'authCheckMemberLogout' => \App\Http\Middleware\AuthCheckMemberLogout::class,
+        'authCheckManagerLogout' => \App\Http\Middleware\AuthCheckManagerLogout::class
     ];
 }

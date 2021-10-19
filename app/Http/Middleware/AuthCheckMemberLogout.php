@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AuthLoginAdmin
+class AuthCheckMemberLogout
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class AuthLoginAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (isManagerLogged()) {
-            return $next($request);
+        if (isMemberLogged()) {
+            return redirect()->route('home');
         }
-        return redirect()->route('admin.login-page');
+        return $next($request);
     }
 }

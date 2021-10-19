@@ -21,10 +21,14 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 |
 */
 
-Route::get('dang-nhap', [AuthController::class, 'signIn'])->name('auth.sign-in');
-Route::post('login', [AuthController::class, 'doLogin'])->name('auth.login');
-Route::get('dang-ky', [AuthController::class, 'signUp'])->name('auth.sign-up');
-Route::post('register', [AuthController::class, 'doRegister'])->name('auth.register');
+Route::get('dang-nhap', [AuthController::class, 'signIn'])->name('auth.sign-in')
+    ->middleware('authCheckMemberLogout');
+Route::post('login', [AuthController::class, 'doLogin'])->name('auth.login')
+    ->middleware('authCheckMemberLogout');
+Route::get('dang-ky', [AuthController::class, 'signUp'])->name('auth.sign-up')
+    ->middleware('authCheckMemberLogout');
+Route::post('register', [AuthController::class, 'doRegister'])->name('auth.register')
+    ->middleware('authCheckMemberLogout');
 Route::get('dang-xuat', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::get('', function () {
