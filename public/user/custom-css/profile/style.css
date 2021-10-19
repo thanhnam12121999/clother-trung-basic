@@ -1,0 +1,70 @@
+.profile-background {
+    padding-bottom: 80px;
+    padding-top: 80px;
+}
+
+.bg-profile-cus {
+    background-color: #e6e6e6;;
+}
+
+.nav-link {
+    color: #0f0f0f;
+}
+
+.nav-link:hover {
+    color: #0f0f0f;
+    text-decoration: underline;
+}
+
+.nav-link.active {
+    color: #e7ab3c !important;
+}
+
+.tab-item ul li a {
+    font-size: 14px;
+    padding: 12px 30px;
+}
+
+.notifications-section .new-label {
+    font-size: 14px;
+    padding: 5px 8px;
+    background-color: #e7ab3c;
+    color: #f1f1f1;
+}
+
+.order-tab .tab-item-content {
+    height: 550px;
+    overflow-y: auto;
+}
+
+.order-tab .tab-item-content::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+.order-tab .tab-item-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.order-tab .tab-item-content::-webkit-scrollbar-thumb {
+    background: #e7ab3c;
+}
+
+/* Handle on hover */
+.order-tab .tab-item-content::-webkit-scrollbar-thumb:hover {
+    background: #f8a70f;
+}
+
+.pd-price, .price-total {
+    color: #e7ab3c;
+}
+
+.btn-cancel {
+    border: none;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+    margin: 1em !important;
+    font-size: 1em !important;
+}

@@ -14,15 +14,16 @@ class ProductVariant extends Model
     protected $table = "product_variants";
     protected $fillable = [
         'product_id',
-        'variant',
+        'variant_value',
+        'variant_text',
         'amount',
         'unit_price'
     ];
 
-    public function images()
-    {
-        return $this->hasMany(ProductVariantImage::class, 'product_variant_id', 'id');
-    }
+    // public function images()
+    // {
+    //     return $this->hasMany(ProductVariantImage::class, 'product_variant_id', 'id');
+    // }
 
     public function product()
     {

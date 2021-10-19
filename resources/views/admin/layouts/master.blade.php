@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title')</title>
+    <title>Admin</title>
+    <base href="{{ asset('') }}">
 
     @include('admin.layouts.components.stylesheet')
 </head>
@@ -27,16 +28,33 @@
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
-                    @if(session()->has('success'))
+                    @if(session()->has('success_msg'))
                     <div class="alert alert-success">
-                        <strong>{{ session('success') }}</strong>
+                        <strong>{{ session('success_msg') }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     @endif
-                    @if(session()->has('error'))
+                    @if(session()->has('error_msg'))
                         <div class="alert alert-danger">
-                            <strong>{{ session('error') }}</strong>
+                            <strong>{{ session('error_msg') }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     @endif
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                        <h1 class="m-0">@yield('breadcrumb')</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">@yield('breadcrumb')</li>
+                        </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
