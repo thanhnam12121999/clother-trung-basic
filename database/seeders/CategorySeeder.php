@@ -17,15 +17,15 @@ class CategorySeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        
+
         DB::table('categories')->truncate();
 
         DB::table('categories')->insert([
-            ['name' => 'áo', 'parent' => 0, 'slug' => 'ao-cat'],
-            ['name' => 'quần', 'parent' => 0, 'slug' => 'quan-cat'],
-            ['name' => 'váy', 'parent' => 0, 'slug' => 'vay-cat'],
+            ['name' => 'áo', 'parent' => 0, 'slug' => 'ao-cat1' . '.' . time()],
+            ['name' => 'quần', 'parent' => 0, 'slug' => 'quan-cat2' . '.' . time()],
+            ['name' => 'váy', 'parent' => 0, 'slug' => 'vay-cat3' . '.' . time()],
         ]);
-        
+
         Schema::enableForeignKeyConstraints();
     }
 }
