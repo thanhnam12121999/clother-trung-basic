@@ -59,11 +59,15 @@ class AttributeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Attribute $attribute)
     {
-        //
+        $response = $this->productAttributeService->deleteAttribute($attribute);
+        if ($response['success']) {
+            return redirect()->back()->with('success_msg', $response['message']);
+        }
+        return redirect()->back()->with('error_msg', $response['message']);
     }
 }

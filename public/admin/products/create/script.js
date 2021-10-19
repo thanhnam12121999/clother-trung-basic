@@ -88,6 +88,27 @@ $(function () {
         $('#attributeModalUpdate input[name="attribute_values_delete"]').val(JSON.stringify(attrValuesDelete))
     })
 
+    $('#attribute-list .btn-delete-attr').click(function (e) {
+        e.preventDefault();
+        let url = $(this).attr('data-url');
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn xóa thuộc tính này?',
+            // text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonColor: '#42c119',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy'
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                $(this).parent().submit()
+            }
+        })
+    });
+
     $(document).on('change', '.select2', function () {
     })
 });
