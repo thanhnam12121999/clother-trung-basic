@@ -32,14 +32,14 @@
                     @include('user.profile.components.sidebar')
                     <!-- /.col -->
                     <div class="col-md-9">
-                        <div class="card notifications-section">
+                        <div class="card notifications-section" style="min-height: 200px;">
                             <div class="card-header">
                                 <h5 class="text-center">Thông báo</h5>
                             </div>
                             <div class="card-body p-0">
                                 @if (!$memberNotifies->total())
-                                <div class="col-12">
-                                    <h4 class="text-center">Không có thông báo nào</h4>
+                                <div style="height: 200px;" class="d-flex align-items-center justify-content-center">
+                                    <h4 class="text-center">Không có thông báo</h4>
                                 </div>
                                 @else
                                 <div class="list-group">

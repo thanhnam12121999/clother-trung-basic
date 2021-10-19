@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/login', [AuthController::class, 'getViewLogin'])->name('login-page');
+Route::get('/login', [AuthController::class, 'getViewLogin'])->name('login-page')->middleware('authCheckManagerLogout');
 Route::post('/login-admin', [AuthController::class, 'doLoginAdmin'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
