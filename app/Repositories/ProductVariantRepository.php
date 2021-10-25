@@ -25,4 +25,9 @@ class ProductVariantRepository extends BaseRepository
     {
         return $this->model->whereNull('variant_text')->get();
     }
+
+    public function getVariantAmountByVariantId($variantId)
+    {
+        return $this->model->where('id', $variantId)->first()->amount;
+    }
 }

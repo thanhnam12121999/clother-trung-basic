@@ -55,6 +55,8 @@ class CartController extends Controller
             toast($response['message'], 'success')->autoClose(3000);
             return redirect()->back();
         }
+        toast($response['message'], 'error')->autoClose(3000);
+        return redirect()->back();
     }
 
     public function update(Request $request)
