@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
-            AccountSeeder::class,
+            // AccountSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
             AttributeSeeder::class,
             AttributeValueSeeder::class,
             AttributeProductSeeder::class,
-            ProductVariantSeeder::class,
+            // ProductVariantSeeder::class,
             ProductImageSeeder::class,
         ]);
     }
