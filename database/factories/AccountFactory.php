@@ -29,7 +29,7 @@ class AccountFactory extends Factory
             'password' => 123456,
             'phone_number' => $this->faker->phoneNumber(),
             'name' => $this->faker->name(),
-            'gender' => Arr::random(['0', '1']),
+            'gender' => Arr::random([0, 1]),
             'date_of_birth' => $this->faker->date('Y-m-d', '2001-12-31'),
             'avatar' => '',
             'accountable_id' => '',
