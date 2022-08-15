@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  #Laravel App
+  app:
+    build:
+      args:
+        user: thanhtrung1999
+        uid: 1000
+      context: .
+      dockerfile: ./docker/prod.dockerfile
+    image: laravel_nginx_server_app
+    container_name: clothes-shopping_app
+    working_dir: /var/www/html/app
+    volumes:
+      - .:/var/www/html/app
+      - ./docker/config/php/php.ini-development:/usr/local/etc/php/php.ini
+    networks:
+      - mynetwork
+
+  #Nginx Service
+  nginx:
+    image: nginx:1.19.6-alpine
+    container_name: clothes-shopping_nginx_server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html/app
+      - ./docker/config/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/config/nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - mynetwork
+
+  #MySQL Service
+  db:
+    image: mysql:8.0
+    container_name: clothes-shopping_mysql_db
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./docker/config/mysql/:/docker-entrypoint-initdb.d
+      - mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    #   MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3396:3306"
+    networks:
+      - mynetwork
+
+#Docker Networks
+networks:
+  mynetwork:
+    driver: bridge
+#Volumes
+volumes:
+  mysqldata:
+    driver: local
