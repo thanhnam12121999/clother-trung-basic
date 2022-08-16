@@ -26,7 +26,7 @@ class AccountFactory extends Factory
         return [
             'email' => $this->faker->safeEmail(),
             'username' => $this->faker->userName(),
-            'password' => 123456,
+            'password' => '123456',
             'phone_number' => $this->faker->phoneNumber(),
             'name' => $this->faker->name(),
             'gender' => Arr::random([0, 1]),

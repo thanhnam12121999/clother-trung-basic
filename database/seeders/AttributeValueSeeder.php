@@ -24,10 +24,10 @@ class AttributeValueSeeder extends Seeder
             ['attribute_id' => 1, 'name' => 'M'],
             ['attribute_id' => 1, 'name' => 'L'],
             ['attribute_id' => 1, 'name' => 'XL'],
-            ['attribute_id' => 2, 'name' => 'đỏ'],
-            ['attribute_id' => 2, 'name' => 'đen'],
-            ['attribute_id' => 2, 'name' => 'trắng'],
-            ['attribute_id' => 2, 'name' => 'xanh'],
+            ['attribute_id' => 2, 'name' => 'Đỏ'],
+            ['attribute_id' => 2, 'name' => 'Đen'],
+            ['attribute_id' => 2, 'name' => 'Trắng'],
+            ['attribute_id' => 2, 'name' => 'Xanh'],
         ]);
 
         Schema::enableForeignKeyConstraints();

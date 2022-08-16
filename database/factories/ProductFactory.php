@@ -26,9 +26,9 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'category_id' => Category::all()->random()->id, 
-            'name' => $this->faker->name(), 
-            'code' => Str::random(10), 
+            'category_id' => Category::inRandomOrder()->first()->id,
+            'name' => $this->faker->name(),
+            'code' => Str::random(10),
             'feature_image' => $this->faker->imageUrl($width = 640, $height = 480),
             'summary' => $this->faker->realText($maxNbChars = 100, $indexSize = 2),
             'detail' => $this->faker->text(),

@@ -20,7 +20,7 @@ class AddSlugForProductsSeeder extends Seeder
         $products = DB::table('products')->get();
         $products->each(function ($product) {
             DB::table('products')->where('id', $product->id)->update([
-                'slug' => Str::slug($product->name) . '-' . Str::random(10) . strtotime($product->created_at)
+                'slug' => Str::slug($product->name) . '-prod' . $product->id . '.' . Str::random(10) . strtotime($product->created_at)
             ]);
         });
         echo "FINISH!\n";
