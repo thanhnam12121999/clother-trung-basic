@@ -41,13 +41,13 @@
                     <div class="footer-logo">
                         <a href="#">
 {{--                            <img src="{{ asset('user/img/footer-logo.png') }}" alt="">--}}
-                            <h3 style="color: #f1f1f1; font-weight: 600;">Holalady</h3>
+                            <h3 style="color: #f1f1f1; font-weight: 600;">{{ __('settings.shop.name') }}</h3>
                         </a>
                     </div>
                     <ul>
-                        <li>Địa chỉ: Tầng 2, toà nhà HCMCC. 249A Thuỵ Khuê, Tây Hồ, Hà Nội</li>
-                        <li>Điện thoại: 1800 2010</li>
-                        <li>Email: holalady@gmail.com</li>
+                        <li>Địa chỉ: {{ __('settings.shop.address') }}</li>
+                        <li>Điện thoại: {{ __('settings.shop.phone') }}</li>
+                        <li>Email: {{ __('settings.shop.email') }}</li>
                     </ul>
                     <div class="footer-social">
                         <a href="#"><i class="fa fa-facebook"></i></a>

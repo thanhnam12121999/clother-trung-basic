@@ -5,11 +5,11 @@
             <div class="ht-left">
                 <div class="mail-service">
                     <i class=" fa fa-envelope"></i>
-                    holalady@gmail.com
+                    {{ __('settings.shop.email') }}
                 </div>
                 <div class="phone-service">
                     <i class=" fa fa-phone"></i>
-                    1800 2010
+                    {{ __('settings.shop.phone') }}
                 </div>
             </div>
             <div class="ht-right">
@@ -53,7 +53,7 @@
                     <div class="logo">
                         <a href="{{ route('home') }}">
 {{--                            <img src="{{ asset('user/img/logo.png') }}" alt="">--}}
-                            <h3 style="font-weight: 600;">Holalady</h3>
+                            <h3 style="font-weight: 600;">{{ __('settings.shop.name') }}</h3>
                         </a>
                     </div>
                 </div>

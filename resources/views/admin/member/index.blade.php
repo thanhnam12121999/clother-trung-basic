@@ -38,15 +38,15 @@
                                             @foreach ($members as $member)
                                             <tr>
                                                 <td class="text-center">{{ $member->id }}</td>
-                                                <td class="text-center">{{ $member->account->name }}</td>
+                                                <td class="text-center">{{ $member->account->name ?? '' }}</td>
                                                 <td class="text-center">{{ $member->address }}</td>
-                                                <td class="text-center">{{ $member->account->email }}</td>
-                                                <td class="text-center">{{ $member->account->phone_number }}</td>
+                                                <td class="text-center">{{ $member->account->email ?? '' }}</td>
+                                                <td class="text-center">{{ $member->account->phone_number ?? '' }}</td>
                                                 <td class="text-center">
-                                                    {{ $member->account->gender == 0 ? 'Nam' : 'Nữ' }}
+                                                    {{ $member->account && $member->account->gender == 0 ? 'Nam' : 'Nữ' }}
                                                 </td>
-                                                <td class="text-center">{{ \Carbon\Carbon::parse($member->account->date_of_birth)->format('d-m-Y') }}</td>
-                                                <td class="text-center">{{ \Carbon\Carbon::parse($member->account->created_at)->format('d-m-Y H:i:s') }}</td>
+                                                <td class="text-center">{{ $member->account && \Carbon\Carbon::parse($member->account->date_of_birth)->format('d-m-Y') }}</td>
+                                                <td class="text-center">{{ $member->account && \Carbon\Carbon::parse($member->account->created_at)->format('d-m-Y H:i:s') }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>

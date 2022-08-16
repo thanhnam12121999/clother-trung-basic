@@ -42,7 +42,7 @@ class ProductRepository extends BaseRepository
 
     public function getProductsPaginate(Request $request, $perPage = 10)
     {
-        $query = $this->model->paginate($perPage);
+        $query = $this->model->orderBy('id', 'DESC')->paginate($perPage);
         if ($request->has('keyword')) {
             $keyword = $request->get('keyword');
             $query = $this->model->where('name', 'like', "%{$keyword}%")
@@ -58,6 +58,7 @@ class ProductRepository extends BaseRepository
                         ->orWhere('slug', 'like', "%{$keyword}%")
                         ->orWhere('description', 'like', "%{$keyword}%");
                 })
+                ->orderBy('id', 'DESC')
                 ->paginate($perPage);
         }
         return $query;

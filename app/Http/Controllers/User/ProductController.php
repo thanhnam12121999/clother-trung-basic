@@ -39,7 +39,7 @@ class ProductController extends Controller
     {
         if (Str::contains($slug, '-cat')) {
             $category = $this->categoryRepository->getCategoryBySlug($slug);
-            $products = $category->products()->paginate(24);
+            $products = $category->products()->orderBy('id', 'DESC')->paginate(24);
             return view('user.products.list.index', compact('category', 'products', 'slug'));
         }
         if (Str::contains($slug, '-prod')) {
