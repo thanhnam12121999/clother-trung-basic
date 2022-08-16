@@ -7,16 +7,23 @@
                     <h2>Danh mục sản phẩm</h2>
                 </div>
             </div>
-            @foreach ($categories as $category)
-                <div class="col-lg-3">
-                    <div class="single-banner h-100">
-                        <img class="h-100 catalog-image" data-slug="{{ $category->slug }}" src="{{ $category->image_path }}" alt="">
-                        <div class="inner-text">
-                            <h4>{{ $category->name }}</h4>
+            @if ($categories->isNotEmpty())
+                @foreach ($categories as $category)
+                    <div class="col-lg-3">
+                        <div class="single-banner h-100">
+                            <img class="h-100 catalog-image" data-slug="{{ $category->slug }}"
+                                src="{{ $category->image_path }}" alt="">
+                            <div class="inner-text">
+                                <h4>{{ $category->name }}</h4>
+                            </div>
                         </div>
                     </div>
+                @endforeach
+            @else
+                <div class="filter-control">
+                    <h3>Chưa có danh mục sản phẩm</h3>
                 </div>
-            @endforeach
+            @endif
         </div>
     </div>
 </div>
