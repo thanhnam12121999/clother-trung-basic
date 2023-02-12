@@ -76,7 +76,6 @@ class AuthService extends BaseService
                 'accountable_type' => Manager::class
             ];
             $isLogin = Auth::guard('accounts')->attempt($credentials);
-            // dd($isLogin);
             if ($isLogin) {
                 return $this->sendResponse('Đăng nhập thành công');
             }

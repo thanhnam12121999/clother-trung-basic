@@ -17,15 +17,18 @@ class ProductService extends BaseService
     protected $productRepository;
     protected $productVariantService;
     protected $productVariantRepository;
+    protected $orderDetailService;
 
     public function __construct(
         ProductRepository $productRepository,
         ProductVariantService $productVariantService,
-        ProductVariantRepository $productVariantRepository
+        ProductVariantRepository $productVariantRepository,
+        OrderDetailService $orderDetailService
     ) {
         $this->productRepository = $productRepository;
         $this->productVariantService = $productVariantService;
         $this->productVariantRepository = $productVariantRepository;
+        $this->orderDetailService = $orderDetailService;
     }
 
     public function getProductFeature($limit)
@@ -175,9 +178,11 @@ class ProductService extends BaseService
         });
 
         $product->variants()->createMany($variantsDataFinal->toArray());
-
         $variantsDelete->each(function ($variantValue, $variantId) {
-            $this->productVariantRepository->delete($variantId);
+            $orderProductVariant = $this->orderDetailService->getOrderByVariantId($variantId);
+            if ($orderProductVariant->isEmpty()) {
+                $this->productVariantRepository->delete($variantId);
+            }
         });
     }
 
